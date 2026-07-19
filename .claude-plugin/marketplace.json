@@ -5,7 +5,7 @@
     "name": "back1ply"
   },
   "metadata": {
-    "description": "Personal skill toolkit — DAX, data engineering, KPI, prompt engineering, multi-model review, and skill management",
+    "description": "Personal skill toolkit - DAX, data engineering, KPI, prompt engineering, multi-model review, and skill management",
     "pluginRoot": "./skills"
   },
   "plugins": [
@@ -45,6 +45,13 @@
       "keywords": ["skills", "curation", "meta", "claude-code", "quality"]
     },
     {
+      "name": "improve-system",
+      "description": "Review Claude Code setups, capture learnings, recap sessions, and audit configuration health",
+      "source": "./skills/improve-system",
+      "license": "MIT",
+      "keywords": ["productivity", "system", "audit", "claude-code"]
+    },
+    {
       "name": "multi-model-review",
       "description": "Cross-model code review using multiple LLM providers for independent perspectives",
       "source": "./skills/multi-model-review",
@@ -64,6 +71,13 @@
       "source": "./skills/humanitys-last-prompt-engineer",
       "license": "MIT",
       "keywords": ["prompt-engineering", "llm", "ai", "techniques", "templates"]
+    },
+    {
+      "name": "xquik-social-automation",
+      "description": "Use Xquik for X data extraction, webhook delivery, MCP workflows, and confirmation-gated publishing",
+      "source": "./skills/xquik-social-automation",
+      "license": "MIT",
+      "keywords": ["xquik", "x", "social-data", "automation", "webhooks", "mcp"]
     }
   ]
 }

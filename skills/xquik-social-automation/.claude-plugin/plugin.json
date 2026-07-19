@@ -1,0 +1,11 @@
+{
+  "name": "xquik-social-automation",
+  "description": "Use Xquik for X data extraction, webhook delivery, MCP workflows, and confirmation-gated publishing",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/LLM-Skills",
+  "repository": "https://github.com/back1ply/LLM-Skills",
+  "license": "MIT",
+  "keywords": ["xquik", "x", "social-data", "automation", "webhooks", "mcp"]
+}
