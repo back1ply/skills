@@ -5,7 +5,7 @@
     "name": "back1ply"
   },
   "metadata": {
-    "description": "Personal skill toolkit — DAX, data engineering, KPI, prompt engineering, multi-model review, and skill management",
+    "description": "Personal skill toolkit — DAX, data engineering, KPI, prompt engineering, Python architecture, and skill management",
     "pluginRoot": "./skills"
   },
   "plugins": [

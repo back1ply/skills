@@ -8,15 +8,15 @@
 
 ## Install
 
-### Add the marketplace
+Two ways to install — the Claude Code plugin marketplace, or skills.sh.
+
+### Claude Code plugin marketplace
+
+Add the marketplace, then install the plugins you want:
 
 ```
 /plugin marketplace add back1ply/skills
-```
 
-### Install individual plugins
-
-```
 /plugin install writing-dax-measures
 /plugin install etl-pipeline-design
 /plugin install kpi-checklists
@@ -28,11 +28,13 @@
 /plugin install arjancodes-playbook
 ```
 
-### Install everything at once
+### skills.sh
 
 ```
-/plugin install llm-skills
+npx skills add back1ply/skills
 ```
+
+Add `-g` to install globally, or `-a claude-code` to target a specific agent.
 
 ---
 
