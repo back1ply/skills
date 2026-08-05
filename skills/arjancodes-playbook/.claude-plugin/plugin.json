@@ -1,0 +1,20 @@
+{
+  "name": "arjancodes-playbook",
+  "description": "Pythonic design patterns, clean architecture, typing/idioms, AI agent engineering, API/data persistence, and testing practices distilled from ArjanCodes' example repo",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "python",
+    "design-patterns",
+    "clean-architecture",
+    "solid",
+    "typing",
+    "fastapi",
+    "mcp",
+    "arjancodes"
+  ]
+}

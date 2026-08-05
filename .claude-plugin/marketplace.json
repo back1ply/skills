@@ -45,13 +45,6 @@
       "keywords": ["skills", "curation", "meta", "claude-code", "quality"]
     },
     {
-      "name": "multi-model-review",
-      "description": "Cross-model code review using multiple LLM providers for independent perspectives",
-      "source": "./skills/multi-model-review",
-      "license": "MIT",
-      "keywords": ["code-review", "llm", "multi-model", "quality", "ai"]
-    },
-    {
       "name": "channel-artifact",
       "description": "Create shareable Claude Code channel artifacts with live web UIs",
       "source": "./skills/channel-artifact",
@@ -64,6 +57,20 @@
       "source": "./skills/humanitys-last-prompt-engineer",
       "license": "MIT",
       "keywords": ["prompt-engineering", "llm", "ai", "techniques", "templates"]
+    },
+    {
+      "name": "improve-system",
+      "description": "Keep your system sharp. Reviews your setup, captures learnings, audits for rot, recaps your sessions.",
+      "source": "./skills/improve-system",
+      "license": "MIT",
+      "keywords": ["productivity", "system", "audit", "claude-code"]
+    },
+    {
+      "name": "arjancodes-playbook",
+      "description": "Pythonic design patterns, clean architecture, typing/idioms, AI agent engineering, API/data persistence, and testing practices distilled from ArjanCodes' example repo",
+      "source": "./skills/arjancodes-playbook",
+      "license": "MIT",
+      "keywords": ["python", "design-patterns", "clean-architecture", "solid", "typing", "fastapi", "mcp", "arjancodes"]
     }
   ]
 }

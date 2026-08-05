@@ -1,6 +1,6 @@
-# LLM Skills
+# Skills
 
-> Personal AI agent skill toolkit — 8 independently installable plugins.
+> Personal AI agent skill toolkit — 9 independently installable plugins.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -22,9 +22,10 @@
 /plugin install kpi-checklists
 /plugin install skill-finder
 /plugin install skill-curator
-/plugin install multi-model-review
 /plugin install channel-artifact
 /plugin install humanitys-last-prompt-engineer
+/plugin install improve-system
+/plugin install arjancodes-playbook
 ```
 
 ### Install everything at once
@@ -44,9 +45,10 @@
 | `kpi-checklists` | Define, align, and implement KPIs from strategy through dashboard go-live |
 | `skill-finder` | Discover and activate the right Claude Code skill for any task |
 | `skill-curator` | Audit, improve, and maintain Claude Code skill libraries |
-| `multi-model-review` | Cross-model code review using multiple LLM providers for independent perspectives |
 | `channel-artifact` | Create shareable Claude Code channel artifacts with live web UIs |
 | `humanitys-last-prompt-engineer` | Advanced prompt engineering techniques, role templates, and scoring frameworks |
+| `improve-system` | Review your setup, capture learnings, audit for rot, recap sessions |
+| `arjancodes-playbook` | Pythonic design patterns, clean architecture, typing/idioms, and testing practices |
 
 ---
 
@@ -55,7 +57,7 @@
 ```
 skills/
 ├── .claude-plugin/
-│   ├── marketplace.json   ← lists all 8 plugins
+│   ├── marketplace.json   ← lists all 9 plugins
 │   └── plugin.json        ← flat install fallback
 └── skills/
     ├── writing-dax-measures/
@@ -63,9 +65,10 @@ skills/
     ├── kpi-checklists/
     ├── skill-finder/
     ├── skill-curator/
-    ├── multi-model-review/
     ├── channel-artifact/
-    └── humanitys-last-prompt-engineer/
+    ├── humanitys-last-prompt-engineer/
+    ├── improve-system/
+    └── arjancodes-playbook/
 ```
 
 Each plugin is a self-contained directory with its own `plugin.json` and `skills/` folder.
