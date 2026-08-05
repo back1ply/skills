@@ -11,7 +11,7 @@
 ### Add the marketplace
 
 ```
-/plugin marketplace add back1ply/LLM-Skills
+/plugin marketplace add back1ply/skills
 ```
 
 ### Install individual plugins
@@ -53,7 +53,7 @@
 ## Structure
 
 ```
-LLM-Skills/
+skills/
 ├── .claude-plugin/
 │   ├── marketplace.json   ← lists all 8 plugins
 │   └── plugin.json        ← flat install fallback
