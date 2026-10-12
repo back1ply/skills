@@ -1,0 +1,17 @@
+{
+  "name": "data-storytelling",
+  "description": "Critique and build graphs, slides, and data presentations around audience, message, and story",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "data-visualization",
+    "storytelling",
+    "presentations",
+    "charts",
+    "bi"
+  ]
+}

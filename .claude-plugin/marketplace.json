@@ -5,7 +5,7 @@
     "name": "back1ply"
   },
   "metadata": {
-    "description": "Personal skill toolkit — DAX, data engineering, KPI, prompt engineering, Python architecture, and skill management",
+    "description": "Personal skill toolkit — DAX, data engineering, KPI, data storytelling, prompt engineering, Python architecture, and skill management",
     "pluginRoot": "./skills"
   },
   "plugins": [
@@ -71,6 +71,13 @@
       "source": "./skills/arjancodes-playbook",
       "license": "MIT",
       "keywords": ["python", "design-patterns", "clean-architecture", "solid", "typing", "fastapi", "mcp", "arjancodes"]
+    },
+    {
+      "name": "data-storytelling",
+      "description": "Critique and build graphs, slides, and data presentations around audience, message, and story",
+      "source": "./skills/data-storytelling",
+      "license": "MIT",
+      "keywords": ["data-visualization", "storytelling", "presentations", "charts", "bi"]
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Skills
 
-> Personal AI agent skill toolkit — 9 independently installable plugins.
+> Personal AI agent skill toolkit — 10 independently installable plugins.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -26,6 +26,7 @@ Add the marketplace, then install the plugins you want:
 /plugin install humanitys-last-prompt-engineer
 /plugin install improve-system
 /plugin install arjancodes-playbook
+/plugin install data-storytelling
 ```
 
 ### skills.sh
@@ -51,6 +52,7 @@ Add `-g` to install globally, or `-a claude-code` to target a specific agent.
 | `humanitys-last-prompt-engineer` | Advanced prompt engineering techniques, role templates, and scoring frameworks |
 | `improve-system` | Review your setup, capture learnings, audit for rot, recap sessions |
 | `arjancodes-playbook` | Pythonic design patterns, clean architecture, typing/idioms, and testing practices |
+| `data-storytelling` | Critique and build graphs, slides, and data presentations around audience, message, and story |
 
 ---
 
@@ -59,7 +61,7 @@ Add `-g` to install globally, or `-a claude-code` to target a specific agent.
 ```
 skills/
 ├── .claude-plugin/
-│   ├── marketplace.json   ← lists all 9 plugins
+│   ├── marketplace.json   ← lists all 10 plugins
 │   └── plugin.json        ← flat install fallback
 └── skills/
     ├── writing-dax-measures/
@@ -70,7 +72,8 @@ skills/
     ├── channel-artifact/
     ├── humanitys-last-prompt-engineer/
     ├── improve-system/
-    └── arjancodes-playbook/
+    ├── arjancodes-playbook/
+    └── data-storytelling/
 ```
 
 Each plugin is a self-contained directory with its own `plugin.json` and `skills/` folder.
