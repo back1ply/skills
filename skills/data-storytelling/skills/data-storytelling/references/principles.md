@@ -1,6 +1,6 @@
 # Principles in depth
 
-Paraphrased from the *SWD + AI Primer* (storytelling with data). Read this when a critique or story plan needs more than the checklist in `SKILL.md`.
+Paraphrased from the [*SWD + AI Primer*](https://mcusercontent.com/1935cba500dc540165456f7dd/files/6507f9da-3916-4e17-ee04-f5a7152fd18d/SWD_AI_PRIMER.01.pdf) (storytelling with data). Read this when a critique or story plan needs more than the checklist in `SKILL.md`.
 
 ## Choosing a graph
 

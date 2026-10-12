@@ -5,7 +5,7 @@ description: This skill should be used when the user asks to "review my chart", 
 
 # Data Storytelling
 
-> **Source**: Principles distilled from the free *SWD + AI Primer* by storytelling with data, which excerpts *storytelling with data: before & after* (Wiley, 2025). Paraphrased; see [storytellingwithdata.com/ai](https://storytellingwithdata.com/ai) for the original.
+> **Source**: Principles distilled from the free [*SWD + AI Primer*](https://mcusercontent.com/1935cba500dc540165456f7dd/files/6507f9da-3916-4e17-ee04-f5a7152fd18d/SWD_AI_PRIMER.01.pdf) by storytelling with data, which excerpts *storytelling with data: before & after* (Wiley, 2025). Paraphrased; see [storytellingwithdata.com/ai](https://storytellingwithdata.com/ai) for the original.
 
 Use this when helping someone **explain** data to other people: graphs, slides, decks, dashboard pages, reports. It is about whether a visual communicates, not how to code it. Pair it with a charting or styling skill for implementation.
 
