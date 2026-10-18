@@ -1,0 +1,17 @@
+{
+  "name": "quality-pass",
+  "description": "One command for a code-quality pass: routes changed files to the best installed review skill (test-guard, clean-code-guard, docs-guard, writing-dax-measures and more), with built-in fallbacks and modes for TDD, architecture, duplicates, performance and reverse engineering",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "code-quality",
+    "code-review",
+    "tdd",
+    "refactoring",
+    "router"
+  ]
+}

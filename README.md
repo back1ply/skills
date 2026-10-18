@@ -1,6 +1,6 @@
 # Skills
 
-> Personal AI agent skill toolkit — 10 independently installable plugins.
+> Personal AI agent skill toolkit — 11 independently installable plugins.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -27,6 +27,7 @@ Add the marketplace, then install the plugins you want:
 /plugin install improve-system
 /plugin install arjancodes-playbook
 /plugin install data-storytelling
+/plugin install quality-pass
 ```
 
 ### skills.sh
@@ -53,6 +54,7 @@ Add `-g` to install globally, or `-a claude-code` to target a specific agent.
 | `improve-system` | Review your setup, capture learnings, audit for rot, recap sessions |
 | `arjancodes-playbook` | Pythonic design patterns, clean architecture, typing/idioms, and testing practices |
 | `data-storytelling` | Critique and build graphs, slides, and data presentations around audience, message, and story |
+| `quality-pass` | One-command code-quality pass: routes changed files to the best installed review skill, with built-in fallbacks |
 
 ---
 
@@ -61,7 +63,7 @@ Add `-g` to install globally, or `-a claude-code` to target a specific agent.
 ```
 skills/
 ├── .claude-plugin/
-│   ├── marketplace.json   ← lists all 10 plugins
+│   ├── marketplace.json   ← lists all 11 plugins
 │   └── plugin.json        ← flat install fallback
 └── skills/
     ├── writing-dax-measures/
@@ -73,10 +75,22 @@ skills/
     ├── humanitys-last-prompt-engineer/
     ├── improve-system/
     ├── arjancodes-playbook/
-    └── data-storytelling/
+    ├── data-storytelling/
+    └── quality-pass/
 ```
 
 Each plugin is a self-contained directory with its own `plugin.json` and `skills/` folder.
+
+### quality-pass: works best with
+
+`quality-pass` is a router. It runs on its own with built-in checks, and gets better with these installed:
+
+```
+npx skills add amElnagdy/guard-skills -g        # test-guard, clean-code-guard, docs-guard
+/plugin install mattpocock-skills@claude-plugins-official   # tdd, codebase-design, improve-codebase-architecture
+```
+
+The full list is in its `SKILL.md`. Installed as a plugin, the command is `/quality-pass:quality-pass`; installed with skills.sh, it is `/quality-pass`.
 
 ---
 

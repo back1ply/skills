@@ -78,6 +78,13 @@
       "source": "./skills/data-storytelling",
       "license": "MIT",
       "keywords": ["data-visualization", "storytelling", "presentations", "charts", "bi"]
+    },
+    {
+      "name": "quality-pass",
+      "description": "One-command code-quality pass that routes changed files to the best installed review skill, with built-in fallbacks",
+      "source": "./skills/quality-pass",
+      "license": "MIT",
+      "keywords": ["code-quality", "code-review", "tdd", "refactoring", "router"]
     }
   ]
 }
