@@ -1,0 +1,17 @@
+{
+  "name": "youtube-to-skill",
+  "description": "Turn YouTube videos, playlists or channels into reusable agent skills, or answer questions about a video",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "youtube",
+    "transcripts",
+    "playlist",
+    "meta"
+  ]
+}

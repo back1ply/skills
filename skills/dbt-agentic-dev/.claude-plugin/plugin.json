@@ -1,0 +1,17 @@
+{
+  "name": "dbt-agentic-dev",
+  "description": "Design and review AI-agent workflows that write, test and ship dbt models, prompt to validated PR (dbt Summit 2026 patterns)",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "dbt",
+    "ai-agents",
+    "agentic-sdlc",
+    "mcp",
+    "analytics-engineering"
+  ]
+}

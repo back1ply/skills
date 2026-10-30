@@ -1,11 +1,11 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "llm-skills",
+  "name": "skills",
   "owner": {
     "name": "back1ply"
   },
   "metadata": {
-    "description": "Personal skill toolkit — DAX, data engineering, KPI, data storytelling, prompt engineering, Python architecture, and skill management",
+    "description": "Personal skill toolkit: DAX, data engineering, KPI, data storytelling, prompt engineering, Python architecture, skill management, YouTube/article-to-skill converters and the skills made with them (dbt, MCP security, SaaS strategy, server capacity, SQL indexing)",
     "pluginRoot": "./skills"
   },
   "plugins": [
@@ -14,77 +14,260 @@
       "description": "Write, review, and debug DAX measures in Power BI and Analysis Services",
       "source": "./skills/writing-dax-measures",
       "license": "MIT",
-      "keywords": ["dax", "power-bi", "measures", "data-modeling"]
+      "keywords": [
+        "dax",
+        "power-bi",
+        "measures",
+        "data-modeling"
+      ]
     },
     {
       "name": "etl-pipeline-design",
       "description": "Design, evaluate, and troubleshoot ETL/ELT data pipeline architectures",
       "source": "./skills/etl-pipeline-design",
       "license": "MIT",
-      "keywords": ["etl", "elt", "data-engineering", "pipelines", "orchestration"]
+      "keywords": [
+        "etl",
+        "elt",
+        "data-engineering",
+        "pipelines",
+        "orchestration"
+      ]
     },
     {
       "name": "kpi-checklists",
       "description": "Define, align, and implement KPIs from strategy through dashboard go-live",
       "source": "./skills/kpi-checklists",
       "license": "MIT",
-      "keywords": ["kpi", "analytics", "bi", "dashboard", "metrics"]
+      "keywords": [
+        "kpi",
+        "analytics",
+        "bi",
+        "dashboard",
+        "metrics"
+      ]
     },
     {
       "name": "skill-finder",
       "description": "Discover and activate the right Claude Code skill for any task",
       "source": "./skills/skill-finder",
       "license": "MIT",
-      "keywords": ["skills", "discovery", "meta", "claude-code"]
+      "keywords": [
+        "skills",
+        "discovery",
+        "meta",
+        "claude-code"
+      ]
     },
     {
       "name": "skill-curator",
       "description": "Audit, improve, and maintain Claude Code skill libraries",
       "source": "./skills/skill-curator",
       "license": "MIT",
-      "keywords": ["skills", "curation", "meta", "claude-code", "quality"]
+      "keywords": [
+        "skills",
+        "curation",
+        "meta",
+        "claude-code",
+        "quality"
+      ]
     },
     {
       "name": "channel-artifact",
       "description": "Create shareable Claude Code channel artifacts with live web UIs",
       "source": "./skills/channel-artifact",
       "license": "MIT",
-      "keywords": ["artifacts", "web-ui", "sharing", "claude-code", "channel"]
+      "keywords": [
+        "artifacts",
+        "web-ui",
+        "sharing",
+        "claude-code",
+        "channel"
+      ]
     },
     {
       "name": "humanitys-last-prompt-engineer",
       "description": "Advanced prompt engineering techniques, role templates, and scoring frameworks",
       "source": "./skills/humanitys-last-prompt-engineer",
       "license": "MIT",
-      "keywords": ["prompt-engineering", "llm", "ai", "techniques", "templates"]
+      "keywords": [
+        "prompt-engineering",
+        "llm",
+        "ai",
+        "techniques",
+        "templates"
+      ]
     },
     {
       "name": "improve-system",
       "description": "Keep your system sharp. Reviews your setup, captures learnings, audits for rot, recaps your sessions.",
       "source": "./skills/improve-system",
       "license": "MIT",
-      "keywords": ["productivity", "system", "audit", "claude-code"]
+      "keywords": [
+        "productivity",
+        "system",
+        "audit",
+        "claude-code"
+      ]
     },
     {
       "name": "arjancodes-playbook",
       "description": "Pythonic design patterns, clean architecture, typing/idioms, AI agent engineering, API/data persistence, and testing practices distilled from ArjanCodes' example repo",
       "source": "./skills/arjancodes-playbook",
       "license": "MIT",
-      "keywords": ["python", "design-patterns", "clean-architecture", "solid", "typing", "fastapi", "mcp", "arjancodes"]
+      "keywords": [
+        "python",
+        "design-patterns",
+        "clean-architecture",
+        "solid",
+        "typing",
+        "fastapi",
+        "mcp",
+        "arjancodes"
+      ]
     },
     {
       "name": "data-storytelling",
       "description": "Critique and build graphs, slides, and data presentations around audience, message, and story",
       "source": "./skills/data-storytelling",
       "license": "MIT",
-      "keywords": ["data-visualization", "storytelling", "presentations", "charts", "bi"]
+      "keywords": [
+        "data-visualization",
+        "storytelling",
+        "presentations",
+        "charts",
+        "bi"
+      ]
     },
     {
       "name": "quality-pass",
       "description": "One-command code-quality pass that routes changed files to the best installed review skill, with built-in fallbacks",
       "source": "./skills/quality-pass",
       "license": "MIT",
-      "keywords": ["code-quality", "code-review", "tdd", "refactoring", "router"]
+      "keywords": [
+        "code-quality",
+        "code-review",
+        "tdd",
+        "refactoring",
+        "router"
+      ]
+    },
+    {
+      "name": "youtube-to-skill",
+      "description": "Turn YouTube videos, playlists or channels into reusable agent skills, or answer questions about a video",
+      "source": "./skills/youtube-to-skill",
+      "license": "MIT",
+      "keywords": [
+        "skills",
+        "youtube",
+        "transcripts",
+        "playlist",
+        "meta"
+      ]
+    },
+    {
+      "name": "article-to-skill",
+      "description": "Turn web articles, blog posts, docs pages and whole blogs into reusable agent skills, or answer questions about an article",
+      "source": "./skills/article-to-skill",
+      "license": "MIT",
+      "keywords": [
+        "skills",
+        "articles",
+        "blogs",
+        "web",
+        "meta"
+      ]
+    },
+    {
+      "name": "dbt-agent-context",
+      "description": "Design the business context AI agents need to answer questions over a dbt project correctly (dbt Summit 2026 patterns)",
+      "source": "./skills/dbt-agent-context",
+      "license": "MIT",
+      "keywords": [
+        "dbt",
+        "semantic-layer",
+        "context-engineering",
+        "text-to-sql",
+        "ai-agents"
+      ]
+    },
+    {
+      "name": "dbt-agentic-dev",
+      "description": "Design and review AI-agent workflows that write, test and ship dbt models, prompt to validated PR (dbt Summit 2026 patterns)",
+      "source": "./skills/dbt-agentic-dev",
+      "license": "MIT",
+      "keywords": [
+        "dbt",
+        "ai-agents",
+        "agentic-sdlc",
+        "mcp",
+        "analytics-engineering"
+      ]
+    },
+    {
+      "name": "dbt-compute-cost",
+      "description": "Cut dbt warehouse spend and run time with dbt State, right-sizing and v2 dev tooling (dbt Summit 2026 results)",
+      "source": "./skills/dbt-compute-cost",
+      "license": "MIT",
+      "keywords": [
+        "dbt",
+        "dbt-state",
+        "warehouse-cost",
+        "snowflake",
+        "performance"
+      ]
+    },
+    {
+      "name": "mcp-security",
+      "description": "Review and harden MCP servers, clients and agent tool setups with the lethal trifecta and OWASP MCP Top 10",
+      "source": "./skills/mcp-security",
+      "license": "MIT",
+      "keywords": [
+        "mcp",
+        "security",
+        "prompt-injection",
+        "owasp",
+        "ai-agents"
+      ]
+    },
+    {
+      "name": "saas-ai-moats",
+      "description": "Score how well a SaaS business can survive AI: 10 AI attacks and the 8 moats that still work",
+      "source": "./skills/saas-ai-moats",
+      "license": "MIT",
+      "keywords": [
+        "saas",
+        "strategy",
+        "moats",
+        "ai",
+        "due-diligence"
+      ]
+    },
+    {
+      "name": "server-capacity-tuning",
+      "description": "Find what limits a small server's user capacity and pick the optimizations that raise it ($12 Server Challenge results)",
+      "source": "./skills/server-capacity-tuning",
+      "license": "MIT",
+      "keywords": [
+        "performance",
+        "load-testing",
+        "capacity-planning",
+        "sqlite",
+        "linux"
+      ]
+    },
+    {
+      "name": "sqlserver-postgres-indexing",
+      "description": "Diagnose slow queries and design indexes on SQL Server and PostgreSQL by thinking like the engine",
+      "source": "./skills/sqlserver-postgres-indexing",
+      "license": "MIT",
+      "keywords": [
+        "sql-server",
+        "postgresql",
+        "indexing",
+        "query-tuning",
+        "execution-plans"
+      ]
     }
   ]
 }

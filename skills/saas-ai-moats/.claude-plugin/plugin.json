@@ -1,0 +1,17 @@
+{
+  "name": "saas-ai-moats",
+  "description": "Score how well a SaaS business can survive AI: 10 AI attacks and the 8 moats that still work",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "saas",
+    "strategy",
+    "moats",
+    "ai",
+    "due-diligence"
+  ]
+}

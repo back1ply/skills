@@ -1,0 +1,17 @@
+{
+  "name": "dbt-compute-cost",
+  "description": "Cut dbt warehouse spend and run time with dbt State, right-sizing and v2 dev tooling (dbt Summit 2026 results)",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "dbt",
+    "dbt-state",
+    "warehouse-cost",
+    "snowflake",
+    "performance"
+  ]
+}

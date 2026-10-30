@@ -1,0 +1,17 @@
+{
+  "name": "server-capacity-tuning",
+  "description": "Find what limits a small server's user capacity and pick the optimizations that raise it ($12 Server Challenge results)",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "performance",
+    "load-testing",
+    "capacity-planning",
+    "sqlite",
+    "linux"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "article-to-skill",
+  "description": "Turn web articles, blog posts, docs pages and whole blogs into reusable agent skills, or answer questions about an article",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "articles",
+    "blogs",
+    "web",
+    "meta"
+  ]
+}

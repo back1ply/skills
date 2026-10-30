@@ -1,0 +1,17 @@
+{
+  "name": "sqlserver-postgres-indexing",
+  "description": "Diagnose slow queries and design indexes on SQL Server and PostgreSQL by thinking like the engine",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "sql-server",
+    "postgresql",
+    "indexing",
+    "query-tuning",
+    "execution-plans"
+  ]
+}

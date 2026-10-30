@@ -1,0 +1,17 @@
+{
+  "name": "dbt-agent-context",
+  "description": "Design the business context AI agents need to answer questions over a dbt project correctly (dbt Summit 2026 patterns)",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "dbt",
+    "semantic-layer",
+    "context-engineering",
+    "text-to-sql",
+    "ai-agents"
+  ]
+}
