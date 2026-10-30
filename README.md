@@ -1,6 +1,6 @@
 # Skills
 
-> Personal AI agent skill toolkit — 20 independently installable plugins.
+> Personal AI agent skill toolkit — 21 independently installable plugins.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -37,6 +37,7 @@ Add the marketplace, then install the plugins you want:
 /plugin install saas-ai-moats
 /plugin install server-capacity-tuning
 /plugin install sqlserver-postgres-indexing
+/plugin install agentic-debugging
 ```
 
 ### skills.sh
@@ -90,39 +91,38 @@ Built with `article-to-skill`. Article text is kept in `data/articles/<id>.json`
 <!-- articles:start -->
 | Skill | What it does | Sources |
 |---|---|---|
+| `agentic-debugging` | Debugs code nobody on hand fully understands (agent-written, unfamiliar, or too large to read) by treating the bug as a constraint satisfaction problem, using Cindy Sridharan's two-tier framework (facts vs hypotheses), a control vs variable comparison, a hypotheses-by-fact matrix, progressive signal discovery, and elimination-only adversarial review. | [How to effectively debug when you no longer understand the code](https://copyconstruct.medium.com/how-to-effectively-debug-when-you-no-longer-understand-the-code-bd3dcb2c5f7b) |
 | `server-capacity-tuning` | Finds what limits how many users a single small server can handle (CPU, memory, file descriptors, disk sync, or the load generator itself) and picks the optimizations that raise it, using results from the $12 Server Challenge (about 30 web servers on 1 vCPU / 2 GB with SQLite). | [Challenge repo, batch-2 report](https://github.com/arjaythedev/twelve-dollar-server-challenge/blob/main/benchmarks/batch-2.md) |
 <!-- articles:end -->
 
 ---
 
-## Structure
+## Repo map
+
+Why `skills` appears three times in a path like `skills/mcp-security/skills/mcp-security/SKILL.md`:
 
 ```
-skills/
+skills/                              <- this repo (marketplace "skills")
 ├── .claude-plugin/
-│   ├── marketplace.json   ← lists all 20 plugins
-│   └── plugin.json        ← flat install fallback
-├── data/
-│   ├── raw/               ← YouTube transcripts behind the video skills
-│   └── articles/          ← article text behind the article skills
-└── skills/
-    ├── writing-dax-measures/
-    ├── etl-pipeline-design/
-    ├── kpi-checklists/
-    ├── skill-finder/
-    ├── skill-curator/
-    ├── channel-artifact/
-    ├── humanitys-last-prompt-engineer/
-    ├── improve-system/
-    ├── arjancodes-playbook/
-    ├── data-storytelling/
-    ├── quality-pass/
-    ├── youtube-to-skill/
-    ├── article-to-skill/
-    └── <skills made with them>/
+│   ├── marketplace.json             <- the catalog: one entry per plugin (what /plugin install reads)
+│   └── plugin.json                  <- the repo as one plugin (fallback; not normally used)
+├── skills/                          <- all plugins live here
+│   └── <plugin>/                    <- one installable plugin, e.g. mcp-security
+│       ├── .claude-plugin/plugin.json   <- that plugin's name, description, keywords
+│       └── skills/                  <- Claude Code requires this folder name inside a plugin
+│           └── <skill>/             <- the skill itself (usually same name as the plugin)
+│               ├── SKILL.md         <- what Claude loads
+│               ├── references/      <- detail files SKILL.md links to, loaded on demand
+│               └── scripts/         <- helper scripts (youtube-to-skill, article-to-skill)
+└── data/                            <- source text behind generated skills; never installed
+    ├── raw/<video-id>.json          <- YouTube transcripts (used by youtube-to-skill's sources.py)
+    └── articles/<site_path_hash>.json  <- web articles (used by article-to-skill's sources.py)
 ```
 
-Each plugin is a self-contained directory with its own `plugin.json` and `skills/` folder.
+- **Adding a skill** = a new `skills/<plugin>/` folder with both `plugin.json` and `skills/<name>/SKILL.md`, plus an entry in `marketplace.json` and an install line in this README.
+- **skills.sh** (`npx skills add back1ply/skills`) ignores the plugin layer and finds every `SKILL.md`.
+- **Exception:** `arjancodes-playbook` holds a skill named `design-patterns-pythonic`.
+- Everything else at the repo root (PDFs, notes) is local-only: `.gitignore` ignores all files by default and lists what is published.
 
 ### quality-pass: works best with
 

@@ -11,13 +11,10 @@
 !.claude-plugin/
 !.claude-plugin/**
 
-# All skills (legacy root — being phased out)
+# All plugins
 !skills/
 !skills/**
-
-# All skills (monorepo structure)
-!skills/
-!skills/**
+# Unpublished local plugins
 skills/plugins/
 
 # Source text behind generated skills (repo root only, not shipped with plugins)
@@ -31,3 +28,4 @@ skills/plugins/
 !docs/
 !docs/**
 __pycache__/
+.ruff_cache/

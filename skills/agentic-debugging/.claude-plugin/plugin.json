@@ -1,0 +1,17 @@
+{
+  "name": "agentic-debugging",
+  "description": "Debug code you no longer understand with an agent: facts vs hypotheses, controls, hypotheses-by-fact matrix, progressive signal discovery (Cindy Sridharan's framework)",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "debugging",
+    "root-cause",
+    "ai-agents",
+    "observability",
+    "incident-response"
+  ]
+}

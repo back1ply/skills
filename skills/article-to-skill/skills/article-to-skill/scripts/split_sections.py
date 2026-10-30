@@ -8,7 +8,7 @@ Usage: uv run split_sections.py data/articles/<id>.json [--level 2] [--window 15
   -> data/sections/<id>/info.md + NN-<slug>.md
 
 Splits at headings of --level (## by default; falls back to ### if there are none, then to
---window-word parts). Sections shorter than --min-words are merged into the one before.
+--window-word parts). A section over 2x --window words is split again at the next heading level. Sections shorter than --min-words are merged into the one before.
 Each section starts with `Cite: <url>#<anchor>`: the page's own heading id when known, else a
 text fragment (#:~:text=...) that Chrome, Edge and Safari scroll to.
 """
@@ -66,11 +66,25 @@ def split_window(lines: list[str], window: int) -> list[tuple[str, list[str]]]:
 def merge_small(parts: list[tuple[str, list[str]]], min_words: int) -> list[tuple[str, list[str]]]:
     merged: list[tuple[str, list[str]]] = []
     for heading, body in parts:
-        if merged and len(" ".join(merged[-1][1]).split()) < min_words:
+        small = (lambda lines: len(" ".join(lines).split()) < min_words)
+        if merged and (small(merged[-1][1]) or small(body)):
             prev_heading, prev_body = merged.pop()
             heading, body = prev_heading or heading, prev_body + body
         merged.append((heading, body))
     return merged
+
+
+def split_large(parts: list[tuple[str, list[str]]], level: int, window: int, min_words: int) -> list[tuple[str, list[str]]]:
+    """Split sections longer than 2x --window again at the next heading level."""
+    out = []
+    for heading, body in parts:
+        sub = split_at(body, level + 1) if len(" ".join(body).split()) > 2 * window else []
+        if sum(1 for h, _ in sub if h) >= 2:
+            first_heading, first_body = sub[0]
+            out += merge_small([(first_heading or heading, first_body), *sub[1:]], min_words)
+        else:
+            out.append((heading, body))
+    return out
 
 
 def sections(text: str, level: int, window: int, min_words: int) -> list[tuple[str, list[str]]]:
@@ -78,7 +92,7 @@ def sections(text: str, level: int, window: int, min_words: int) -> list[tuple[s
     for lvl in (level, level + 1):
         parts = split_at(lines, lvl)
         if sum(1 for h, _ in parts if h) >= 2:
-            return merge_small(parts, min_words)
+            return split_large(merge_small(parts, min_words), lvl, window, min_words)
     return split_window(lines, window)
 
 

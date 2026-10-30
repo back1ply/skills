@@ -268,6 +268,19 @@
         "query-tuning",
         "execution-plans"
       ]
+    },
+    {
+      "name": "agentic-debugging",
+      "description": "Debug code you no longer understand with an agent: facts vs hypotheses, controls, hypotheses-by-fact matrix, progressive signal discovery (Cindy Sridharan's framework)",
+      "source": "./skills/agentic-debugging",
+      "license": "MIT",
+      "keywords": [
+        "debugging",
+        "root-cause",
+        "ai-agents",
+        "observability",
+        "incident-response"
+      ]
     }
   ]
 }
