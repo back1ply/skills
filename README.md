@@ -1,6 +1,6 @@
 # Skills
 
-> Personal AI agent skill toolkit — 21 independently installable plugins.
+> Personal AI agent skill toolkit — 22 independently installable plugins.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -38,6 +38,7 @@ Add the marketplace, then install the plugins you want:
 /plugin install server-capacity-tuning
 /plugin install sqlserver-postgres-indexing
 /plugin install agentic-debugging
+/plugin install agentic-review-loop
 ```
 
 ### skills.sh
@@ -92,6 +93,7 @@ Built with `article-to-skill`. Article text is kept in `data/articles/<id>.json`
 | Skill | What it does | Sources |
 |---|---|---|
 | `agentic-debugging` | Debugs code nobody on hand fully understands (agent-written, unfamiliar, or too large to read) by treating the bug as a constraint satisfaction problem, using Cindy Sridharan's two-tier framework (facts vs hypotheses), a control vs variable comparison, a hypotheses-by-fact matrix, progressive signal discovery, and elimination-only adversarial review. | [How to effectively debug when you no longer understand the code](https://copyconstruct.medium.com/how-to-effectively-debug-when-you-no-longer-understand-the-code-bd3dcb2c5f7b) |
+| `agentic-review-loop` | Sets up, runs and measures a team-wide AI code review loop where each developer fires their own review skill at pull requests, the author's agent answers every finding (fix, decline, refute), a human reviews last, and a scorecard rates each review skill on precision and depth, using Robin Wieruch's process and three weeks of numbers. | [Toward a Self-Improving Agentic Code Review Loop](https://www.robinwieruch.de/agentic-code-review-loop/) |
 | `server-capacity-tuning` | Finds what limits how many users a single small server can handle (CPU, memory, file descriptors, disk sync, or the load generator itself) and picks the optimizations that raise it, using results from the $12 Server Challenge (about 30 web servers on 1 vCPU / 2 GB with SQLite). | [Challenge repo, batch-2 report](https://github.com/arjaythedev/twelve-dollar-server-challenge/blob/main/benchmarks/batch-2.md) |
 <!-- articles:end -->
 

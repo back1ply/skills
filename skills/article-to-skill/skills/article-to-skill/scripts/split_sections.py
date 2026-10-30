@@ -4,11 +4,12 @@
 # ///
 """Split a fetched article into section files with a citation link on each.
 
-Usage: uv run split_sections.py data/articles/<id>.json [--level 2] [--window 1500] [--min-words 80]
+Usage: uv run split_sections.py data/articles/<id>.json [--level N] [--window 1500] [--min-words 80]
   -> data/sections/<id>/info.md + NN-<slug>.md
 
-Splits at headings of --level (## by default; falls back to ### if there are none, then to
---window-word parts). A section over 2x --window words is split again at the next heading level. Sections shorter than --min-words are merged into the one before.
+Splits at the shallowest heading level that occurs at least twice (so a lone '# title' is
+skipped, and sites that use '#' for sections still split), or at --level; with no repeated
+headings, into --window-word parts. A section over 2x --window words is split again at the next heading level. Sections shorter than --min-words are merged into the one before.
 Each section starts with `Cite: <url>#<anchor>`: the page's own heading id when known, else a
 text fragment (#:~:text=...) that Chrome, Edge and Safari scroll to.
 """
@@ -87,9 +88,9 @@ def split_large(parts: list[tuple[str, list[str]]], level: int, window: int, min
     return out
 
 
-def sections(text: str, level: int, window: int, min_words: int) -> list[tuple[str, list[str]]]:
+def sections(text: str, level: int | None, window: int, min_words: int) -> list[tuple[str, list[str]]]:
     lines = text.splitlines()
-    for lvl in (level, level + 1):
+    for lvl in ([level] if level else [1, 2, 3, 4]):
         parts = split_at(lines, lvl)
         if sum(1 for h, _ in parts if h) >= 2:
             return split_large(merge_small(parts, min_words), lvl, window, min_words)
@@ -112,7 +113,7 @@ def info_md(rec: dict, parts: list[tuple[str, str, int]]) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("article", type=Path)
-    parser.add_argument("--level", type=int, default=2)
+    parser.add_argument("--level", type=int, help="heading level to split at (default: shallowest level used 2+ times)")
     parser.add_argument("--window", type=int, default=1500)
     parser.add_argument("--min-words", type=int, default=80)
     args = parser.parse_args()

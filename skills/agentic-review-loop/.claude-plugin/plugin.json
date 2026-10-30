@@ -1,0 +1,17 @@
+{
+  "name": "agentic-review-loop",
+  "description": "Run and measure a team AI code review loop: personal review skills, the author's agent answers every finding, human reviews last, a precision/depth scorecard rates each reviewer (Robin Wieruch's process)",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "ai-agents",
+    "pull-requests",
+    "metrics",
+    "software-factory"
+  ]
+}

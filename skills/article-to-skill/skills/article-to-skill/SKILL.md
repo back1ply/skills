@@ -27,7 +27,7 @@ uv run S/scripts/fetch_article.py <urls...> [--list data/lists/<site>.tsv]  # ->
 #   --refresh   --delay 1   --min-words 150   --from-file page.md --url <original url>
 uv run S/scripts/catalog.py [--list data/lists/<site>.tsv]       # -> data/catalog.md triage table
 uv run S/scripts/split_sections.py data/articles/<id>.json       # -> data/sections/<id>/info.md + NN-*.md
-#   --level 2 (split at ##)   --window 1500 (words, no-heading pages)   --min-words 80
+#   --level N (default: shallowest heading level used 2+ times)   --window 1500   --min-words 80
 uv run S/scripts/scan_skill.py <dir or file> [--allow a.com,b.dev]  # planted-instruction scan; FAIL = stop
 uv run S/scripts/sources.py [--skills skills] [--readme README.md] [--marker articles]  # article <-> skill map
 ```

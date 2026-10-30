@@ -281,6 +281,19 @@
         "observability",
         "incident-response"
       ]
+    },
+    {
+      "name": "agentic-review-loop",
+      "description": "Run and measure a team AI code review loop: personal review skills, the author's agent answers every finding, human reviews last, a precision/depth scorecard rates each reviewer (Robin Wieruch's process)",
+      "source": "./skills/agentic-review-loop",
+      "license": "MIT",
+      "keywords": [
+        "code-review",
+        "ai-agents",
+        "pull-requests",
+        "metrics",
+        "software-factory"
+      ]
     }
   ]
 }
