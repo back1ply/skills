@@ -310,6 +310,20 @@
         "metrics",
         "software-factory"
       ]
+    },
+    {
+      "name": "agent-orchestration-checklist",
+      "description": "Hand big coding tasks to an orchestrator agent and judge the result without reading every line: decide what not to build, sandbox agents, self-verification, deterministic reports, ownership (Maximilian Schwarzmüller)",
+      "source": "./skills/agent-orchestration-checklist",
+      "license": "MIT",
+      "keywords": [
+        "agents",
+        "orchestration",
+        "claude-code",
+        "codex",
+        "verification",
+        "ai-workflow"
+      ]
     }
   ]
 }
