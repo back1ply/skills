@@ -257,6 +257,22 @@
       ]
     },
     {
+      "name": "go-observability",
+      "description": "Review and build Go observability: slog logging, log-once errors, log security, Prometheus/Grafana metrics and alerts, pprof, OpenTelemetry tracing (Boot.dev course by Jonathan Hall)",
+      "source": "./skills/go-observability",
+      "license": "MIT",
+      "keywords": [
+        "go",
+        "logging",
+        "slog",
+        "observability",
+        "prometheus",
+        "grafana",
+        "pprof",
+        "opentelemetry"
+      ]
+    },
+    {
       "name": "sqlserver-postgres-indexing",
       "description": "Diagnose slow queries and design indexes on SQL Server and PostgreSQL by thinking like the engine",
       "source": "./skills/sqlserver-postgres-indexing",
