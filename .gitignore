@@ -29,3 +29,12 @@ skills/plugins/
 !docs/**
 __pycache__/
 .ruff_cache/
+# impatient-programming: full site mirror written by tools/refresh.sh (copyrighted, never commit)
+skills/impatient-programming/_source/
+# designite-skills test samples: build output and analysis results
+skills/designite-skills/dev/samples/**/bin/
+skills/designite-skills/dev/samples/**/obj/
+skills/designite-skills/dev/samples/**/.designite/
+*.sarif
+.mypy_cache/
+.venv/

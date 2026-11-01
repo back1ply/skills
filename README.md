@@ -1,6 +1,6 @@
 # Skills
 
-> Personal AI agent skill toolkit — 24 independently installable plugins.
+> Personal AI agent skill toolkit — 26 independently installable plugins.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -41,6 +41,8 @@ Add the marketplace, then install the plugins you want:
 /plugin install agentic-debugging
 /plugin install agentic-review-loop
 /plugin install agent-orchestration-checklist
+/plugin install impatient-programming
+/plugin install designite-skills
 ```
 
 ### skills.sh
@@ -70,6 +72,8 @@ Add `-g` to install globally, or `-a claude-code` to target a specific agent.
 | `quality-pass` | One-command code-quality pass: routes changed files to the best installed review skill, with built-in fallbacks |
 | `youtube-to-skill` | Turn YouTube videos, playlists or channels into skills, or answer questions about a video |
 | `article-to-skill` | Turn web articles, blog posts, docs pages and whole blogs into skills, or answer questions about an article |
+| `impatient-programming` | Work the Impatient Programming way: XP's 29 rules rewritten for teams building with coding agents (CC BY 4.0, see its [README](skills/impatient-programming/README.md)) |
+| `designite-skills` | Designite-style code smell analysis for Java, C# and Python with open-source tools (`designite-java`, `designite-csharp`, `designite-python`; see its [README](skills/designite-skills/README.md)) |
 
 ### Made from videos
 
@@ -127,7 +131,7 @@ skills/                              <- this repo (marketplace "skills")
 
 - **Adding a skill** = a new `skills/<plugin>/` folder with both `plugin.json` and `skills/<name>/SKILL.md`, plus an entry in `marketplace.json` and an install line in this README.
 - **skills.sh** (`npx skills add back1ply/skills`) ignores the plugin layer and finds every `SKILL.md`.
-- **Exception:** `arjancodes-playbook` holds a skill named `design-patterns-pythonic`.
+- **Exceptions:** `arjancodes-playbook` holds a skill named `design-patterns-pythonic`; `designite-skills` holds three skills (`designite-java`, `designite-csharp`, `designite-python`) plus test samples in `dev/`; `impatient-programming` has its own CC BY 4.0 `LICENSE`, a `NOTICE.md`, and maintenance scripts in `tools/`.
 - Everything else at the repo root (PDFs, notes) is local-only: `.gitignore` ignores all files by default and lists what is published.
 
 ### quality-pass: works best with
@@ -145,4 +149,4 @@ The full list is in its `SKILL.md`. Installed as a plugin, the command is `/qual
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE), except `impatient-programming`, which is CC BY 4.0 (see its [LICENSE](skills/impatient-programming/LICENSE) and [NOTICE](skills/impatient-programming/NOTICE.md)).

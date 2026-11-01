@@ -1,0 +1,18 @@
+{
+  "name": "designite-skills",
+  "description": "Designite-style code smell analysis for Java, C# and Python using open-source tools plus Claude's judgment, with Designite's published thresholds",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "code-smells",
+    "technical-debt",
+    "designite",
+    "java",
+    "csharp",
+    "python"
+  ]
+}

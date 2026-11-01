@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!-- PMD 7 ruleset that approximates DesigniteJava's design, implementation,
+     testability and test smells. Thresholds follow DesigniteJava's defaults
+     (ThresholdsDTO.java). See references/catalog.md for the mapping. -->
+<ruleset name="designite-proxy"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+  <description>Designite proxy rules</description>
+
+  <!-- Implementation smells -->
+  <rule ref="category/java/design.xml/CyclomaticComplexity">
+    <properties>
+      <property name="methodReportLevel" value="8"/>   <!-- Complex Method: CC >= 8 -->
+      <property name="classReportLevel" value="100"/>  <!-- Insufficient Modularization: WMC >= 100 -->
+    </properties>
+  </rule>
+  <rule ref="category/java/design.xml/ExcessiveParameterList">
+    <properties><property name="minimum" value="5"/></properties>  <!-- Long Parameter List -->
+  </rule>
+  <rule ref="category/java/codestyle.xml/LongVariable">
+    <properties><property name="minimum" value="30"/></properties>  <!-- Long Identifier -->
+  </rule>
+  <rule ref="category/java/errorprone.xml/EmptyCatchBlock"/>
+  <rule ref="category/java/bestpractices.xml/NonExhaustiveSwitch"/>  <!-- Missing Default -->
+  <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod"/>  <!-- Abstract Function Call From Constructor -->
+  <rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition"/>  <!-- Magic Number (in conditions only) -->
+
+  <!-- Design smells -->
+  <rule ref="category/java/design.xml/GodClass"/>    <!-- Insufficient Modularization / Multifaceted Abstraction -->
+  <rule ref="category/java/design.xml/DataClass"/>   <!-- Broken Modularization -->
+  <rule ref="category/java/design.xml/TooManyMethods">
+    <properties><property name="maxmethods" value="29"/></properties>  <!-- Insufficient Modularization: NOM >= 30 -->
+  </rule>
+  <rule ref="category/java/design.xml/ExcessivePublicCount">
+    <properties><property name="minimum" value="20"/></properties>  <!-- Insufficient Modularization: public interface -->
+  </rule>
+  <rule ref="category/java/design.xml/AbstractClassWithoutAnyMethod"/>  <!-- Unnecessary Abstraction -->
+
+  <!-- Testability smells -->
+  <rule ref="category/java/design.xml/MutableStaticState"/>             <!-- Global State -->
+  <rule ref="category/java/errorprone.xml/AssignmentToNonFinalStatic"/> <!-- Global State -->
+  <rule ref="category/java/design.xml/LawOfDemeter"/>                   <!-- Law of Demeter Violation (noisy) -->
+  <rule ref="category/java/design.xml/CouplingBetweenObjects">
+    <properties><property name="threshold" value="20"/></properties>    <!-- Excessive Dependency -->
+  </rule>
+
+  <!-- Test smells (TSDetect covers more; these work without it) -->
+  <rule ref="category/java/bestpractices.xml/UnitTestShouldIncludeAssert"/>          <!-- Unknown Test -->
+  <rule ref="category/java/bestpractices.xml/UnitTestAssertionsShouldIncludeMessage"/> <!-- Assertion Roulette -->
+</ruleset>

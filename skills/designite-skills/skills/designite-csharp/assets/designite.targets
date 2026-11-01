@@ -1,0 +1,15 @@
+<!-- Injected with -p:CustomAfterMicrosoftCommonTargets=<this file>. Changes nothing in the analyzed repo.
+     Enables the .NET analyzer rules that stand in for Designite smells (see designite.globalconfig)
+     and writes one SARIF log per project to $(DesigniteOut). -->
+<Project>
+  <PropertyGroup>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+    <ErrorLog Condition="'$(DesigniteOut)' != ''">$(DesigniteOut)/$(MSBuildProjectName)-$(TargetFramework).sarif,version=2.1</ErrorLog>
+  </PropertyGroup>
+  <ItemGroup>
+    <GlobalAnalyzerConfigFiles Include="$(MSBuildThisFileDirectory)designite.globalconfig" />
+  </ItemGroup>
+</Project>

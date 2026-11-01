@@ -1,0 +1,19 @@
+{
+  "name": "impatient-programming",
+  "description": "Work the Impatient Programming way: XP's 29 rules rewritten for teams building with coding agents. The Contract, breathe in / breathe out, mutation-tested tests, green merges itself.",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "impatient-programming",
+    "imp",
+    "extreme-programming",
+    "xp",
+    "agentic-engineering",
+    "mutation-testing",
+    "contract"
+  ]
+}

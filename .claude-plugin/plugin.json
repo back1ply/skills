@@ -1,4 +1,4 @@
 {
   "name": "skills",
-  "description": "Personal skill toolkit: DAX, data engineering, KPI, data storytelling, prompt engineering, Python architecture, skill management, YouTube/article-to-skill converters and the skills made with them (dbt, MCP security, SaaS strategy, server capacity, SQL indexing, Go observability, agent orchestration)"
+  "description": "Personal skill toolkit: DAX, data engineering, KPI, data storytelling, prompt engineering, Python architecture, code smells (Designite-style), Impatient Programming, skill management, YouTube/article-to-skill converters and the skills made with them (dbt, MCP security, SaaS strategy, server capacity, SQL indexing, Go observability, agent orchestration)"
 }

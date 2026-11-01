@@ -5,7 +5,7 @@
     "name": "back1ply"
   },
   "metadata": {
-    "description": "Personal skill toolkit: DAX, data engineering, KPI, data storytelling, prompt engineering, Python architecture, skill management, YouTube/article-to-skill converters and the skills made with them (dbt, MCP security, SaaS strategy, server capacity, SQL indexing)",
+    "description": "Personal skill toolkit: DAX, data engineering, KPI, data storytelling, prompt engineering, Python architecture, code smells (Designite-style), Impatient Programming, skill management, YouTube/article-to-skill converters and the skills made with them (dbt, MCP security, SaaS strategy, server capacity, SQL indexing)",
     "pluginRoot": "./skills"
   },
   "plugins": [
@@ -323,6 +323,33 @@
         "codex",
         "verification",
         "ai-workflow"
+      ]
+    },
+    {
+      "name": "impatient-programming",
+      "description": "Work the Impatient Programming way: XP's 29 rules rewritten for teams building with coding agents (the Contract, breathe in / breathe out, mutation-tested tests, green merges itself)",
+      "source": "./skills/impatient-programming",
+      "license": "CC-BY-4.0",
+      "keywords": [
+        "impatient-programming",
+        "imp",
+        "extreme-programming",
+        "agentic-engineering",
+        "mutation-testing"
+      ]
+    },
+    {
+      "name": "designite-skills",
+      "description": "Designite-style code smell analysis for Java, C# and Python: architecture, design, implementation, testability and test smells with Designite's thresholds, using open-source tools",
+      "source": "./skills/designite-skills",
+      "license": "MIT",
+      "keywords": [
+        "code-smells",
+        "technical-debt",
+        "designite",
+        "java",
+        "csharp",
+        "python"
       ]
     }
   ]
