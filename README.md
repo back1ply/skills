@@ -31,63 +31,63 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 
 | Plugin | What it does |
 |---|---|
-| `writing-dax-measures` | Write, review, and debug DAX measures in Power BI and Analysis Services |
-| `etl-pipeline-design` | Design, evaluate, and troubleshoot ETL/ELT pipelines |
-| `kpi-checklists` | Define and implement KPIs, from strategy to a live dashboard |
-| `data-storytelling` | Critique and build charts, slides, and data presentations around audience and message |
-| `sqlserver-postgres-indexing` | Diagnose slow queries and design indexes on SQL Server and PostgreSQL |
+| `writing-dax-measures` | Write, review, and debug DAX measures for Power BI and Analysis Services. Use for new calculations, time intelligence, filter context bugs, or slow measures. |
+| `etl-pipeline-design` | Design, evaluate, and troubleshoot ETL/ELT pipelines. Use for ingestion, orchestration, batch vs streaming, medallion layers, or a failing pipeline. |
+| `kpi-checklists` | Define and implement KPIs, from strategy to a live dashboard. Use when designing a KPI system, scorecard, KPI tree, or management reporting. |
+| `data-storytelling` | Critique and build charts, slides, and data presentations around audience and message. Use when reviewing a chart or deck, or planning a data story. |
+| `sqlserver-postgres-indexing` | Diagnose slow queries and design indexes on SQL Server and PostgreSQL by thinking like the engine. Use for slow queries, execution plans, or index design. |
 
 ### dbt
 
 | Plugin | What it does |
 |---|---|
-| `dbt-agent-context` | Give AI agents the business context they need to answer questions over a dbt project |
-| `dbt-agentic-dev` | Design and review agent workflows that write, test, and ship dbt models, from prompt to PR |
-| `dbt-compute-cost` | Cut dbt warehouse spend and run time with dbt State, right-sizing, and v2 tooling |
+| `dbt-agent-context` | Give AI agents the business context they need to answer questions over a dbt project. Use for text-to-SQL or BI agents that give wrong or inconsistent answers. |
+| `dbt-agentic-dev` | Design and review agent workflows that write, test, and ship dbt models, from prompt to validated PR. Use when building or reviewing AI-driven dbt development. |
+| `dbt-compute-cost` | Cut dbt warehouse spend and run time with dbt State, right-sizing, and v2 tooling. Use when dbt runs or CI are slow or expensive, or planning a v2 migration. |
 
 ### Code quality and design
 
 | Plugin | What it does |
 |---|---|
-| `quality-pass` | One-command quality pass: sends each changed file to the best installed review skill ([see below](#quality-pass-works-best-with)) |
-| `designite-skills` | Code smell analysis for Java, C#, and Python using open-source tools ([README](skills/designite-skills/README.md)) |
-| `arjancodes-playbook` | Pythonic design patterns, clean architecture, typing, and testing (from ArjanCodes) |
+| `arjancodes-playbook` | Pythonic design patterns, clean architecture, typing, and testing (from ArjanCodes). Use when choosing or implementing a design pattern in Python. |
+| `quality-pass` | One-command quality pass that sends each changed file to the best installed review skill. Use after changing code and before committing. |
+| `designite-skills` | Designite-style code smell analysis for Java, C#, and Python with open-source tools. Use for design-smell, architecture-smell, or technical-debt reviews. ([README](skills/designite-skills/README.md)) |
 
 ### Working with coding agents
 
 | Plugin | What it does |
 |---|---|
-| `agent-orchestration-checklist` | Hand big tasks to an orchestrator agent and judge the result without reading every line |
-| `agentic-debugging` | Debug code nobody fully understands: facts vs hypotheses, controls, and elimination |
-| `agentic-review-loop` | Run and measure a team AI code review loop with a per-reviewer scorecard |
-| `impatient-programming` | XP's 29 rules rewritten for teams building with coding agents (CC BY 4.0, [README](skills/impatient-programming/README.md)) |
-| `humanitys-last-prompt-engineer` | Prompt engineering techniques, role templates, and scoring frameworks |
-| `improve-system` | Review your setup, capture learnings, audit for rot, and recap sessions |
-| `channel-artifact` | Create shareable Claude Code channel artifacts with live web UIs |
+| `channel-artifact` | Build interactive localhost HTML artifacts wired to a live Claude Code session through a channel plugin. Use when you want a UI you can pin questions on. |
+| `humanitys-last-prompt-engineer` | Prompt engineering techniques, role templates, and scoring frameworks. Use when writing, fixing, or improving a prompt. |
+| `improve-system` | Review your agent setup, capture learnings, audit for rot, and recap sessions. Run regularly to keep your setup improving. |
+| `agentic-debugging` | Debug code nobody fully understands by separating facts from hypotheses and eliminating causes. Use when an agent's root-cause claim is unproven or a fix didn't work. |
+| `agentic-review-loop` | Set up, run, and measure a team AI code review loop with a per-reviewer scorecard. Use when designing or tuning AI pull-request review for a team. |
+| `agent-orchestration-checklist` | Hand big coding tasks to an orchestrator agent and judge the result without reading every line. Use before delegating large work to sub-agents. |
+| `impatient-programming` | XP's 29 rules rewritten for teams building with coding agents (Impatient Programming). Use when setting up how a team works with agents, tests, and merges. ([README](skills/impatient-programming/README.md)) |
 
 ### Backend, infrastructure, and security
 
 | Plugin | What it does |
 |---|---|
-| `go-observability` | Logs, metrics, alerts, profiles, and traces for Go services |
-| `server-capacity-tuning` | Find what limits a small server's capacity and pick the fixes that raise it |
-| `mcp-security` | Review and harden MCP servers, clients, and agent tool setups (OWASP MCP Top 10) |
+| `mcp-security` | Review and harden MCP servers, clients, and agent tool setups (OWASP MCP Top 10). Use when building, installing, or auditing an MCP server or agent config. |
+| `server-capacity-tuning` | Find what limits a small server's capacity and pick the fixes that raise it. Use for load testing, capacity planning, or EMFILE, OOM, and iowait problems. |
+| `go-observability` | Review and build logs, metrics, alerts, profiles, and traces for Go services. Use when adding or auditing observability in a Go service. |
 
 ### Business
 
 | Plugin | What it does |
 |---|---|
-| `saas-ai-moats` | Score how well a SaaS business can survive AI: 10 attacks and 8 moats that still work |
+| `saas-ai-moats` | Score how well a SaaS business can survive AI: 10 attacks and 8 moats that still work. Use when judging a SaaS idea, product, or acquisition target. |
 
 ### Making and managing skills
 
 | Plugin | What it does |
 |---|---|
-| `youtube-to-skill` | Turn YouTube videos, playlists, or channels into skills, or answer questions about a video |
-| `article-to-skill` | Turn articles, blog posts, and docs pages into skills, or answer questions about an article |
-| `skill-finder` | Find and activate the right skill for a task |
-| `skill-curator` | Audit, improve, and maintain a skill library |
-| `skill-publisher` | Package a skill repo for the Claude Code marketplace and skills.sh, then open a PR |
+| `skill-finder` | Find skills, plugins, and MCP servers for a task by searching GitHub and marketplaces. Use when you lack a tool for something. |
+| `skill-curator` | Audit, improve, and maintain a skill library: duplicates, overlaps, gaps, and conflicts. Use when reviewing installed skills. |
+| `skill-publisher` | Package a skill repo for the Claude Code marketplace and skills.sh, then open a PR. Use when publishing a skill or adding install support. |
+| `youtube-to-skill` | Turn YouTube videos, playlists, or channels into agent skills, or answer questions about a video. Use when sharing a YouTube link. ([README](skills/youtube-to-skill/README.md)) |
+| `article-to-skill` | Turn articles, blog posts, and docs pages into agent skills, or answer questions about an article. Use when sharing an article or blog URL. |
 
 ### quality-pass: works best with
 
@@ -158,7 +158,7 @@ skills/                                  <- this repo (marketplace name: "skills
 └── data/                                <- source text for the Sources tables; never installed
 ```
 
-To add a skill: create `skills/<plugin>/` with `plugin.json` and `skills/<name>/SKILL.md`, add an entry to `.claude-plugin/marketplace.json`, and add a row to the matching [catalog](#catalog) table. skills.sh ignores the plugin layer and picks up every `SKILL.md`.
+To add a skill: create `skills/<plugin>/` with `plugin.json` and `skills/<name>/SKILL.md`, and add an entry to `.claude-plugin/marketplace.json` with a `description` (what it does and when to use it) and a `category` (`data`, `dbt`, `code-quality`, `agents`, `backend`, `business`, or `skills`). The [catalog](#catalog) is built from those entries. skills.sh ignores the plugin layer and picks up every `SKILL.md`.
 
 `.gitignore` ignores everything by default and lists what gets published, so other files at the repo root stay local.
 

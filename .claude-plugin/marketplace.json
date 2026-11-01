@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "writing-dax-measures",
-      "description": "Write, review, and debug DAX measures in Power BI and Analysis Services",
+      "description": "Write, review, and debug DAX measures for Power BI and Analysis Services. Use for new calculations, time intelligence, filter context bugs, or slow measures.",
       "source": "./skills/writing-dax-measures",
       "license": "MIT",
       "keywords": [
@@ -19,11 +19,12 @@
         "power-bi",
         "measures",
         "data-modeling"
-      ]
+      ],
+      "category": "data"
     },
     {
       "name": "etl-pipeline-design",
-      "description": "Design, evaluate, and troubleshoot ETL/ELT data pipeline architectures",
+      "description": "Design, evaluate, and troubleshoot ETL/ELT pipelines. Use for ingestion, orchestration, batch vs streaming, medallion layers, or a failing pipeline.",
       "source": "./skills/etl-pipeline-design",
       "license": "MIT",
       "keywords": [
@@ -32,11 +33,12 @@
         "data-engineering",
         "pipelines",
         "orchestration"
-      ]
+      ],
+      "category": "data"
     },
     {
       "name": "kpi-checklists",
-      "description": "Define, align, and implement KPIs from strategy through dashboard go-live",
+      "description": "Define and implement KPIs, from strategy to a live dashboard. Use when designing a KPI system, scorecard, KPI tree, or management reporting.",
       "source": "./skills/kpi-checklists",
       "license": "MIT",
       "keywords": [
@@ -45,11 +47,12 @@
         "bi",
         "dashboard",
         "metrics"
-      ]
+      ],
+      "category": "data"
     },
     {
       "name": "skill-finder",
-      "description": "Discover and activate the right Claude Code skill for any task",
+      "description": "Find skills, plugins, and MCP servers for a task by searching GitHub and marketplaces. Use when you lack a tool for something.",
       "source": "./skills/skill-finder",
       "license": "MIT",
       "keywords": [
@@ -57,11 +60,12 @@
         "discovery",
         "meta",
         "claude-code"
-      ]
+      ],
+      "category": "skills"
     },
     {
       "name": "skill-curator",
-      "description": "Audit, improve, and maintain Claude Code skill libraries",
+      "description": "Audit, improve, and maintain a skill library: duplicates, overlaps, gaps, and conflicts. Use when reviewing installed skills.",
       "source": "./skills/skill-curator",
       "license": "MIT",
       "keywords": [
@@ -70,11 +74,12 @@
         "meta",
         "claude-code",
         "quality"
-      ]
+      ],
+      "category": "skills"
     },
     {
       "name": "skill-publisher",
-      "description": "Package an existing skill repo for the Claude Code plugin marketplace, skills.sh and the skills directory, then open a PR",
+      "description": "Package a skill repo for the Claude Code marketplace and skills.sh, then open a PR. Use when publishing a skill or adding install support.",
       "source": "./skills/skill-publisher",
       "license": "MIT",
       "keywords": [
@@ -82,11 +87,12 @@
         "plugin-marketplace",
         "skills-sh",
         "publishing"
-      ]
+      ],
+      "category": "skills"
     },
     {
       "name": "channel-artifact",
-      "description": "Create shareable Claude Code channel artifacts with live web UIs",
+      "description": "Build interactive localhost HTML artifacts wired to a live Claude Code session through a channel plugin. Use when you want a UI you can pin questions on.",
       "source": "./skills/channel-artifact",
       "license": "MIT",
       "keywords": [
@@ -95,11 +101,12 @@
         "sharing",
         "claude-code",
         "channel"
-      ]
+      ],
+      "category": "agents"
     },
     {
       "name": "humanitys-last-prompt-engineer",
-      "description": "Advanced prompt engineering techniques, role templates, and scoring frameworks",
+      "description": "Prompt engineering techniques, role templates, and scoring frameworks. Use when writing, fixing, or improving a prompt.",
       "source": "./skills/humanitys-last-prompt-engineer",
       "license": "MIT",
       "keywords": [
@@ -108,11 +115,12 @@
         "ai",
         "techniques",
         "templates"
-      ]
+      ],
+      "category": "agents"
     },
     {
       "name": "improve-system",
-      "description": "Keep your system sharp. Reviews your setup, captures learnings, audits for rot, recaps your sessions.",
+      "description": "Review your agent setup, capture learnings, audit for rot, and recap sessions. Run regularly to keep your setup improving.",
       "source": "./skills/improve-system",
       "license": "MIT",
       "keywords": [
@@ -120,11 +128,12 @@
         "system",
         "audit",
         "claude-code"
-      ]
+      ],
+      "category": "agents"
     },
     {
       "name": "arjancodes-playbook",
-      "description": "Pythonic design patterns, clean architecture, typing/idioms, AI agent engineering, API/data persistence, and testing practices distilled from ArjanCodes' example repo",
+      "description": "Pythonic design patterns, clean architecture, typing, and testing (from ArjanCodes). Use when choosing or implementing a design pattern in Python.",
       "source": "./skills/arjancodes-playbook",
       "license": "MIT",
       "keywords": [
@@ -136,11 +145,12 @@
         "fastapi",
         "mcp",
         "arjancodes"
-      ]
+      ],
+      "category": "code-quality"
     },
     {
       "name": "data-storytelling",
-      "description": "Critique and build graphs, slides, and data presentations around audience, message, and story",
+      "description": "Critique and build charts, slides, and data presentations around audience and message. Use when reviewing a chart or deck, or planning a data story.",
       "source": "./skills/data-storytelling",
       "license": "MIT",
       "keywords": [
@@ -149,11 +159,12 @@
         "presentations",
         "charts",
         "bi"
-      ]
+      ],
+      "category": "data"
     },
     {
       "name": "quality-pass",
-      "description": "One-command code-quality pass that routes changed files to the best installed review skill, with built-in fallbacks",
+      "description": "One-command quality pass that sends each changed file to the best installed review skill. Use after changing code and before committing.",
       "source": "./skills/quality-pass",
       "license": "MIT",
       "keywords": [
@@ -162,11 +173,12 @@
         "tdd",
         "refactoring",
         "router"
-      ]
+      ],
+      "category": "code-quality"
     },
     {
       "name": "youtube-to-skill",
-      "description": "Turn YouTube videos, playlists or channels into reusable agent skills, or answer questions about a video",
+      "description": "Turn YouTube videos, playlists, or channels into agent skills, or answer questions about a video. Use when sharing a YouTube link.",
       "source": "./skills/youtube-to-skill",
       "license": "MIT",
       "keywords": [
@@ -175,11 +187,12 @@
         "transcripts",
         "playlist",
         "meta"
-      ]
+      ],
+      "category": "skills"
     },
     {
       "name": "article-to-skill",
-      "description": "Turn web articles, blog posts, docs pages and whole blogs into reusable agent skills, or answer questions about an article",
+      "description": "Turn articles, blog posts, and docs pages into agent skills, or answer questions about an article. Use when sharing an article or blog URL.",
       "source": "./skills/article-to-skill",
       "license": "MIT",
       "keywords": [
@@ -188,11 +201,12 @@
         "blogs",
         "web",
         "meta"
-      ]
+      ],
+      "category": "skills"
     },
     {
       "name": "dbt-agent-context",
-      "description": "Design the business context AI agents need to answer questions over a dbt project correctly (dbt Summit 2026 patterns)",
+      "description": "Give AI agents the business context they need to answer questions over a dbt project. Use for text-to-SQL or BI agents that give wrong or inconsistent answers.",
       "source": "./skills/dbt-agent-context",
       "license": "MIT",
       "keywords": [
@@ -201,11 +215,12 @@
         "context-engineering",
         "text-to-sql",
         "ai-agents"
-      ]
+      ],
+      "category": "dbt"
     },
     {
       "name": "dbt-agentic-dev",
-      "description": "Design and review AI-agent workflows that write, test and ship dbt models, prompt to validated PR (dbt Summit 2026 patterns)",
+      "description": "Design and review agent workflows that write, test, and ship dbt models, from prompt to validated PR. Use when building or reviewing AI-driven dbt development.",
       "source": "./skills/dbt-agentic-dev",
       "license": "MIT",
       "keywords": [
@@ -214,11 +229,12 @@
         "agentic-sdlc",
         "mcp",
         "analytics-engineering"
-      ]
+      ],
+      "category": "dbt"
     },
     {
       "name": "dbt-compute-cost",
-      "description": "Cut dbt warehouse spend and run time with dbt State, right-sizing and v2 dev tooling (dbt Summit 2026 results)",
+      "description": "Cut dbt warehouse spend and run time with dbt State, right-sizing, and v2 tooling. Use when dbt runs or CI are slow or expensive, or planning a v2 migration.",
       "source": "./skills/dbt-compute-cost",
       "license": "MIT",
       "keywords": [
@@ -227,11 +243,12 @@
         "warehouse-cost",
         "snowflake",
         "performance"
-      ]
+      ],
+      "category": "dbt"
     },
     {
       "name": "mcp-security",
-      "description": "Review and harden MCP servers, clients and agent tool setups with the lethal trifecta and OWASP MCP Top 10",
+      "description": "Review and harden MCP servers, clients, and agent tool setups (OWASP MCP Top 10). Use when building, installing, or auditing an MCP server or agent config.",
       "source": "./skills/mcp-security",
       "license": "MIT",
       "keywords": [
@@ -240,11 +257,12 @@
         "prompt-injection",
         "owasp",
         "ai-agents"
-      ]
+      ],
+      "category": "backend"
     },
     {
       "name": "saas-ai-moats",
-      "description": "Score how well a SaaS business can survive AI: 10 AI attacks and the 8 moats that still work",
+      "description": "Score how well a SaaS business can survive AI: 10 attacks and 8 moats that still work. Use when judging a SaaS idea, product, or acquisition target.",
       "source": "./skills/saas-ai-moats",
       "license": "MIT",
       "keywords": [
@@ -253,11 +271,12 @@
         "moats",
         "ai",
         "due-diligence"
-      ]
+      ],
+      "category": "business"
     },
     {
       "name": "server-capacity-tuning",
-      "description": "Find what limits a small server's user capacity and pick the optimizations that raise it ($12 Server Challenge results)",
+      "description": "Find what limits a small server's capacity and pick the fixes that raise it. Use for load testing, capacity planning, or EMFILE, OOM, and iowait problems.",
       "source": "./skills/server-capacity-tuning",
       "license": "MIT",
       "keywords": [
@@ -266,11 +285,12 @@
         "capacity-planning",
         "sqlite",
         "linux"
-      ]
+      ],
+      "category": "backend"
     },
     {
       "name": "go-observability",
-      "description": "Review and build Go observability: slog logging, log-once errors, log security, Prometheus/Grafana metrics and alerts, pprof, OpenTelemetry tracing (Boot.dev course by Jonathan Hall)",
+      "description": "Review and build logs, metrics, alerts, profiles, and traces for Go services. Use when adding or auditing observability in a Go service.",
       "source": "./skills/go-observability",
       "license": "MIT",
       "keywords": [
@@ -282,11 +302,12 @@
         "grafana",
         "pprof",
         "opentelemetry"
-      ]
+      ],
+      "category": "backend"
     },
     {
       "name": "sqlserver-postgres-indexing",
-      "description": "Diagnose slow queries and design indexes on SQL Server and PostgreSQL by thinking like the engine",
+      "description": "Diagnose slow queries and design indexes on SQL Server and PostgreSQL by thinking like the engine. Use for slow queries, execution plans, or index design.",
       "source": "./skills/sqlserver-postgres-indexing",
       "license": "MIT",
       "keywords": [
@@ -295,11 +316,12 @@
         "indexing",
         "query-tuning",
         "execution-plans"
-      ]
+      ],
+      "category": "data"
     },
     {
       "name": "agentic-debugging",
-      "description": "Debug code you no longer understand with an agent: facts vs hypotheses, controls, hypotheses-by-fact matrix, progressive signal discovery (Cindy Sridharan's framework)",
+      "description": "Debug code nobody fully understands by separating facts from hypotheses and eliminating causes. Use when an agent's root-cause claim is unproven or a fix didn't work.",
       "source": "./skills/agentic-debugging",
       "license": "MIT",
       "keywords": [
@@ -308,11 +330,12 @@
         "ai-agents",
         "observability",
         "incident-response"
-      ]
+      ],
+      "category": "agents"
     },
     {
       "name": "agentic-review-loop",
-      "description": "Run and measure a team AI code review loop: personal review skills, the author's agent answers every finding, human reviews last, a precision/depth scorecard rates each reviewer (Robin Wieruch's process)",
+      "description": "Set up, run, and measure a team AI code review loop with a per-reviewer scorecard. Use when designing or tuning AI pull-request review for a team.",
       "source": "./skills/agentic-review-loop",
       "license": "MIT",
       "keywords": [
@@ -321,11 +344,12 @@
         "pull-requests",
         "metrics",
         "software-factory"
-      ]
+      ],
+      "category": "agents"
     },
     {
       "name": "agent-orchestration-checklist",
-      "description": "Hand big coding tasks to an orchestrator agent and judge the result without reading every line: decide what not to build, sandbox agents, self-verification, deterministic reports, ownership (Maximilian Schwarzmüller)",
+      "description": "Hand big coding tasks to an orchestrator agent and judge the result without reading every line. Use before delegating large work to sub-agents.",
       "source": "./skills/agent-orchestration-checklist",
       "license": "MIT",
       "keywords": [
@@ -335,11 +359,12 @@
         "codex",
         "verification",
         "ai-workflow"
-      ]
+      ],
+      "category": "agents"
     },
     {
       "name": "impatient-programming",
-      "description": "Work the Impatient Programming way: XP's 29 rules rewritten for teams building with coding agents (the Contract, breathe in / breathe out, mutation-tested tests, green merges itself)",
+      "description": "XP's 29 rules rewritten for teams building with coding agents (Impatient Programming). Use when setting up how a team works with agents, tests, and merges.",
       "source": "./skills/impatient-programming",
       "license": "CC-BY-4.0",
       "keywords": [
@@ -348,11 +373,12 @@
         "extreme-programming",
         "agentic-engineering",
         "mutation-testing"
-      ]
+      ],
+      "category": "agents"
     },
     {
       "name": "designite-skills",
-      "description": "Designite-style code smell analysis for Java, C# and Python: architecture, design, implementation, testability and test smells with Designite's thresholds, using open-source tools",
+      "description": "Designite-style code smell analysis for Java, C#, and Python with open-source tools. Use for design-smell, architecture-smell, or technical-debt reviews.",
       "source": "./skills/designite-skills",
       "license": "MIT",
       "keywords": [
@@ -362,7 +388,8 @@
         "java",
         "csharp",
         "python"
-      ]
+      ],
+      "category": "code-quality"
     }
   ]
 }
