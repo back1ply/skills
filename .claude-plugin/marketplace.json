@@ -73,6 +73,18 @@
       ]
     },
     {
+      "name": "skill-publisher",
+      "description": "Package an existing skill repo for the Claude Code plugin marketplace, skills.sh and the skills directory, then open a PR",
+      "source": "./skills/skill-publisher",
+      "license": "MIT",
+      "keywords": [
+        "skills",
+        "plugin-marketplace",
+        "skills-sh",
+        "publishing"
+      ]
+    },
+    {
       "name": "channel-artifact",
       "description": "Create shareable Claude Code channel artifacts with live web UIs",
       "source": "./skills/channel-artifact",

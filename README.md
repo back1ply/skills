@@ -1,6 +1,6 @@
 # Skills
 
-> Personal AI agent skill toolkit — 26 independently installable plugins.
+> Personal AI agent skill toolkit — 27 independently installable plugins.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -22,6 +22,7 @@ Add the marketplace, then install the plugins you want:
 /plugin install kpi-checklists
 /plugin install skill-finder
 /plugin install skill-curator
+/plugin install skill-publisher
 /plugin install channel-artifact
 /plugin install humanitys-last-prompt-engineer
 /plugin install improve-system
@@ -64,6 +65,7 @@ Add `-g` to install globally, or `-a claude-code` to target a specific agent.
 | `kpi-checklists` | Define, align, and implement KPIs from strategy through dashboard go-live |
 | `skill-finder` | Discover and activate the right Claude Code skill for any task |
 | `skill-curator` | Audit, improve, and maintain Claude Code skill libraries |
+| `skill-publisher` | Package an existing skill repo for the Claude Code plugin marketplace, skills.sh and the skills directory, then open a PR |
 | `channel-artifact` | Create shareable Claude Code channel artifacts with live web UIs |
 | `humanitys-last-prompt-engineer` | Advanced prompt engineering techniques, role templates, and scoring frameworks |
 | `improve-system` | Review your setup, capture learnings, audit for rot, recap sessions |
