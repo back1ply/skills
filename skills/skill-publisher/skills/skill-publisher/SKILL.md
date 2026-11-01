@@ -23,28 +23,36 @@ PR: https://github.com/keithbinkly/dbt-semantic-layer/pull/1 (made before the `m
 - Grep scripts and docs for hardcoded skill paths (e.g. `.claude/skills/kb-*` or old names).
 - Note the default branch: `gh repo view <owner>/<repo> --json defaultBranchRef -q .defaultBranchRef.name`.
 
+Set up the shell state every later step uses, and leave the default branch, whether or not step 2 runs:
+```bash
+skill_md=SKILL.md                          # or skills/<name>/SKILL.md if already nested
+name=$(yq --front-matter=extract '.name' "$skill_md")
+[[ "$name" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || { echo "invalid skill name: $name"; exit 1; }
+git checkout -b add-plugin-support         # or `git checkout` it if it already exists
+```
+
 ### 2. Restructure into `skills/<skill-name>/`
 Skip this step if the skill is already at `skills/<skill-name>/SKILL.md`.
 
-Move `SKILL.md` and every folder it uses, including `scripts/`. skills.sh copies only the skill folder, so anything left at the root is missing after install:
+skills.sh copies only the skill folder, so everything the skill uses must end up inside `skills/<skill-name>/`. List what sits next to `SKILL.md` (`git ls-files` at the root) and decide, file by file, what belongs to the skill: anything `SKILL.md` or its references link to, such as `references/`, `assets/`, `scripts/`, `templates/`, `examples/` or `data/`. Leave repo-level files (`README.md`, `LICENSE`, CI config) where they are. If a folder serves both the skill and the repo (for example `scripts/` with CI scripts), ask the user which files go with the skill.
+
 ```bash
-name='<skill-name>'   # already checked in step 1
-git checkout -b add-plugin-support
 mkdir -p "skills/$name" .claude-plugin
 git mv SKILL.md "skills/$name/SKILL.md"
-for d in references assets scripts templates; do
+for d in references assets scripts templates examples data; do   # adjust to the list you made
   if [ -e "$d" ]; then git mv "$d" "skills/$name/$d"; fi
 done
 ```
-Only move a root folder that belongs to the skill. If `scripts/` also serves the repo itself (CI, build), ask the user which files go with the skill.
+Then check that every relative link in `skills/$name/SKILL.md` and its references points to a file that exists under `skills/$name/`.
 
 ### 3. Create `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 `plugin.json` makes the repo a plugin. `marketplace.json` makes it a marketplace. `/plugin marketplace add <owner>/<repo>` reads only `marketplace.json`; without it the command fails with "Marketplace file not found". Create both.
 
-Write both files with a JSON tool, never by pasting text from the repo into a template. A description that contains `"` or `}` can otherwise break out of its string and add fields, such as a different plugin `source`:
+Write both files with a JSON tool, never by pasting text from the repo into a template or into a shell command. A description that contains `"` or `}` can otherwise break out of a JSON string and add fields, such as a different plugin `source`; one that contains `'` can break out of a shell string and run commands. Read the values with tools so the text never passes through shell quoting:
 ```bash
-desc='<one-line description from SKILL.md>'
-license='<license from step 1>'   # drop the --arg and field if there is none
+desc=$(yq --front-matter=extract '.description' "skills/$name/SKILL.md")
+license=$(gh api 'repos/<owner>/<repo>/license' -q '.license.spdx_id' 2>/dev/null)
+# No license (empty or NOASSERTION)? Drop the --arg and the license field, and tell the user.
 jq -n --arg name "$name" --arg desc "$desc" --arg owner '<owner>' \
       --arg repo '<owner>/<repo>' --arg license "$license" '{
   name: $name, description: $desc,
@@ -78,7 +86,7 @@ Replace/add an **Installation** section with:
 /plugin install <skill-name> --marketplace <owner>/<repo>
 # One step on Claude Code 2.1.275+. Older versions:
 # /plugin marketplace add <owner>/<repo>
-# /plugin install <skill-name>@<skill-name>
+# /plugin install <skill-name>@<marketplace-name>
 
 ### Via skills.sh
 npx skills add <owner>/<repo>
@@ -101,7 +109,8 @@ Update any file path references in the README to reflect the new `skills/<skill-
 ### 5. Fix paths in scripts and docs
 The skill lands in a different place for each install method (a plugin cache folder, `~/.claude/skills/`, a project's `.claude/skills/`), so never rewrite paths to a fixed `.claude/skills/<skill-name>/`.
 - In `SKILL.md` and its references, point to files relative to the skill folder (`scripts/foo.py`, `references/bar.md`).
-- In hooks, MCP config and other plugin files, use `${CLAUDE_PLUGIN_ROOT}`.
+- Inside hook commands and MCP server commands or arguments, use `${CLAUDE_PLUGIN_ROOT}`.
+- In `plugin.json` component fields (`hooks`, `commands`, `agents`, `mcpServers` paths), use `./` paths relative to the plugin root.
 - In scripts, find files relative to the script's own location (Python: `Path(__file__).parent`; bash: `"$(dirname "$0")"`).
 
 ### 6. Validate
@@ -120,14 +129,15 @@ git commit -m "feat: add Claude Code plugin marketplace and skills.sh support"
 **Stop here and ask the user.** Pushing and opening a PR are visible to others and notify the repo owner. Show the user the target repo, the branch, `git diff --stat <default-branch>...HEAD` and the PR title and body, and wait for a clear yes before running anything below.
 
 ### 8. Push and open the PR
-Push the branch you committed on, never `main`:
+Write the PR body (see the template below) to a file outside the repo, so it never gets committed. Then push the branch you committed on, never `main`:
 ```bash
+pr_body=$(mktemp)    # write the filled-in template into "$pr_body"
 branch=$(git branch --show-current)
 
 # With push access to <owner>/<repo>:
 git push -u origin "$branch"
 gh pr create --repo '<owner>/<repo>' --base '<default-branch>' --head "$branch" \
-  --title "feat: add Claude Code plugin marketplace and skills.sh support" --body-file pr-body.md
+  --title "feat: add Claude Code plugin marketplace and skills.sh support" --body-file "$pr_body"
 
 # Without push access: fork, then push to the fork
 gh repo fork '<owner>/<repo>' --clone=false
@@ -135,7 +145,7 @@ fork_url="https://github.com/<your-account>/<repo>"
 git remote get-url fork >/dev/null 2>&1 && git remote set-url fork "$fork_url" || git remote add fork "$fork_url"
 git push -u fork "$branch"
 gh pr create --repo '<owner>/<repo>' --base '<default-branch>' --head "<your-account>:$branch" \
-  --title "feat: add Claude Code plugin marketplace and skills.sh support" --body-file pr-body.md
+  --title "feat: add Claude Code plugin marketplace and skills.sh support" --body-file "$pr_body"
 ```
 
 ## PR body template
@@ -200,5 +210,5 @@ Add to `.claude/settings.json` so team members are automatically prompted to ins
 - skills.sh finds `SKILL.md` files and copies each skill's folder. It does not install the plugin, so hooks, agents, commands and `.mcp.json` are dropped
 - A folder in `~/.claude/skills/` (or a project's `.claude/skills/`) that contains `.claude-plugin/plugin.json` loads as `<name>@skills-dir` with no install step. Turn it off with `claude plugin disable <name>@skills-dir`
 - skills.sh install path for Claude Code: `.claude/skills/<skill-name>/` (project) or `~/.claude/skills/<skill-name>/` (global)
-- If plugin has hooks/scripts, all paths in plugin.json must use `${CLAUDE_PLUGIN_ROOT}`, never hardcoded paths — plugins are copied to a cache dir on install
+- Plugins are copied to a cache dir on install, so never hardcode absolute paths. Component paths in `plugin.json` are `./` paths relative to the plugin root; `${CLAUDE_PLUGIN_ROOT}` goes inside hook and MCP command strings and arguments
 - Relative source paths (e.g. `./plugins/foo`) in marketplace.json only work with git-based distribution, not direct URL distribution
