@@ -1,6 +1,6 @@
 # Skills
 
-30 agent skills in 28 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
+31 agent skills in 29 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -35,6 +35,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `etl-pipeline-design` | Design, evaluate, and troubleshoot ETL/ELT pipelines. Use for ingestion, orchestration, batch vs streaming, medallion layers, or a failing pipeline. |
 | `kpi-checklists` | Define and implement KPIs, from strategy to a live dashboard. Use when designing a KPI system, scorecard, KPI tree, or management reporting. |
 | `data-storytelling` | Critique and build charts, slides, and data presentations around audience and message. Use when reviewing a chart or deck, or planning a data story. |
+| `deck-ai-tells` | Audit and build slide decks so they don't read as AI-made, strongest tells first. Use when a deck looks AI-generated or you build one with an AI tool. |
 | `sqlserver-postgres-indexing` | Diagnose slow queries and design indexes on SQL Server and PostgreSQL by thinking like the engine. Use for slow queries, execution plans, or index design. |
 
 ### dbt
@@ -136,6 +137,7 @@ Built with `article-to-skill`. Article text is in `data/articles/<id>.json`. Reg
 |---|---|---|
 | `agentic-debugging` | Debugs code nobody on hand fully understands (agent-written, unfamiliar, or too large to read) by treating the bug as a constraint satisfaction problem, using Cindy Sridharan's two-tier framework (facts vs hypotheses), a control vs variable comparison, a hypotheses-by-fact matrix, progressive signal discovery, and elimination-only adversarial review. | [How to effectively debug when you no longer understand the code](https://copyconstruct.medium.com/how-to-effectively-debug-when-you-no-longer-understand-the-code-bd3dcb2c5f7b) |
 | `agentic-review-loop` | Sets up, runs and measures a team-wide AI code review loop where each developer fires their own review skill at pull requests, the author's agent answers every finding (fix, decline, refute), a human reviews last, and a scorecard rates each review skill on precision and depth, using Robin Wieruch's process and three weeks of numbers. | [Toward a Self-Improving Agentic Code Review Loop](https://www.robinwieruch.de/agentic-code-review-loop/) |
+| `deck-ai-tells` | Audits and builds slide decks so they don't read as AI-made, fixing first the tells that actually separated 94 AI slides from 100 real slides by consulting firms and banks in a side-by-side comparison. | [A complete guide to making your decks not AI](https://aa-not-ai-decks.vercel.app/not-ai-decks-guide.md) |
 | `server-capacity-tuning` | Finds what limits how many users a single small server can handle (CPU, memory, file descriptors, disk sync, or the load generator itself) and picks the optimizations that raise it, using results from the $12 Server Challenge (about 30 web servers on 1 vCPU / 2 GB with SQLite). | [Challenge repo, batch-2 report](https://github.com/arjaythedev/twelve-dollar-server-challenge/blob/main/benchmarks/batch-2.md) |
 <!-- articles:end -->
 

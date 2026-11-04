@@ -1,0 +1,17 @@
+{
+  "name": "deck-ai-tells",
+  "description": "Audit and build slide decks so they don't read as AI-made, fixing the tells that actually separate AI slides from real ones first",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "presentations",
+    "slides",
+    "decks",
+    "ai-slop",
+    "design-review"
+  ]
+}

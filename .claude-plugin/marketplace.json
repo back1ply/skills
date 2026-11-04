@@ -163,6 +163,20 @@
       "category": "data"
     },
     {
+      "name": "deck-ai-tells",
+      "description": "Audit and build slide decks so they don't read as AI-made, strongest tells first. Use when a deck looks AI-generated or you build one with an AI tool.",
+      "source": "./skills/deck-ai-tells",
+      "license": "MIT",
+      "keywords": [
+        "presentations",
+        "slides",
+        "decks",
+        "ai-slop",
+        "design-review"
+      ],
+      "category": "data"
+    },
+    {
       "name": "quality-pass",
       "description": "One-command quality pass that sends each changed file to the best installed review skill. Use after changing code and before committing.",
       "source": "./skills/quality-pass",
