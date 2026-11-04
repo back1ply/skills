@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Template: copy, replace every {{...}}, add one column per scored repo and one row per dimension (20). -->
+<title>AI-readiness scorecard: {{scope}} ({{date}})</title>
+<style>
+  body { font: 14px/1.45 system-ui, sans-serif; margin: 24px; color: #1d2b36; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 16px; color: #556; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #d5dbe0; padding: 6px 8px; vertical-align: top; text-align: left; }
+  th { background: #eef2f5; }
+  td.s { text-align: center; font-weight: 700; width: 64px; }
+  .s1 { background: #f8d4d0; } .s2 { background: #fbe7c6; } .s3 { background: #fff6c8; }
+  .s4 { background: #d8efd6; } .s5 { background: #b9e3b5; }
+  .cal { font-size: 11px; color: #777; display: block; font-weight: 400; }
+  .group td { background: #f6f8fa; font-weight: 600; }
+  .g { font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>AI-readiness scorecard: {{scope}}</h1>
+<p class="sub">Scored {{date}} against the live howreadyfor.ai tells, read-only. Floor: {{floor}} (held by {{floor dimensions}}). Sum: {{sum}} ({{band}}). "cal" marks a score changed during calibration.</p>
+<table>
+<tr><th>#</th><th>Dimension</th><th>{{repo A}}</th><th>{{repo B}}</th><th>Key evidence / cheapest move up</th><th>Research behind it</th></tr>
+<tr class="group"><td colspan="6">Foundation &amp; Structure</td></tr>
+<tr><td>1</td><td>Repository structure</td><td class="s s3">3</td><td class="s s2">2<span class="cal">cal from 1</span></td>
+<td>{{evidence with file:line}}. Move: {{one concrete change}}.</td>
+<td class="g">{{grade from references/research.md}}</td></tr>
+<!-- ... rows 2-20, with group rows for Truth Signals, Flow & Throughput, Memory & Intent, Enforcement & Release ... -->
+</table>
+<p class="sub" style="margin-top:14px">Verified by the parent: {{claims spot-checked}}. Agent-reported: {{the rest}}. Not checked: {{gaps}}.</p>
+</body>
+</html>
