@@ -1,6 +1,6 @@
 ---
 name: ai-readiness
-description: Scores a repository, product or team estate on Jurgen De Smet's 20-dimension AI-readiness instrument (howreadyfor.ai) from evidence, not opinion. Places each dimension on the 1-5 ladder (Blind, Tacit, Visible but inert, Acted on, Durable) by its tell, reports the floor first, calibrates scores across repos, and names the cheapest move up per dimension, including converting cultural agreements into hard guardrails. Use when the user asks "how ready are we for AI agents", "score this repo on howreadyfor.ai", "answer the AI readiness questions for <repo>", "what is our floor", "which standards are only agreed, not enforced", or compares two codebases for agent readiness. PRIVATE: never commit, push or share this skill.
+description: Scores a repository, product or team estate on Jurgen De Smet's 20-dimension AI-readiness instrument (howreadyfor.ai) from evidence, not opinion. Places each dimension on the 1-5 ladder (Blind, Tacit, Visible but inert, Acted on, Durable) by its tell, reports the floor first, calibrates scores across repos, and names the cheapest move up per dimension, including converting cultural agreements into hard guardrails. Use when the user asks "how ready are we for AI agents", "score this repo on howreadyfor.ai", "answer the AI readiness questions for <repo>", "what is our floor", "which standards are only agreed, not enforced", or compares two codebases for agent readiness.
 ---
 
 # AI readiness: score a codebase from evidence
@@ -66,4 +66,4 @@ One question climbs every dimension: does the system act on this, or does a huma
 | The 20 per-dimension essays of the AI Readiness series (linked per dimension in each cluster file) | Jurgen De Smet, Substack | 2026 | Detection signals, practices and moves folded into the cluster files |
 | The 20 long-form dimension pages, `https://howreadyfor.ai/d/<slug>` | Lean Tech BV | read 2026-11-03 | Level detail and examples folded into the cluster files |
 
-License: the field guide is CC BY-NC-ND 4.0 and the site is all rights reserved. This is a private adaptation for the owner's own use; sharing it would breach both.
+License: UNLICENSED. The field guide is CC BY-NC-ND 4.0 and the site is all rights reserved. Publishing this adaptation grants no additional rights to the source material. See the plugin's [NOTICE](../../NOTICE.md) for details.

@@ -1,0 +1,16 @@
+{
+  "name": "ai-readiness",
+  "description": "Score a repo, product or estate on Jurgen De Smet's 20-dimension AI-readiness ladder from evidence, floor first",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://howreadyfor.ai/method/",
+  "license": "UNLICENSED",
+  "keywords": [
+    "ai-readiness",
+    "engineering",
+    "assessment",
+    "guardrails",
+    "maturity"
+  ]
+}

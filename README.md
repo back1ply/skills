@@ -1,6 +1,6 @@
 # Skills
 
-29 agent skills in 27 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
+30 agent skills in 28 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -63,6 +63,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `agentic-debugging` | Debug code nobody fully understands by separating facts from hypotheses and eliminating causes. Use when an agent's root-cause claim is unproven or a fix didn't work. |
 | `agentic-review-loop` | Set up, run, and measure a team AI code review loop with a per-reviewer scorecard. Use when designing or tuning AI pull-request review for a team. |
 | `agent-orchestration-checklist` | Hand big coding tasks to an orchestrator agent and judge the result without reading every line. Use before delegating large work to sub-agents. |
+| `ai-readiness` | Score a repository, product, or team estate across 20 AI-readiness dimensions using evidence. Use to assess readiness for coding agents, find weak spots, or compare codebases. |
 | `impatient-programming` | XP's 29 rules rewritten for teams building with coding agents (Impatient Programming). Use when setting up how a team works with agents, tests, and merges. ([README](skills/impatient-programming/README.md)) |
 
 ### Backend, infrastructure, and security
@@ -165,3 +166,5 @@ To add a skill: create `skills/<plugin>/` with `plugin.json` and `skills/<name>/
 ## License
 
 MIT (see [LICENSE](LICENSE)), except `impatient-programming`, which is CC BY 4.0 (see its [LICENSE](skills/impatient-programming/LICENSE) and [NOTICE](skills/impatient-programming/NOTICE.md)).
+
+`ai-readiness` is UNLICENSED and is excluded from the repository's MIT license. Its source material has separate restrictions: see its [NOTICE](skills/ai-readiness/NOTICE.md).

@@ -363,6 +363,20 @@
       "category": "agents"
     },
     {
+      "name": "ai-readiness",
+      "description": "Score a repository, product, or team estate across 20 AI-readiness dimensions using evidence. Use to assess readiness for coding agents, find weak spots, or compare codebases.",
+      "source": "./skills/ai-readiness",
+      "license": "UNLICENSED",
+      "keywords": [
+        "ai-readiness",
+        "engineering",
+        "assessment",
+        "guardrails",
+        "maturity"
+      ],
+      "category": "agents"
+    },
+    {
       "name": "impatient-programming",
       "description": "XP's 29 rules rewritten for teams building with coding agents (Impatient Programming). Use when setting up how a team works with agents, tests, and merges.",
       "source": "./skills/impatient-programming",
