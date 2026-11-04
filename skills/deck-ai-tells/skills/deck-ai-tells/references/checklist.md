@@ -1,0 +1,45 @@
+# Deck AI tells: before-you-present checklist
+
+Source: A complete guide to making your decks not AI (https://aa-not-ai-decks.vercel.app/not-ai-decks-guide.md#:~:text=The%20before-you-present%20checklist, Analyst Academy, November 2026). 34 checks, strongest signal first. Run it on every slide; each "no" is a fix. Tell numbers point to `tells.md`. For what a brand template exempts (partly the guide's rule, partly this skill's judgment), see SKILL.md.
+
+## Strong signal (5)
+- [ ] Each slide starts with its title: nothing above it (no kicker, ALL-CAPS label, breadcrumb or pill). (19)
+- [ ] No production slips: nothing overlapping or spilling out of its box or off the slide, no leftover placeholder text, no word split by wrapping, title numbers match the slide. (29)
+- [ ] The sentences sound spoken: no habit of colon titles or em-dash pivots. (12)
+- [ ] No "key takeaway" box and no filled banner along the bottom. (30)
+- [ ] No full-height coloured strip down a slide edge. (31)
+
+## Some signal (4)
+- [ ] Lists have as many items as the content needs, not three by habit. (17)
+- [ ] None of: unlock, elevate, delve, leverage, seamless, game-changer, or the rest of the banned list. (4)
+- [ ] Body text is left-aligned; only short single items are centred. (9)
+- [ ] No inflated significance ("pivotal", "a testament to", "plays a crucial role", "broader trend"); each slide says what happened and how big. (13)
+
+## Weak signal, still worth fixing (25)
+- [ ] Every title is a full-sentence takeaway. (1)
+- [ ] The titles read alone carry the whole argument. (1)
+- [ ] Each slide makes one point. (7)
+- [ ] Every number has a real source you could name. (8)
+- [ ] No invented stats, quotes or examples. (8)
+- [ ] No emoji bullets, icons in circles or decorative icons. (2)
+- [ ] No purple or violet glow, glassmorphism or gradient text. (3)
+- [ ] One accent colour, used only on what matters. (25)
+- [ ] Most slides carry specific nouns: names, numbers, dates, places. (4)
+- [ ] Layouts vary with the content: no symmetric three-box grids, no single template on every slide. (5, 10)
+- [ ] Images show the real thing, or there is no image. (6)
+- [ ] Bullet lists are short, uneven and rare. (7)
+- [ ] Every chart has a takeaway title and an annotation on the key point. (11)
+- [ ] No "experts say", "studies show" or "many believe" without a named source. (14)
+- [ ] The deck ends on a decision or an ask, not a "challenges and future prospects" wrap-up. (15)
+- [ ] No "it's not just X, it's Y" or "not only X, but Y". (16)
+- [ ] No rounded boxes or cards with a coloured accent line on one side or the top. (18)
+- [ ] No short thick accent bar or coloured rule above, beside or under the title. (20)
+- [ ] The cover subtitle is a few words, or absent, never a sentence. (21)
+- [ ] One element clearly wins on each slide, and the title is much bigger than the body. (22)
+- [ ] One typeface, regular and bold, three or four sizes used the same way throughout. (23)
+- [ ] No drop shadows, floating cards or cards inside cards. (24)
+- [ ] The palette was chosen on purpose (brand, or a stated set), not a default cream-and-terracotta or dark-navy look. (26)
+- [ ] No pills, badges, chips or coloured status dots. (27)
+- [ ] No rows of equal-sized stat tiles. (28)
+
+Judgment calls (this skill, not the guide) on tells 2, 23, 24, 25 and 27, plus bold lead-ins on bullets: real decks did these more often than AI tools, so a "no" there is a style decision for the brand, not proof the deck looks AI-made. The bullet-wall checks (tell 7) are not judgment calls. The strict fix is in tells.md.
