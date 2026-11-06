@@ -1,6 +1,6 @@
 # Skills
 
-31 agent skills in 29 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
+32 agent skills in 30 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -87,6 +87,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 |---|---|
 | `skill-finder` | Find skills, plugins, and MCP servers for a task by searching GitHub and marketplaces. Use when you lack a tool for something. |
 | `skill-curator` | Audit, improve, and maintain a skill library: duplicates, overlaps, gaps, and conflicts. Use when reviewing installed skills. |
+| `detox` | Audit and clean up a Claude setup (chats, memory, skills, connectors, scheduled tasks) from one checklist page. Use when your setup feels bloated. |
 | `skill-publisher` | Package a skill repo for the Claude Code marketplace and skills.sh, then open a PR. Use when publishing a skill or adding install support. |
 | `youtube-to-skill` | Turn YouTube videos, playlists, or channels into agent skills, or answer questions about a video. Use when sharing a YouTube link. ([README](skills/youtube-to-skill/README.md)) |
 | `article-to-skill` | Turn articles, blog posts, and docs pages into agent skills, or answer questions about an article. Use when sharing an article or blog URL. |

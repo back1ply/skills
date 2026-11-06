@@ -1,0 +1,17 @@
+{
+  "name": "detox",
+  "description": "Audit and clean up a Claude setup: interface, memory, skills, connectors, and scheduled tasks, applied from one checklist page",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "cleanup",
+    "audit",
+    "meta",
+    "claude-code"
+  ]
+}

@@ -418,6 +418,20 @@
         "python"
       ],
       "category": "code-quality"
+    },
+    {
+      "name": "detox",
+      "description": "Audit and clean up a Claude setup (chats, memory, skills, connectors, scheduled tasks) from one checklist page. Use when your setup feels bloated.",
+      "source": "./skills/detox",
+      "license": "MIT",
+      "keywords": [
+        "skills",
+        "cleanup",
+        "audit",
+        "meta",
+        "claude-code"
+      ],
+      "category": "skills"
     }
   ]
 }
