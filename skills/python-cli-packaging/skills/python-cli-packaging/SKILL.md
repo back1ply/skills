@@ -27,7 +27,7 @@ Behavioural checks run real commands. Run read-only commands first (`--help`, `-
    ```
    python <skill-dir>/scripts/cli_contract.py --cmd "uv run tool" --sub <each-sub> --run "<safe args>" --json-run "<args> --json"
    ```
-   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. On Windows, pass paths as `F:/...`; Git Bash's `/f/...` form fails when the script launches the command. Then do the fresh-install test (TST-03): `uv build`, then run `uvx --from dist/<wheel>.whl tool --help` from a directory outside the repo.
+   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. On Windows, pass paths as `F:/...`; Git Bash's `/f/...` form fails when the script launches the command. The script always sends `--help`, `--version`, and an unknown flag to the root and `--help` to each `--sub`; confirm from the source that those probes are harmless first. Then do the fresh-install test (TST-03): `uv build`, then run `uvx --from dist/<wheel>.whl tool --help` from a directory outside the repo.
 4. **Report.** One table row per MUST and SHOULD item: `ID | status | evidence`. Status is `pass`, `fail`, `n/a` (with a reason), or `not checked` (with a reason). Evidence is a command plus its result, or `file:line`. List fails MUST first, then SHOULD, each with a concrete fix. Add NICE items only when they fail cheaply.
 
 The audit is done when every MUST and SHOULD ID has a row. No item is skipped silently.

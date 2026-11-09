@@ -10,6 +10,10 @@ OUT-04, and ERR-01 from references/checklist.md.
 Only pass --run / --json-run commands that are safe to execute (read-only or a
 test target). The script runs them for real.
 
+The script always sends --help, --version, and an unknown flag to the root
+command, and --help to every --sub. A script that hand-parses sys.argv may treat
+those as real arguments and run its action, so read its argument handling first.
+
 Exit codes: 0 all checks passed, 1 at least one check failed, 2 usage error
 or the command could not start (its root --help printed nothing and failed).
 """
