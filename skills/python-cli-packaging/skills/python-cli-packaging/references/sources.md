@@ -4,6 +4,8 @@ Checklist items cite these IDs, for example `[S16]`. Last reviewed November 2026
 
 Trust levels: **High** = official spec, docs, or recognized expert writing in their own domain. **Medium** = practitioner blog or skill with reasoned arguments. **Low** = thin, outdated, or only seen through a secondary summary.
 
+Background sources not cited by an item: S42 backs the `pyproject-fmt` command in checks.md, S51 is the skills.sh search used to find skills, and S54 had little substance.
+
 | ID | Title | URL | Type | Trust | One-line takeaway |
 |---|---|---|---|---|---|
 | S1 | PyPA guide: Creating and packaging command-line tools | https://packaging.python.org/en/latest/guides/creating-command-line-tools/ | guide | High | src layout, `[project.scripts]`, a minimal `__main__.py`, `pipx install .`. It has no testing guidance. |
