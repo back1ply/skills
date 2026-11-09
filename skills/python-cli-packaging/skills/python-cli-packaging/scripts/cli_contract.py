@@ -10,7 +10,8 @@ OUT-04, and ERR-01 from references/checklist.md.
 Only pass --run / --json-run commands that are safe to execute (read-only or a
 test target). The script runs them for real.
 
-Exit codes: 0 all checks passed, 1 at least one check failed, 2 usage error.
+Exit codes: 0 all checks passed, 1 at least one check failed, 2 usage error
+or the command could not start (its root --help printed nothing and failed).
 """
 
 import argparse
@@ -58,11 +59,33 @@ def run(cmd, args, timeout):
     return Run(proc.returncode, proc.stdout, proc.stderr)
 
 
+def first_err(r):
+    lines = r.err.strip().splitlines()
+    return f", stderr: {lines[0][:100]!r}" if lines else ""
+
+
+def preflight(cmd, timeout):
+    """Stop early when the command cannot start, so later checks can't pass vacuously."""
+    r = run(cmd, ["--help"], timeout)
+    if r.rc != 0 and not r.out.strip():
+        print(
+            f"error: '{shlex.join(cmd)} --help' printed nothing and exited {r.rc}{first_err(r)}. "
+            "Make sure the command runs on its own (on Windows, pass paths as F:/..., not /f/...).",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
+
+
 def check_help(cmd, sub, timeout):
     args = [*sub, "--help"]
     r = run(cmd, args, timeout)
     ok = r.rc == 0 and bool(r.out.strip())
-    return Result("help", " ".join(args), ok, f"rc={r.rc}, stdout {len(r.out)} chars")
+    return Result(
+        "help",
+        " ".join(args),
+        ok,
+        f"rc={r.rc}, stdout {len(r.out)} chars{first_err(r)}",
+    )
 
 
 def check_version(cmd, timeout):
@@ -93,7 +116,7 @@ def check_run(cmd, line, timeout):
             )
         ]
     return [
-        Result("no-tty", line, True, f"rc={r.rc}"),
+        Result("no-tty", line, True, f"rc={r.rc}{first_err(r)}"),
         Result(
             "no-ansi",
             line,
@@ -123,6 +146,7 @@ def check_json(cmd, line, timeout):
 def collect(opts):
     cmd = shlex.split(opts.cmd)
     t = opts.timeout
+    preflight(cmd, t)
     results = [check_help(cmd, [], t), check_version(cmd, t), check_usage_error(cmd, t)]
     results += [check_help(cmd, [s], t) for s in opts.sub]
     for line in opts.run:

@@ -17,7 +17,7 @@ Pick the mode from the request:
 
 ## Safety
 
-Behavioural checks run real commands. Run read-only commands first (`--help`, `--version`, list or show). Run anything that writes, logs in, or touches a device only against a test target, a fixture file, or `--dry-run`. Clone third-party repos into a fresh empty directory and run their code only after reading what it does.
+Behavioural checks run real commands. Run read-only commands first (`--help`, `--version`, list or show), but only after reading how the tool parses arguments: a script that hand-parses `sys.argv` may treat `--help` as an ordinary argument and run the real action. Run anything that writes, logs in, or touches a device only against a test target, a fixture file, or `--dry-run`. Clone third-party repos into a fresh empty directory and run their code only after reading what it does.
 
 ## Audit
 
@@ -27,7 +27,7 @@ Behavioural checks run real commands. Run read-only commands first (`--help`, `-
    ```
    python <skill-dir>/scripts/cli_contract.py --cmd "uv run tool" --sub <each-sub> --run "<safe args>" --json-run "<args> --json"
    ```
-   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. Then do the fresh-install test (TST-03): `uv build`, then run `uvx --from dist/<wheel>.whl tool --help` from a directory outside the repo.
+   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. On Windows, pass paths as `F:/...`; Git Bash's `/f/...` form fails when the script launches the command. Then do the fresh-install test (TST-03): `uv build`, then run `uvx --from dist/<wheel>.whl tool --help` from a directory outside the repo.
 4. **Report.** One table row per MUST and SHOULD item: `ID | status | evidence`. Status is `pass`, `fail`, `n/a` (with a reason), or `not checked` (with a reason). Evidence is a command plus its result, or `file:line`. List fails MUST first, then SHOULD, each with a concrete fix. Add NICE items only when they fail cheaply.
 
 The audit is done when every MUST and SHOULD ID has a row. No item is skipped silently.
