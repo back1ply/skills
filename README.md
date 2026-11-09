@@ -53,7 +53,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `arjancodes-playbook` | Pythonic design patterns, clean architecture, typing, and testing (from ArjanCodes). Use when choosing or implementing a design pattern in Python. |
 | `quality-pass` | One-command quality pass that sends each changed file to the best installed review skill. Use after changing code and before committing. |
 | `designite-skills` | Designite-style code smell analysis for Java, C#, and Python with open-source tools. Use for design-smell, architecture-smell, or technical-debt reviews. ([README](skills/designite-skills/README.md)) |
-| `python-cli-packaging` | Build, convert, and audit installable Python CLIs that work for humans and AI agents (93-item sourced checklist). Use when packaging scripts into one command, reviewing a CLI repo, or making a CLI agent-friendly. |
+| `python-cli-packaging` | Build, convert, and audit installable Python CLIs that work for humans and AI agents (94-item sourced checklist). Use when packaging scripts into one command, reviewing a CLI repo, or making a CLI agent-friendly. |
 
 ### Working with coding agents
 

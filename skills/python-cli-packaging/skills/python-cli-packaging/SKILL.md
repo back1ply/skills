@@ -5,7 +5,7 @@ description: Builds, converts, and audits installable Python command-line tools 
 
 # Python CLI packaging
 
-A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 93 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
+A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 94 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
 
 Pick the mode from the request:
 
@@ -103,7 +103,8 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 - **Lockfile:** commit `uv.lock`. It protects dev and CI only; `uv tool install`, pipx, and pip resolve fresh, so the `pyproject.toml` ranges must work alone (DEP-03).
 - **New releases:** set `[tool.uv] exclude-newer = "7 days"`; justify any locked version newer than that (DEP-05).
 - **Exit codes:** 0 success, 1 failure, 2 usage. Add more only for failure classes a caller would branch on, and document them.
-- **JSON:** explicit `--json`, never switched on automatically by piping. In `--json` mode, errors go to stderr as JSON with a non-zero exit.
+- **Input:** flags and positional arguments. Structured input, if any, comes from a file or stdin, never only an inline JSON string (AGT-15).
+- **JSON output:** explicit `--json`, never switched on automatically by piping. In `--json` mode, errors go to stderr as JSON with a non-zero exit.
 - **Prompts:** allowed when stdin and stdout are TTYs, as long as every prompt has a flag.
 - **Agent env vars** (`CLAUDECODE`, `CI`): may change cosmetics only, never confirm actions.
 - **CLI vs MCP:** build the CLI first, with a short usage guide for agents (DOC-06). Add an MCP server when users need OAuth, remote access, or have no shell.
@@ -111,9 +112,9 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 
 ## References
 
-- [references/checklist.md](references/checklist.md): all 93 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
+- [references/checklist.md](references/checklist.md): all 94 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
 - [references/checks.md](references/checks.md): copy-paste commands and the anti-pattern list. Read it in audit step 2.
 - [references/disputes.md](references/disputes.md): debated choices and research gaps. Read it before overriding a default.
 - [references/patterns.md](references/patterns.md): code shapes for `pyproject.toml`, the entry point, lazy dispatch, a subcommand, safe prompts, tests, and the fresh-install CI step. Read it in convert step 4 and build mode.
-- [references/sources.md](references/sources.md): the 56 sources behind the checklist.
+- [references/sources.md](references/sources.md): the 59 sources behind the checklist.
 - `scripts/cli_contract.py`: cross-platform behavioural checks. Run `--help` for options.

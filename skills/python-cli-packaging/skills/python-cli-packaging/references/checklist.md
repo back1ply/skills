@@ -1,6 +1,6 @@
 # Python CLI checklist
 
-93 items with stable IDs. Sources: [sources.md](sources.md). Commands in tables escape `|` as `\|`; copy runnable commands from [checks.md](checks.md) instead.
+94 items with stable IDs. Sources: [sources.md](sources.md). Commands in tables escape `|` as `\|`; copy runnable commands from [checks.md](checks.md) instead.
 
 Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode unless the mode column says otherwise. The only items without A are the convert-only LAY-08, DOC-05, and DIST-03.
 
@@ -87,6 +87,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | AGT-12 | `--help` alone is enough for an agent to use the tool: subcommands, required vs optional arguments, defaults, an example, a mention of `--json`, and exit codes. | SHOULD | B C A | Give an agent only `tool --help` and see whether it can complete a typical task | S19, S37, S35, S36 |
 | AGT-13 | If the tool detects CI or agent env vars (`CI`, `AGENT`, `CLAUDECODE`, ...), they change cosmetics only (color, pager, progress). They never auto-confirm or skip safety checks. | SHOULD (MUST NOT break if detection is implemented) | B A | `rg -n "CLAUDECODE\|AGENT\|CODEX" src/` and read what each hit changes | S38 |
 | AGT-14 | Lookup commands accept several identifiers in one call (`tool show A B C --json` returns one array), so agents don't pay startup, config, and auth cost once per item. | SHOULD | B C A | `tool show <id1> <id2> --json` returns both records in one document | S48 |
+| AGT-15 | Inputs are flags and positional arguments. Structured input, if offered, is an extra path that reads from a file or stdin (`--input spec.json`, `-`), never the only way and never only an inline JSON string, because shell quoting breaks it (worst on PowerShell). | SHOULD | B C A | Read `--help`: every required value has a flag. `rg -n "json.loads\(args\." src/` and check each has a flag equivalent | S57, S16 |
 
 ### 2.6 Errors and logging (ERR)
 
@@ -115,7 +116,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | DEP-01 | An application repo commits `uv.lock` (or another lockfile), and CI installs with `uv sync --locked`. | SHOULD | B C A | `git ls-files uv.lock` and `grep -n "sync --locked" .github/workflows/*` | S8, S24, S25 |
 | DEP-02 | The lockfile matches `pyproject.toml`. | MUST (if a lock exists) | B C A | `uv lock --check` | S8 |
 | DEP-03 | The repo accepts that `uv.lock` only protects dev and CI. `uv tool install`, `pipx`, and `pip install` resolve fresh from the `pyproject.toml` ranges, so those ranges must work alone. Test the lowest direct versions. | SHOULD | B C A | In a scratch copy (it rewrites `uv.lock`): `cp -r . /tmp/lowcheck && cd /tmp/lowcheck && uv sync --resolution lowest-direct && uv run pytest` (docs). In place, finish with `git checkout uv.lock`. | S14, S15, S10 |
-| DEP-04 | A pip path exists. The README documents `pip install .` or `pipx install git+URL`. If a pinned requirements file is needed, it is generated with `uv export --format requirements.txt` and CI checks it is current. Never delete a requirements.txt without documenting the replacement. | SHOULD (MUST in convert mode when requirements.txt is removed) | C A | `grep -nE "pip install\|pipx install" README*`. If the file exists: `uv export --format requirements.txt --no-hashes \| diff - requirements.txt`. | S12, S28, S24 (disputed: disputes.md) |
+| DEP-04 | A pip path exists. The README documents `pip install .` or `pipx install git+URL`. If a pinned requirements file is needed, it is generated with `uv export --format requirements.txt` (or `--format pylock.toml`, the PEP 751 standard) and CI checks it is current. Never delete a requirements.txt without documenting the replacement. | SHOULD (MUST in convert mode when requirements.txt is removed) | C A | `grep -nE "pip install\|pipx install" README*`. If the file exists: `uv export --format requirements.txt --no-hashes \| diff - requirements.txt`. | S12, S28, S24, S59 (disputed: disputes.md) |
 | DEP-05 | A dependency cooldown is set (`[tool.uv] exclude-newer = "7 days"`, which needs uv 0.9.17+), with exceptions listed in `exclude-newer-package`. Any locked version less than about 7 days old has a written reason, for example a security fix. | SHOULD | B C A | `grep -n exclude-newer pyproject.toml`. Check age with `curl -s https://pypi.org/pypi/<pkg>/<ver>/json \| jq -r '.urls[0].upload_time'` | S9, S49 |
 | DEP-06 | CI scans dependencies for known vulnerabilities, with `uv audit --locked` (preview) or `pip-audit`. CI may also set `UV_MALWARE_CHECK=1`. | SHOULD | B C A | `grep -nE "uv audit\|pip-audit" .github/workflows/*` | S13, S24 |
 | DEP-07 | Runtime dependencies are kept minimal. Small tools prefer the stdlib. No dev tool appears in runtime `dependencies`. | SHOULD | B C A | `uv tree --no-dev --depth 1` | S47, S24 |
@@ -158,4 +159,4 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | DIST-02 | `uvx --from git+https://<repo> tool --help` works, so the tool can be tried without installing it. | NICE | B C A | Run it from `/tmp` | S10 |
 | DIST-03 | Convert mode decides whether packaging is warranted at all. One or two independent single-file scripts with few dependencies may be better as PEP 723 scripts (`#!/usr/bin/env -S uv run --script`, `uv lock --script`). | SHOULD | C | Count the scripts, how much code they share, and whether anyone else installs them | S11, S7, S24 |
 
-Total: 93 items (PKG 11, LAY 10, CLI 11, OUT 12, AGT 14, ERR 4, CFG 6, DEP 7, TST 6, CI 3, DOC 6, DIST 3).
+Total: 94 items (PKG 11, LAY 10, CLI 11, OUT 12, AGT 15, ERR 4, CFG 6, DEP 7, TST 6, CI 3, DOC 6, DIST 3).
