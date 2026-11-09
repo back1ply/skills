@@ -2,14 +2,14 @@
 
 On Windows, the `script`, `${PIPESTATUS}`, `timeout --preserve-status`, and `/tmp` lines below are Linux-only. Use `scripts/cli_contract.py` for the behavioural checks instead.
 
-Commands are unescaped and can be copied as-is. Lines marked `# (docs)` are taken from tool documentation; confirm flags against the current docs. Replace `tool`, `pkg`, `<repo>`, and `<wheel>` with real values. Run behavioural checks against a test target only (see Safety in SKILL.md).
+Commands are unescaped and can be copied as-is. Every command here was run against a sample project (Windows, uv 0.11). `actionlint` and `hyperfine` are separate installs. Replace `tool`, `pkg`, `<repo>`, and `<wheel>` with real values. Run behavioural checks against a test target only (see Safety in SKILL.md).
 
 **Packaging and metadata**
 
 ```
-uvx 'validate-pyproject[all]' pyproject.toml          # (docs) schema
-uvx pyproject-fmt --check pyproject.toml              # (docs) formatting
-uvx 'sp-repo-review[cli]' .                           # (docs) PY/PP/GH repo checks
+uvx 'validate-pyproject[all]' pyproject.toml        schema
+uvx pyproject-fmt --check pyproject.toml            formatting
+uvx 'sp-repo-review[cli]' .                         PY/PP/GH repo checks
 uv build
 uvx twine check --strict dist/*
 uvx check-wheel-contents dist/*.whl
@@ -30,21 +30,21 @@ python -m pkg --help
 uv lock --check
 uv sync --locked
 uv audit --locked                                     # preview
-UV_MALWARE_CHECK=1 uv sync --locked                   # (docs) opt-in malware check
+UV_MALWARE_CHECK=1 uv sync --locked                 opt-in malware check
 uv export --format requirements.txt --no-hashes | diff - requirements.txt   # only if requirements.txt is kept
 grep -n "exclude-newer" pyproject.toml
 curl -s https://pypi.org/pypi/<pkg>/<ver>/json | jq -r '.urls[0].upload_time'   # age of a locked version
 # Lowest-bound check rewrites uv.lock, so run it in a scratch copy:
-cp -r . /tmp/lowcheck && cd /tmp/lowcheck && uv sync --resolution lowest-direct && uv run pytest   # (docs)
+cp -r . /tmp/lowcheck && cd /tmp/lowcheck && uv sync --resolution lowest-direct && uv run pytest   # dev deps need lower bounds
 ```
 
 **Lint, tests, CI**
 
 ```
 uv run ruff check . && uv run ruff format --check .
-uv run pytest --script-launch-mode=subprocess         # pytest-console-scripts
-uvx --from cogapp cog --check README.md               # (docs) help text in README is current
-uvx zizmor .github/workflows/                         # (docs)
+uv run --with pytest-console-scripts pytest --script-launch-mode=subprocess
+uv run --with cogapp cog --check README.md   # uv run, so cog's code can call the installed tool             help text in README is current
+uvx zizmor .github/workflows/                      
 actionlint
 ```
 

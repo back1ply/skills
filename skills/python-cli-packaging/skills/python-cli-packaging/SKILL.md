@@ -5,7 +5,7 @@ description: Builds, converts, and audits installable Python command-line tools 
 
 # Python CLI packaging
 
-A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 94 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
+A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 97 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
 
 Pick the mode from the request:
 
@@ -77,7 +77,7 @@ Every mode needs these. Full wording, verification, and sources are in the check
 - AGT-01: data commands take `--json`; stdout is then exactly one JSON document.
 - AGT-04: with no TTY on stdin, never wait for input; fail fast naming the flag to pass.
 - AGT-05: every prompt has a flag equivalent (`--yes`, `--no-input`, a value flag).
-- AGT-10: errors name the bad input and the fix.
+- AGT-10: errors name the bad input and the fix, with valid values or an example.
 
 **Errors and secrets**
 - ERR-01: expected failures print one line on stderr, no traceback.
@@ -112,9 +112,9 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 
 ## References
 
-- [references/checklist.md](references/checklist.md): all 94 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
+- [references/checklist.md](references/checklist.md): all 97 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
 - [references/checks.md](references/checks.md): copy-paste commands and the anti-pattern list. Read it in audit step 2.
 - [references/disputes.md](references/disputes.md): debated choices and research gaps. Read it before overriding a default.
 - [references/patterns.md](references/patterns.md): code shapes for `pyproject.toml`, the entry point, lazy dispatch, a subcommand, safe prompts, tests, and the fresh-install CI step. Read it in convert step 4 and build mode.
-- [references/sources.md](references/sources.md): the 59 sources behind the checklist.
+- [references/sources.md](references/sources.md): the 62 sources behind the checklist.
 - `scripts/cli_contract.py`: cross-platform behavioural checks. Run `--help` for options.

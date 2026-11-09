@@ -1,6 +1,6 @@
 # Python CLI checklist
 
-94 items with stable IDs. Sources: [sources.md](sources.md). Commands in tables escape `|` as `\|`; copy runnable commands from [checks.md](checks.md) instead.
+97 items with stable IDs. Sources: [sources.md](sources.md). Commands in tables escape `|` as `\|`; copy runnable commands from [checks.md](checks.md) instead.
 
 Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode unless the mode column says otherwise. The only items without A are the convert-only LAY-08, DOC-05, and DIST-03.
 
@@ -9,7 +9,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 
 | ID | Item | Sev | Modes | Verify | Source |
 |---|---|---|---|---|---|
-| PKG-01 | `pyproject.toml` has a `[build-system]` table with `requires` and `build-backend`. Without it, `[project.scripts]` does nothing under uv. | MUST | B C A | `grep -A3 '^\[build-system\]' pyproject.toml`, then `uvx 'validate-pyproject[all]' pyproject.toml` (docs) | S7, S23 (PP002), S41 |
+| PKG-01 | `pyproject.toml` has a `[build-system]` table with `requires` and `build-backend`. Without it, `[project.scripts]` does nothing under uv. | MUST | B C A | `grep -A3 '^\[build-system\]' pyproject.toml`, then `uvx 'validate-pyproject[all]' pyproject.toml` | S7, S23 (PP002), S41 |
 | PKG-02 | The `[project]` table has `name`, `version` (or `dynamic`), `description`, `readme`, `requires-python`, `license` as an SPDX string, and a `LICENSE` file is present. | MUST | B C A | `validate-pyproject` passes, `ls LICENSE*`, and `uv build` succeeds | S23 (PY002, PY003, PP005), S27, S41 |
 | PKG-03 | The `requires-python` floor equals the oldest Python version CI actually tests, and the reason for it is written down. It has no upper cap. | MUST | B C A | Compare `grep requires-python pyproject.toml` with the CI `python-version` matrix. `grep -E "requires-python.*<"` must find nothing. | S22, S23 (PP004), S7 |
 | PKG-04 | Runtime `dependencies` use lower bounds. No exact `==` pins (exact pins belong in the lockfile). Any upper cap has a comment explaining it. | SHOULD | B C A | `python -c "import tomllib;print(tomllib.load(open('pyproject.toml','rb'))['project']['dependencies'])"` and look for `==` or `<` | S22 |
@@ -47,7 +47,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | CLI-05 | `tool --version` prints the version to stdout and exits 0. | MUST | B C A | `tool --version; echo $?` | S17, S16, S31 |
 | CLI-06 | Every flag has a long form. Single-letter flags exist only for common options. Flags use conventional names (`--json`, `--quiet`, `--verbose`, `--output`, `--dry-run`, `--force`/`--yes`, `--no-input`, `--no-color`), and names are unambiguous (`--user-id`, not `--user`). | SHOULD | B C A | Read the flag list in `--help` | S16, S17, S34 |
 | CLI-07 | Flags are preferred over positional arguments. Use at most one kind of positional, such as a list of files. | SHOULD | B C A | Read the help. Two different positional types is a smell. | S17, S16, S30 |
-| CLI-08 | A usage error (unknown flag, missing argument, bad choice) exits 2, prints its message on stderr, and leaves stdout empty. | MUST | B C A | `tool --bogus >o 2>e; echo $?` prints 2, `test ! -s o`, `test -s e` | S16, S37, S30 |
+| CLI-08 | A usage error (unknown flag, missing argument, bad choice) exits 2, prints its message on stderr, and leaves stdout empty. | MUST | B C A | `tool --bogus >o 2>e; echo $?` prints 2, `test ! -s o`, `test -s e` | S52, S37, S30 (S16 requires only non-zero) |
 | CLI-09 | A mistyped subcommand or choice gets a suggestion (argparse `suggest_on_error=True` on 3.14+, built into click and typer). Suggestions never run automatically. | NICE | B C A | `tool lsit` suggests `list` | S6, S16 |
 | CLI-10 | `tool --help` starts in roughly 500 ms or less. Heavy imports are deferred to the subcommand that needs them. | SHOULD | B C A | `python -X importtime -c "import pkg.cli" 2>&1 \| sort -t'\|' -k2 -n \| tail -5`, then `hyperfine 'tool --help'` | S17 (100–500 ms target), S47 |
 | CLI-11 | Where a file is expected, `-` means stdin or stdout. | NICE | B C A | `echo data \| tool cmd -` | S16, S33 |
@@ -73,7 +73,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 
 | ID | Item | Sev | Modes | Verify | Source |
 |---|---|---|---|---|---|
-| AGT-01 | Every data-returning command has `--json` (or `--format json`). With it, stdout holds exactly one valid JSON document (or NDJSON for streams) and nothing else. | MUST | B C A | `tool cmd --json \| python -c "import json,sys;json.load(sys.stdin)"` | S16, S30, S35, S36, S37, S39 |
+| AGT-01 | Every data-returning command has `--json` (or `--format json`). With it, stdout holds exactly one valid JSON document and nothing else. Use NDJSON only for real streams: in one measured test JSONL cost 2.6x more than a single JSON document with worse results. | MUST | B C A | `tool cmd --json \| python -c "import json,sys;json.load(sys.stdin)"` | S16, S30, S35, S36, S37, S39, S61 |
 | AGT-02 | The JSON shape is a documented, stable contract: field names are consistent across commands, the structure is flat, and changes are additive only. | SHOULD | B C A | Schema or examples in the docs, plus the TST-04 contract test | S16 (future-proofing), S30, S37 |
 | AGT-03 | Failures stay machine-detectable in `--json` mode: a non-zero exit plus a parseable error with a code and message. A `transient`/retryable hint is a plus. | SHOULD | B C A | `tool cmd --json --bad-input; echo $?` returns non-zero with a parseable error (stream: disputes.md) | S30, S36, S37 |
 | AGT-04 | The tool never blocks waiting for input when stdin is not a TTY. It shows no prompt, and fails fast with a message naming the flag to pass. | MUST | B C A | `timeout 10 tool <each-cmd> </dev/null; echo $?` is never 124 | S16, S17 (factor 7), S30, S35, S36, S37 |
@@ -82,12 +82,14 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | AGT-07 | Mutating commands are idempotent, or report "already exists" as a distinct result. Re-running after an interruption is safe. | SHOULD | B C A | Run the same create or apply command twice: the second run succeeds or returns the documented conflict code | S16 (robustness), S30, S36, S37 |
 | AGT-08 | Output is bounded: list and search commands have a default limit, accept `--limit` and filters, and print a hint on truncation explaining how to get more. Field selection or `--quiet` bare values are a plus. | SHOULD | B C A | `tool list` against a large dataset prints at most N items plus a hint (on stderr) | S34, S36, S30, S39, S37 |
 | AGT-09 | Mutations print the identifier or path of what they created or changed, so the next command can chain on it. | SHOULD | B C A | `tool create --json \| jq -r .id` | S30, S36, S37 |
-| AGT-10 | Errors are actionable: what failed, the offending input, and the fix (valid values or the exact command to run). | MUST | B C A | Trigger 3 common errors and check each message names the input and a next step | S16, S17, S34, S36, S37 |
+| AGT-10 | Errors are actionable: what failed, the offending input, and the fix, with the list of valid values or an example. Agents treat errors as the spec and guess until something passes when values are missing. | MUST | B C A | Trigger 3 common errors and check each message names the input and a next step | S16, S17, S34, S36, S37, S61 |
 | AGT-11 | "No results" (exit 0, empty list or `[]`) is distinguishable from "query failed" (non-zero, error object). Carry the difference in the JSON, not in a special exit code. | SHOULD | B C A | Run a query that matches nothing (`echo $?` prints 0, `--json` prints `[]`) and one that fails (non-zero) | S48, S16 |
 | AGT-12 | `--help` alone is enough for an agent to use the tool: subcommands, required vs optional arguments, defaults, an example, a mention of `--json`, and exit codes. | SHOULD | B C A | Give an agent only `tool --help` and see whether it can complete a typical task | S19, S37, S35, S36 |
 | AGT-13 | If the tool detects CI or agent env vars (`CI`, `AGENT`, `CLAUDECODE`, ...), they change cosmetics only (color, pager, progress). They never auto-confirm or skip safety checks. | SHOULD (MUST NOT break if detection is implemented) | B A | `rg -n "CLAUDECODE\|AGENT\|CODEX" src/` and read what each hit changes | S38 |
 | AGT-14 | Lookup commands accept several identifiers in one call (`tool show A B C --json` returns one array), so agents don't pay startup, config, and auth cost once per item. | SHOULD | B C A | `tool show <id1> <id2> --json` returns both records in one document | S48 |
 | AGT-15 | Inputs are flags and positional arguments. Structured input, if offered, is an extra path that reads from a file or stdin (`--input spec.json`, `-`), never the only way and never only an inline JSON string, because shell quoting breaks it (worst on PowerShell). | SHOULD | B C A | Read `--help`: every required value has a flag. `rg -n "json.loads\(args\." src/` and check each has a flag equivalent | S57, S16 |
+| AGT-16 | Every set of choices (plugins, templates, formats, profiles, enum values) can be listed by a command or appears in `--help`, so agents don't reverse-engineer it. | SHOULD | B C A | For each option that takes a name, find the command or help text that lists valid names | S61, S39 |
+| AGT-17 | Operations that finish after the command returns offer a completion signal: block by default, or provide `--wait` or a status command. | SHOULD (if async work exists) | B C A | Start the operation and check that you can tell when it is done without polling files or sleeping | S61 |
 
 ### 2.6 Errors and logging (ERR)
 
@@ -115,7 +117,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 |---|---|---|---|---|---|
 | DEP-01 | An application repo commits `uv.lock` (or another lockfile), and CI installs with `uv sync --locked`. | SHOULD | B C A | `git ls-files uv.lock` and `grep -n "sync --locked" .github/workflows/*` | S8, S24, S25 |
 | DEP-02 | The lockfile matches `pyproject.toml`. | MUST (if a lock exists) | B C A | `uv lock --check` | S8 |
-| DEP-03 | The repo accepts that `uv.lock` only protects dev and CI. `uv tool install`, `pipx`, and `pip install` resolve fresh from the `pyproject.toml` ranges, so those ranges must work alone. Test the lowest direct versions. | SHOULD | B C A | In a scratch copy (it rewrites `uv.lock`): `cp -r . /tmp/lowcheck && cd /tmp/lowcheck && uv sync --resolution lowest-direct && uv run pytest` (docs). In place, finish with `git checkout uv.lock`. | S14, S15, S10 |
+| DEP-03 | The repo accepts that `uv.lock` only protects dev and CI. `uv tool install`, `pipx`, and `pip install` resolve fresh from the `pyproject.toml` ranges, so those ranges must work alone. Test the lowest direct versions. Dev-group entries need lower bounds too (`pytest>=8`), or the lowest-version test installs ancient releases that fail to build. | SHOULD | B C A | In a scratch copy (it rewrites `uv.lock`): `cp -r . /tmp/lowcheck && cd /tmp/lowcheck && uv sync --resolution lowest-direct && uv run pytest`. In place, finish with `git checkout uv.lock`. | S14, S15, S10 |
 | DEP-04 | A pip path exists. The README documents `pip install .` or `pipx install git+URL`. If a pinned requirements file is needed, it is generated with `uv export --format requirements.txt` (or `--format pylock.toml`, the PEP 751 standard) and CI checks it is current. Never delete a requirements.txt without documenting the replacement. | SHOULD (MUST in convert mode when requirements.txt is removed) | C A | `grep -nE "pip install\|pipx install" README*`. If the file exists: `uv export --format requirements.txt --no-hashes \| diff - requirements.txt`. | S12, S28, S24, S59 (disputed: disputes.md) |
 | DEP-05 | A dependency cooldown is set (`[tool.uv] exclude-newer = "7 days"`, which needs uv 0.9.17+), with exceptions listed in `exclude-newer-package`. Any locked version less than about 7 days old has a written reason, for example a security fix. | SHOULD | B C A | `grep -n exclude-newer pyproject.toml`. Check age with `curl -s https://pypi.org/pypi/<pkg>/<ver>/json \| jq -r '.urls[0].upload_time'` | S9, S49 |
 | DEP-06 | CI scans dependencies for known vulnerabilities, with `uv audit --locked` (preview) or `pip-audit`. CI may also set `UV_MALWARE_CHECK=1`. | SHOULD | B C A | `grep -nE "uv audit\|pip-audit" .github/workflows/*` | S13, S24 |
@@ -137,7 +139,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | ID | Item | Sev | Modes | Verify | Source |
 |---|---|---|---|---|---|
 | CI-01 | CI runs `astral-sh/setup-uv`, `uv sync --locked`, `ruff check`, `ruff format --check`, `pytest`, and the build checks (PKG-07, PKG-08, TST-03). Adding a type checker (ty, mypy, or pyright) is a plus. | SHOULD | B C A | Read `.github/workflows/*.yml` | S24, S8, S25 |
-| CI-02 | Workflows pin actions to SHAs (or keep them updated with Dependabot) and declare least-privilege `permissions:`. Lint them with actionlint and zizmor. | SHOULD | B C A | `uvx zizmor .github/workflows/` (docs). `grep -n "permissions:" .github/workflows/*` | S25, S24, S23 (GH200, GH210, GH211) |
+| CI-02 | Workflows pin actions to SHAs (or keep them updated with Dependabot) and declare least-privilege `permissions:`. Lint them with actionlint and zizmor. | SHOULD | B C A | `uvx zizmor .github/workflows/`. `grep -n "permissions:" .github/workflows/*` | S25, S24, S23 (GH200, GH210, GH211) |
 | CI-03 | Publishing uses PyPI Trusted Publishing (OIDC), not a long-lived API token. | SHOULD (if publishing) | B A | `grep -n "pypa/gh-action-pypi-publish\|id-token: write" .github/workflows/*` and no `PYPI_TOKEN` secret | S23 (GH105), S20, S27 |
 
 ### 2.11 Docs and README (DOC)
@@ -149,7 +151,7 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | DOC-03 | The README documents exit codes, env vars, config file locations, and the `--json` output shape. | SHOULD | B C A | grep the README for those sections | S16, S30, S37 |
 | DOC-04 | There is a changelog and the project follows SemVer. Flags, subcommands, exit codes, and JSON fields count as public API: breaking changes bump the major version and first get a deprecation warning on stderr. | SHOULD | B C A | `ls CHANGELOG*`, then `git log -p` on the CLI module for renamed flags | S18, S16, S30, S31 |
 | DOC-05 | Convert mode records a migration map from old invocations (`python script_a.py --x`) to new ones (`tool a --x`). Shims stay for one release if other people or scripts call the old names. | SHOULD | C | Look for a migration section in the README or CHANGELOG | S30, S16 |
-| DOC-06 | Ship a short AGENTS.md section or agent skill that leads with usage: the 3–7 core tasks, which commands are safe for agents, and which ones are destructive or cost money (paid APIs, tokens), with the cheaper alternative. Keep it short; a short opinionated guide beats a long reference. | SHOULD | B C A | Look for `AGENTS.md` or `SKILL.md` and check it starts with usage, not contribution rules | S35, S19, S48, S50, S55 |
+| DOC-06 | Ship a short AGENTS.md section or agent skill that leads with usage: the 3–7 core tasks, which commands are safe for agents, and which ones are destructive or cost money (paid APIs, tokens), with the cheaper alternative. Keep it short; a short opinionated guide beats a long reference. Write steering as warnings about what fails ("X breaks the build; use Y"), because agents ignore optional tips. | SHOULD | B C A | Look for `AGENTS.md` or `SKILL.md` and check it starts with usage, not contribution rules | S35, S19, S48, S50, S55, S61 |
 
 ### 2.12 Distribution and install paths (DIST)
 
@@ -158,5 +160,6 @@ Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode
 | DIST-01 | `uv tool install .` and `pipx install .` install the tool into an isolated environment and put the command on PATH. | MUST | B C A | `uv tool install . && tool --version && uv tool uninstall <dist>` | S1, S10 |
 | DIST-02 | `uvx --from git+https://<repo> tool --help` works, so the tool can be tried without installing it. | NICE | B C A | Run it from `/tmp` | S10 |
 | DIST-03 | Convert mode decides whether packaging is warranted at all. One or two independent single-file scripts with few dependencies may be better as PEP 723 scripts (`#!/usr/bin/env -S uv run --script`, `uv lock --script`). | SHOULD | C | Count the scripts, how much code they share, and whether anyone else installs them | S11, S7, S24 |
+| DIST-04 | Internal tools document one pinned install path: a private index with `==`, a git URL at a tag or full commit SHA, or a wheel URL, plus the upgrade command (`@latest` or the new tag). | SHOULD (internal tools) | B C A | Read the install section for a pinned command and an upgrade command | S60, S10 |
 
-Total: 94 items (PKG 11, LAY 10, CLI 11, OUT 12, AGT 15, ERR 4, CFG 6, DEP 7, TST 6, CI 3, DOC 6, DIST 3).
+Total: 97 items (PKG 11, LAY 10, CLI 11, OUT 12, AGT 17, ERR 4, CFG 6, DEP 7, TST 6, CI 3, DOC 6, DIST 4).

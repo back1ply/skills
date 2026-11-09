@@ -38,7 +38,7 @@ dependencies = ["httpx>=0.27"]          # lower bounds, no == pins
 mytool = "mytool.cli:main"
 
 [dependency-groups]
-dev = ["pytest", "ruff"]
+dev = ["pytest>=8", "ruff>=0.6"]            # lower bounds, so lowest-version tests work
 
 [tool.uv]
 exclude-newer = "7 days"                # dependency cooldown (DEP-05)
