@@ -1,0 +1,11 @@
+{
+  "name": "python-cli-packaging",
+  "description": "Build, convert, and audit installable Python CLIs that work for humans and AI agents, with a 93-item sourced checklist",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": ["python", "cli", "packaging", "uv", "pyproject", "ai-agents"]
+}

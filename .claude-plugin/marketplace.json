@@ -432,6 +432,21 @@
         "claude-code"
       ],
       "category": "skills"
+    },
+    {
+      "name": "python-cli-packaging",
+      "description": "Build, convert, and audit installable Python CLIs for humans and AI agents. Use when packaging scripts into a CLI, reviewing a CLI repo, or making one agent-friendly.",
+      "source": "./skills/python-cli-packaging",
+      "license": "MIT",
+      "keywords": [
+        "python",
+        "cli",
+        "packaging",
+        "uv",
+        "pyproject",
+        "ai-agents"
+      ],
+      "category": "code-quality"
     }
   ]
 }
