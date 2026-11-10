@@ -171,7 +171,7 @@ AND region = '{{ params.region }}'
 
 **Problem**: Monolithic DAGs are fragile
 
-**Pattern**: Break into micro-DAGs
+**Pattern**: Break into micro-DAGs, orchestrated by a meta-DAG. Treat pipelines like microservices: each DAG should be autonomous, able to run independently and in parallel, so one failure doesn't take down the rest.
 
 ```text
 Meta-DAG (orchestrates other DAGs):
@@ -181,12 +181,28 @@ Meta-DAG (orchestrates other DAGs):
   └── Validation DAG
 ```
 
+The book's Figure 3-4 shows the shape in more detail. A parent job runs its own tasks, and specific tasks trigger whole child jobs that have their own internal fan-out and fan-in:
+
+```text
+Parent job:
+  T1 → T2 ─┐
+       T3 ─┴→ T4 ─┬→ T5 → T7
+                  └→ T6 → T8
+  T2 triggers Child job 1:  T1 → (T2, T3 in parallel) → T4
+  T5 triggers Child job 2:  (T1, T2 in parallel) → T3
+```
+
+- The parent owns the sequence and the hand-off points (T2 and T5 here). Each child owns its internal steps.
+- Each child can be developed, tested, monitored and rerun on its own.
+- Keep cross-job dependencies few and explicit, so children can run in parallel.
+
 **Benefits**:
 
-- Isolated failures
-- Easier debugging
+- Isolated failures (critical failures stay contained)
+- Easier debugging and monitoring
 - Independent development
 - Selective reruns
+- Better error handling and scalability
 
 ---
 

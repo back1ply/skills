@@ -238,6 +238,16 @@ Horizontal scaling = More machines/nodes
 Vertical scaling = Bigger machines/nodes
 ```
 
+### Developer Experience (DevEx)
+
+Efficiency also covers the team building the pipelines. The book uses the three "core dimensions" of DevEx from Noda et al. (2022):
+
+| Dimension | What it means | Questions to ask |
+| --------- | ------------- | ---------------- |
+| **Feedback loops** | Speed and quality of responses to your actions | Can you develop a DAG locally? Do you see a change's effect on the system and the data right away? Aim for a "frontend DevEx": edit in one window, see results live, deploy in a few commands. |
+| **Cognitive load** | Mental effort a task requires | How hard is it to set up a local environment, create a new dbt model, or understand existing tables and metadata? Are you switching between seven tools? Simplify config and builds. |
+| **Flow state** | Focused, immersed, enjoyable work | Follows from meaningful work, short feedback loops and low cognitive load. Tune systems for fast, low-stress development. |
+
 ---
 
 ## Decision Framework
