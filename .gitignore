@@ -6,6 +6,7 @@
 !.gitattributes
 !LICENSE
 !README.md
+!AGENTS.md
 
 # Plugin manifest
 !.claude-plugin/
