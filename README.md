@@ -1,6 +1,6 @@
 # Skills
 
-33 agent skills in 31 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
+34 agent skills in 32 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -53,7 +53,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `arjancodes-playbook` | Pythonic design patterns, clean architecture, typing, and testing (from ArjanCodes). Use when choosing or implementing a design pattern in Python. |
 | `quality-pass` | One-command quality pass that sends each changed file to the best installed review skill. Use after changing code and before committing. |
 | `designite-skills` | Designite-style code smell analysis for Java, C#, and Python with open-source tools. Use for design-smell, architecture-smell, or technical-debt reviews. ([README](skills/designite-skills/README.md)) |
-| `python-cli-packaging` | Build, convert, and audit installable Python CLIs that work for humans and AI agents (97-item sourced checklist). Use when packaging scripts into one command, reviewing a CLI repo, or making a CLI agent-friendly. |
+| `python-cli-packaging` | Build, convert, and audit installable Python CLIs for humans and AI agents. Use when packaging scripts into a CLI, reviewing a CLI repo, or making one agent-friendly. |
 
 ### Working with coding agents
 
@@ -67,6 +67,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `agent-orchestration-checklist` | Hand big coding tasks to an orchestrator agent and judge the result without reading every line. Use before delegating large work to sub-agents. |
 | `ai-readiness` | Score a repository, product, or team estate across 20 AI-readiness dimensions using evidence. Use to assess readiness for coding agents, find weak spots, or compare codebases. |
 | `impatient-programming` | XP's 29 rules rewritten for teams building with coding agents (Impatient Programming). Use when setting up how a team works with agents, tests, and merges. ([README](skills/impatient-programming/README.md)) |
+| `lean-spec` | Lightweight Markdown specs for coding agents: a Kiro-style bugfix template, spec deltas, and same-commit sync. Use instead of a spec framework when fixing bugs or changing features in existing code. |
 
 ### Backend, infrastructure, and security
 
@@ -88,10 +89,10 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 |---|---|
 | `skill-finder` | Find skills, plugins, and MCP servers for a task by searching GitHub and marketplaces. Use when you lack a tool for something. |
 | `skill-curator` | Audit, improve, and maintain a skill library: duplicates, overlaps, gaps, and conflicts. Use when reviewing installed skills. |
-| `detox` | Audit and clean up a Claude setup (chats, memory, skills, connectors, scheduled tasks) from one checklist page. Use when your setup feels bloated. |
 | `skill-publisher` | Package a skill repo for the Claude Code marketplace and skills.sh, then open a PR. Use when publishing a skill or adding install support. |
 | `youtube-to-skill` | Turn YouTube videos, playlists, or channels into agent skills, or answer questions about a video. Use when sharing a YouTube link. ([README](skills/youtube-to-skill/README.md)) |
 | `article-to-skill` | Turn articles, blog posts, and docs pages into agent skills, or answer questions about an article. Use when sharing an article or blog URL. |
+| `detox` | Audit and clean up a Claude setup (chats, memory, skills, connectors, scheduled tasks) from one checklist page. Use when your setup feels bloated. |
 
 ### quality-pass: works best with
 
@@ -170,5 +171,3 @@ To add a skill: create `skills/<plugin>/` with `plugin.json` and `skills/<name>/
 ## License
 
 MIT (see [LICENSE](LICENSE)), except `impatient-programming`, which is CC BY 4.0 (see its [LICENSE](skills/impatient-programming/LICENSE) and [NOTICE](skills/impatient-programming/NOTICE.md)).
-
-`ai-readiness` is UNLICENSED and is excluded from the repository's MIT license. Its source material has separate restrictions: see its [NOTICE](skills/ai-readiness/NOTICE.md).

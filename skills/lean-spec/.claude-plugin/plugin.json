@@ -1,0 +1,16 @@
+{
+  "name": "lean-spec",
+  "description": "Lightweight Markdown specs for coding agents: a bugfix template, spec deltas, and same-commit sync, without a spec framework",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "spec-driven-development",
+    "specs",
+    "bugfix",
+    "ai-agents"
+  ]
+}
