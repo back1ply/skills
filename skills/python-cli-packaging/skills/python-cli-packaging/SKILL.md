@@ -5,7 +5,7 @@ description: Builds, converts, and audits installable Python command-line tools 
 
 # Python CLI packaging
 
-A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 98 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
+A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 99 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
 
 Pick the mode from the request:
 
@@ -27,21 +27,26 @@ Behavioural checks run real commands. Run read-only commands first (`--help`, `-
    ```
    python <skill-dir>/scripts/cli_contract.py --cmd "uv run tool" --sub <each-sub> --run "<safe args>" --json-run "<args> --json"
    ```
-   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. On Windows, pass paths as `F:/...`; Git Bash's `/f/...` form fails when the script launches the command, and run the script under `PYTHONUTF8=0 env -u PYTHONIOENCODING` so the cp1252 crash users hit shows up (OUT-12; Python 3.15+ enables UTF-8 mode by default). The script always sends `--help`, `--version`, and an unknown flag to the root and `--help` to each `--sub`; confirm from the source that those probes are harmless first. Then do the fresh-install test (TST-03): `uv build`, then run `uvx --from dist/<wheel>.whl tool --help` from a directory outside the repo.
-4. **Report.** One table row per MUST and SHOULD item: `ID | status | evidence`. Status is `pass`, `fail`, `n/a` (with a reason), or `not checked` (with a reason). Evidence is a command plus its result, or `file:line`. List fails MUST first, then SHOULD, each with a concrete fix. Add NICE items only when they fail cheaply.
+   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. On Windows, pass paths as `F:/...`; Git Bash's `/f/...` form fails when the script launches the command. `--cmd` and `--run` are split like a shell line, so quote paths with spaces inside them (`--cmd "uvx --from 'F:/My Projects/dist/x.whl' tool"`), and run the script under `PYTHONUTF8=0 env -u PYTHONIOENCODING` so the cp1252 crash users hit shows up (OUT-12; Python 3.15+ enables UTF-8 mode by default). The script always sends `--help`, `--version`, and an unknown flag to the root, and `--help` and an unknown flag to each `--sub`; confirm from the source that those probes are harmless first. Then do the fresh-install test (TST-03): `uv build`, then from a directory outside the repo rerun the script with `--cmd "uvx --from <repo>/dist/<wheel>.whl tool"`, every `--sub`, and one safe `--run` that touches bundled data. Root `--help` alone imports no subcommand, so it can't catch a missing dependency.
+4. **Report.** Spend the words on what's broken:
+   - **Fails**, MUST first, then SHOULD: a table row `ID | evidence | fix`. Evidence is a command plus its result, or `file:line`. The fix is concrete.
+   - **Not checked**: `ID | reason | what would check it`.
+   - **n/a**: grouped by cause, one line each ("no network calls: CFG-06", "no prompts: AGT-04, AGT-05").
+   - **Passes**: one line each, `ID: evidence`. No table.
+   Add NICE items only when they fail cheaply.
 
-The audit is done when every MUST and SHOULD ID has a row. No item is skipped silently.
+The audit is done when every MUST and SHOULD ID appears in exactly one of those four lists. No item is skipped silently.
 
 ## Convert
 
 1. **Decide whether to package (DIST-03).** One or two independent scripts with few dependencies may be better as PEP 723 scripts (`uv run --script`). Package when there are several related tools, shared code, or other users.
-2. **Inventory and record.** Write down every current invocation (`python a.py X Y`), its arguments, exit codes, and how the scripts import each other. Sibling imports (`from a import x`) must become package imports.
-3. **Restructure.** Use `src/<project_name>/` with a project-specific package name (PKG-09). Add `pyproject.toml` with `[project]`, `[build-system]`, `[project.scripts]`, and a `dev` dependency group. Set `requires-python` to the oldest version CI tests (PKG-03).
+2. **Inventory and record.** List every current invocation (`python a.py X Y`) and how the scripts import each other. Sibling imports (`from a import x`) must become package imports. Then capture the old behaviour before touching code: write a small script that runs each safe invocation against fixture files and saves its exit code, stdout, and stderr. Step 8 reruns it with the new commands and diffs the results, which is how DOC-05 gets checked.
+3. **Restructure.** Use `src/<project_name>/` with a project-specific package name (PKG-09). Add `pyproject.toml` with `[project]`, `[build-system]`, `[project.scripts]`, and a `dev` dependency group. Set `requires-python` to the oldest version the code supports, and prove it with `uv run --python <floor> pytest` (PKG-03). Run `uvx deptry src/` so every third-party import is declared (DEP-08).
 4. **Rewrite each tool** to `build_parser()` plus `main(argv=None) -> int`, following [references/patterns.md](references/patterns.md). Keep core logic importable without argparse. Dispatch subcommands in-process through a lazy `"module:function"` map, never through `subprocess` (LAY-07). Add `__main__.py`.
 5. **Add the agent contract** from the MUST list below: streams, exit codes, `--json`, no prompts without a TTY.
-6. **Tests and CI.** One `main([...])` test per subcommand (TST-01), a test that resolves every dispatch-map entry (LAY-06), the fresh-install test (TST-03), and CI with `astral-sh/setup-uv` and `uv sync --locked`.
+6. **Tests and CI.** One `main([...])` test per subcommand that checks captured stdout and stderr (TST-01), a test that resolves every dispatch-map entry (LAY-06), the fresh-install test (TST-03), and CI with `astral-sh/setup-uv` and `uv sync --locked`.
 7. **Docs.** README install paths for uv, pipx, and pip (DOC-01, DEP-04), exit codes, and a migration map from old to new invocations (DOC-05). Optionally add a `justfile` with `setup`, `test`, `lint`, and `check` recipes that wrap `uv run`.
-8. **Verify** by running the audit steps 2–3 on the result.
+8. **Verify** by running the audit steps 2–3 on the result, then rerun the step 2 recording script with the new commands and diff.
 
 Convert is done when every MUST passes, the fresh-install test passes from outside the repo, and each old invocation has a documented replacement.
 
@@ -56,7 +61,7 @@ Every mode needs these. Full wording, verification, and sources are in the check
 **Packaging**
 - PKG-01: `[build-system]` table present; without it uv ignores `[project.scripts]`.
 - PKG-02: `[project]` has name, version, description, readme, requires-python, SPDX license; `LICENSE` file exists.
-- PKG-03: `requires-python` floor equals the oldest Python in CI, with a written reason; no upper cap.
+- PKG-03: the `requires-python` floor passes the tests (`uv run --python <floor> pytest`); no upper cap.
 - PKG-09: top-level import package has a project-specific name, never `tools`, `utils`, `scripts`, `cli`, `app`, `lib`, `common`, or `src`.
 
 **Entry points**
@@ -87,9 +92,10 @@ Every mode needs these. Full wording, verification, and sources are in the check
 
 **Dependencies, tests, distribution**
 - DEP-02: `uv lock --check` passes when a lockfile exists.
+- DEP-08: every third-party import in shipped code is a declared runtime dependency (`uvx deptry`).
 - DEP-04 (convert): if `requirements.txt` is removed, the README documents `pip install .` or `pipx install`.
-- TST-01: each subcommand has a test asserting exit code, stdout, and stderr separately.
-- TST-03: wheel installs into a clean env and `tool --help` runs from outside the repo.
+- TST-01: each subcommand has a test asserting exit code and captured stdout and stderr separately.
+- TST-03: from outside the repo, the installed wheel runs `--help` on the root and every subcommand, plus one real command.
 - DOC-01: README shows install commands for each supported path and the command name.
 - DIST-01: `uv tool install .` and `pipx install .` put the command on PATH.
 
@@ -104,7 +110,7 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 - **New releases:** set `[tool.uv] exclude-newer = "7 days"`; justify any locked version newer than that (DEP-05).
 - **Exit codes:** 0 success, 1 failure, 2 usage. Add more only for failure classes a caller would branch on, and document them.
 - **Input:** flags and positional arguments. Structured input, if any, comes from a file or stdin, never only an inline JSON string (AGT-15).
-- **JSON output:** explicit `--json`, never switched on automatically by piping. In `--json` mode, errors go to stderr as JSON with a non-zero exit.
+- **JSON output:** explicit `--json`, never switched on automatically by piping. In `--json` mode, runtime errors go to stderr as one JSON object (`{"error": {"code", "message"}}`) with a non-zero exit; usage errors stay argparse text with exit 2 (AGT-03).
 - **Prompts:** allowed when stdin and stdout are TTYs, as long as every prompt has a flag.
 - **Agent env vars** (`CLAUDECODE`, `CI`): may change cosmetics only, never confirm actions.
 - **CLI vs MCP:** build the CLI first, with a short usage guide for agents (DOC-06). Add an MCP server when users need OAuth, remote access, or have no shell.
@@ -112,7 +118,7 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 
 ## References
 
-- [references/checklist.md](references/checklist.md): all 98 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
+- [references/checklist.md](references/checklist.md): all 99 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
 - [references/checks.md](references/checks.md): copy-paste commands and the anti-pattern list. Read it in audit step 2.
 - [references/disputes.md](references/disputes.md): debated choices and research gaps. Read it before overriding a default.
 - [references/patterns.md](references/patterns.md): code shapes for `pyproject.toml`, the entry point, lazy dispatch, a subcommand, safe prompts, tests, and the fresh-install CI step. Read it in convert step 4 and build mode.

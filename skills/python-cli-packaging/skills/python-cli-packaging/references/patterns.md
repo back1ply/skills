@@ -22,7 +22,7 @@ tests/
 
 ```toml
 [build-system]
-requires = ["uv_build"]                 # or hatchling, setuptools
+requires = ["uv_build>=0.13,<0.14"]     # cap at the next minor (PKG-01); no patch pin, or exclude-newer can block it
 build-backend = "uv_build"
 
 [project]
@@ -31,7 +31,8 @@ version = "0.1.0"
 description = "One line saying what mytool does"
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.11"              # oldest version CI tests; reason: tomllib
+license-files = ["LICENSE"]             # PEP 639 (PKG-02)
+requires-python = ">=3.11"              # proven: uv run --python 3.11 pytest (PKG-03)
 dependencies = ["httpx>=0.27"]          # lower bounds, no == pins
 
 [project.scripts]
@@ -42,15 +43,21 @@ dev = ["pytest>=8", "ruff>=0.6"]            # lower bounds, so lowest-version te
 
 [tool.uv]
 exclude-newer = "7 days"                # dependency cooldown (DEP-05)
+
+# Only when the package name differs from the normalized project name,
+# e.g. dist "my-tool" with package "mytool" (PKG-09):
+# [tool.uv.build-backend]
+# module-name = "mytool"
 ```
 
-## Entry point and dispatch (LAY-02, LAY-07, CLI-08)
+## Entry point and dispatch (LAY-02, LAY-07, CLI-01, CLI-08, OUT-12)
 
 ```python
 # src/mytool/cli.py
 import argparse
 import importlib
 import importlib.metadata
+import os
 import sys
 
 # Lazy "module:function" map: a subcommand's heavy imports load only when it runs.
@@ -60,33 +67,37 @@ COMMANDS = {
 }
 
 
+def configure_streams():
+    """OUT-12: Windows pipes default to cp1252, so non-ASCII output or error text crashes."""
+    if os.environ.get("PYTHONIOENCODING"):   # the caller chose an encoding; keep it
+        return
+    for stream, errors in ((sys.stdout, "strict"), (sys.stderr, "backslashreplace")):
+        if hasattr(stream, "reconfigure"):   # StringIO in tests has no reconfigure
+            stream.reconfigure(encoding="utf-8", errors=errors)
+
+
 def build_parser():
-    parser = argparse.ArgumentParser(prog="mytool", description="What mytool does.")
+    parser = argparse.ArgumentParser(prog="mytool", description="What mytool does.",
+                                     epilog="Run 'mytool COMMAND --help' for command options.")
     parser.add_argument("--version", action="version",
                         version=importlib.metadata.version("mytool"))
-    parser.add_argument("command", choices=COMMANDS, metavar="COMMAND",
-                        help=", ".join(f"{k}: {v[1]}" for k, v in COMMANDS.items()))
+    sub = parser.add_subparsers(dest="command", metavar="COMMAND", required=True)
+    for name, (_, help_text) in COMMANDS.items():
+        sub.add_parser(name, help=help_text, add_help=False)  # the command's own parser owns --help
     return parser
 
 
 def main(argv=None):
-    if hasattr(sys.stdout, "reconfigure"):    # StringIO in tests has no reconfigure
-        sys.stdout.reconfigure(encoding="utf-8")  # OUT-12: piped output on Windows is cp1252 otherwise
-    argv = list(sys.argv[1:] if argv is None else argv)
-    if not argv:
-        build_parser().print_help(sys.stderr)
-        return 2
-    if argv[0] not in COMMANDS:
-        build_parser().parse_args(argv[:1])   # argparse prints the error to stderr and exits 2
-    target, _ = COMMANDS[argv[0]]
-    module_name, _, func_name = target.partition(":")
+    configure_streams()
+    args, rest = build_parser().parse_known_args(argv)  # no command or unknown command: stderr, exit 2
+    module_name, _, func_name = COMMANDS[args.command][0].partition(":")
     func = getattr(importlib.import_module(module_name), func_name)
-    return func(argv[1:])
+    return func(rest)  # the command's parser handles its flags, --help, and unknown flags
 ```
 
-Unknown flags and commands must reach argparse's error path, which writes to stderr and exits 2. Printing help to stdout for an unknown flag fails CLI-08.
+The root parser only picks the command; everything after it goes to that command's own `build_parser()`, so `mytool export --help` shows export's help and `mytool export --bogus` gets export's usage error on stderr with exit 2. Root options go before the command (`mytool --version`). Printing help to stdout for an unknown flag fails CLI-08.
 
-## A subcommand (OUT-01, ERR-01, AGT-01)
+## A subcommand (OUT-01, ERR-01, AGT-01, AGT-03)
 
 ```python
 # src/mytool/commands/export.py
@@ -106,13 +117,22 @@ def build_parser():
     return parser
 
 
+def fail(args, code, message):
+    """One-line error on stderr; one JSON object instead under --json (AGT-03)."""
+    if args.json:
+        json.dump({"error": {"code": code, "message": message}}, sys.stderr)
+        sys.stderr.write("\n")
+    else:
+        print(f"error: {message}", file=sys.stderr)
+    return 1
+
+
 def main(argv=None):
-    args = build_parser().parse_args(argv)
+    args = build_parser().parse_args(argv)  # usage errors: argparse text on stderr, exit 2
     try:
         records = load_records(args.source, limit=args.limit)
     except FileNotFoundError:
-        print(f"error: {args.source} not found; pass an existing JSON file", file=sys.stderr)
-        return 1
+        return fail(args, "not_found", f"{args.source} not found; pass an existing JSON file")
     if args.json:
         json.dump(records, sys.stdout)
         sys.stdout.write("\n")
@@ -126,7 +146,7 @@ if __name__ == "__main__":
     raise SystemExit(main())
 ```
 
-Data goes to stdout, every message to stderr. Expected failures print one line naming the input and the fix, then return non-zero.
+Data goes to stdout, every message to stderr. Expected failures print one line naming the input and the fix, then return non-zero. Under `--json` the same failure is one JSON object on stderr, so an agent can parse it; stdout stays empty.
 
 ## `__main__.py` (LAY-04)
 
@@ -189,9 +209,14 @@ def test_unknown_flag_exits_2_on_stderr(capsys):
 ## Fresh-install check in CI (TST-03)
 
 ```yaml
-- run: uv build
+- run: uv build                          # builds the wheel from the sdist, so both are tested
 - run: |
     cd "$RUNNER_TEMP"
-    uvx --from "$GITHUB_WORKSPACE"/dist/*.whl mytool --help
-    uvx --from "$GITHUB_WORKSPACE"/dist/*.whl mytool --version
+    run() { uvx --from "$GITHUB_WORKSPACE"/dist/*.whl mytool "$@"; }
+    run --help
+    run --version
+    for sub in export; do run "$sub" --help; done   # imports every subcommand module
+    run export "$GITHUB_WORKSPACE"/tests/fixtures/data.json --json   # one real command
 ```
+
+Root `--help` alone imports no subcommand module, so a missing dependency or data file would still pass.

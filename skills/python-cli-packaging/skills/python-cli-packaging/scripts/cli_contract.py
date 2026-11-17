@@ -11,7 +11,7 @@ Only pass --run / --json-run commands that are safe to execute (read-only or a
 test target). The script runs them for real.
 
 The script always sends --help, --version, and an unknown flag to the root
-command, and --help to every --sub. A script that hand-parses sys.argv may treat
+command, and --help and an unknown flag to every --sub. A script that hand-parses sys.argv may treat
 those as real arguments and run its action, so read its argument handling first.
 
 Exit codes: 0 all checks passed, 1 at least one check failed, 2 usage error
@@ -100,11 +100,12 @@ def check_version(cmd, timeout):
     )
 
 
-def check_usage_error(cmd, timeout):
-    r = run(cmd, [BOGUS_FLAG], timeout)
+def check_usage_error(cmd, sub, timeout):
+    args = [*sub, BOGUS_FLAG]
+    r = run(cmd, args, timeout)
     ok = r.rc == 2 and not r.out.strip() and bool(r.err.strip())
     detail = f"rc={r.rc} (want 2), stdout empty={not r.out.strip()}, stderr set={bool(r.err.strip())}"
-    return Result("usage-error", BOGUS_FLAG, ok, detail)
+    return Result("usage-error", " ".join(args), ok, detail)
 
 
 def check_run(cmd, line, timeout):
@@ -151,8 +152,9 @@ def collect(opts):
     cmd = shlex.split(opts.cmd)
     t = opts.timeout
     preflight(cmd, t)
-    results = [check_help(cmd, [], t), check_version(cmd, t), check_usage_error(cmd, t)]
-    results += [check_help(cmd, [s], t) for s in opts.sub]
+    results = [check_help(cmd, [], t), check_version(cmd, t), check_usage_error(cmd, [], t)]
+    for s in opts.sub:
+        results += [check_help(cmd, [s], t), check_usage_error(cmd, [s], t)]
     for line in opts.run:
         results += check_run(cmd, line, t)
     results += [check_json(cmd, line, t) for line in opts.json_run]
@@ -184,7 +186,7 @@ def build_parser():
         "--sub",
         action="append",
         default=[],
-        help="subcommand whose --help to check (repeatable)",
+        help="subcommand whose --help and usage error to check (repeatable)",
     )
     p.add_argument(
         "--run",
