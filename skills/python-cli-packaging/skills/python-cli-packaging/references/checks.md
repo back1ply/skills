@@ -72,15 +72,22 @@ hyperfine 'tool --help'
 
 **Code smells (ripgrep)**
 
+Set `CODE` to every shipped package directory and top-level module first. In a flat repo, `src/` matches nothing and every line passes without checking anything.
+
 ```
-rg -n 'sys\.path\.(insert|append)' src/
-rg -n 'subprocess.*sys\.executable' src/
-rg -n 'input\(|getpass|confirm\(|prompt\(' src/
-rg -n 'basicConfig\(.*stdout|StreamHandler\(sys\.stdout' src/
-rg -n 'show_locals' src/
-rg -n '__file__|os\.getcwd\(\)|Path\.cwd\(\)' src/
-rg -n 'sys\.exit|raise SystemExit' src/
-rg -n 'CLAUDECODE|AGENT|CODEX' src/
+CODE="src/"                                   # flat layout: CODE="mytool.py mytool/"
+rg -n 'sys\.argv\[\d+\]|len\(sys\.argv\)|in sys\.argv' $CODE
+rg -n 'print\(\s*f?["'"'"'](\[!\]|error|warning|unknown|failed)' $CODE   # errors on stdout (OUT-01)
+rg -n --pcre2 '(?<![\w.])open\((?![^)]*(encoding|b["'"'"']|b\)))' $CODE   # text open() without encoding= (OUT-12)
+rg -n 'return .*\b2\b|exit\(2\)' $CODE                    # exit 2 reused for runtime failures (OUT-03)
+rg -n 'sys\.path\.(insert|append)' $CODE
+rg -n 'subprocess.*sys\.executable' $CODE
+rg -n 'input\(|getpass|confirm\(|prompt\(' $CODE
+rg -n 'basicConfig\(.*stdout|StreamHandler\(sys\.stdout' $CODE
+rg -n 'show_locals' $CODE
+rg -n '__file__|os\.getcwd\(\)|Path\.cwd\(\)' $CODE
+rg -n 'sys\.exit|raise SystemExit' $CODE
+rg -n 'CLAUDECODE|AGENT|CODEX' $CODE
 ```
 
 ## Anti-patterns to look for in AI-written or migrated CLIs

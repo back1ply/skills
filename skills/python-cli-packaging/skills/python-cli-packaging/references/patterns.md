@@ -70,6 +70,8 @@ def build_parser():
 
 
 def main(argv=None):
+    if hasattr(sys.stdout, "reconfigure"):    # StringIO in tests has no reconfigure
+        sys.stdout.reconfigure(encoding="utf-8")  # OUT-12: piped output on Windows is cp1252 otherwise
     argv = list(sys.argv[1:] if argv is None else argv)
     if not argv:
         build_parser().print_help(sys.stderr)

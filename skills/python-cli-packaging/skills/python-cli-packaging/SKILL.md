@@ -5,7 +5,7 @@ description: Builds, converts, and audits installable Python command-line tools 
 
 # Python CLI packaging
 
-A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 97 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
+A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 98 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
 
 Pick the mode from the request:
 
@@ -22,12 +22,12 @@ Behavioural checks run real commands. Run read-only commands first (`--help`, `-
 ## Audit
 
 1. **Inventory.** Read `pyproject.toml`, the entry modules, tests, CI workflows, and README. List every command and subcommand.
-2. **Static checks.** Run the packaging, dependency, and ripgrep blocks in [references/checks.md](references/checks.md). Several commands there are Linux-only (`script`, `${PIPESTATUS}`, `/tmp`); on Windows use the Python script in the next step.
+2. **Static checks.** Run the packaging, dependency, and ripgrep blocks in [references/checks.md](references/checks.md). Point every grep at the shipped code (`<code>` in the checklist): in a flat repo `src/` doesn't exist, and the grep passes without checking anything. Several commands there are Linux-only (`script`, `${PIPESTATUS}`, `/tmp`); on Windows use the Python script in the next step.
 3. **Behavioural checks.** Install into an isolated env (`uv sync` or `uv tool install .`), then run the contract script from this skill's own directory (not the audited repo):
    ```
    python <skill-dir>/scripts/cli_contract.py --cmd "uv run tool" --sub <each-sub> --run "<safe args>" --json-run "<args> --json"
    ```
-   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. On Windows, pass paths as `F:/...`; Git Bash's `/f/...` form fails when the script launches the command. The script always sends `--help`, `--version`, and an unknown flag to the root and `--help` to each `--sub`; confirm from the source that those probes are harmless first. Then do the fresh-install test (TST-03): `uv build`, then run `uvx --from dist/<wheel>.whl tool --help` from a directory outside the repo.
+   It checks help, version, usage-error exit 2, no hang without a TTY, no ANSI in pipes, no tracebacks, and valid JSON. On Windows, pass paths as `F:/...`; Git Bash's `/f/...` form fails when the script launches the command, and run the script under `PYTHONUTF8=0 env -u PYTHONIOENCODING` so the cp1252 crash users hit shows up (OUT-12; Python 3.15+ enables UTF-8 mode by default). The script always sends `--help`, `--version`, and an unknown flag to the root and `--help` to each `--sub`; confirm from the source that those probes are harmless first. Then do the fresh-install test (TST-03): `uv build`, then run `uvx --from dist/<wheel>.whl tool --help` from a directory outside the repo.
 4. **Report.** One table row per MUST and SHOULD item: `ID | status | evidence`. Status is `pass`, `fail`, `n/a` (with a reason), or `not checked` (with a reason). Evidence is a command plus its result, or `file:line`. List fails MUST first, then SHOULD, each with a concrete fix. Add NICE items only when they fail cheaply.
 
 The audit is done when every MUST and SHOULD ID has a row. No item is skipped silently.
@@ -112,7 +112,7 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 
 ## References
 
-- [references/checklist.md](references/checklist.md): all 97 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
+- [references/checklist.md](references/checklist.md): all 98 items with severity, modes, verification, and sources. Read it for an audit report or when an item ID needs detail.
 - [references/checks.md](references/checks.md): copy-paste commands and the anti-pattern list. Read it in audit step 2.
 - [references/disputes.md](references/disputes.md): debated choices and research gaps. Read it before overriding a default.
 - [references/patterns.md](references/patterns.md): code shapes for `pyproject.toml`, the entry point, lazy dispatch, a subcommand, safe prompts, tests, and the fresh-install CI step. Read it in convert step 4 and build mode.
