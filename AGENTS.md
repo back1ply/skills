@@ -11,3 +11,7 @@ Commit and push directly to `main`. Don't create feature branches or pull reques
 ## CodeScene
 
 After changing code, run `code_health_review` on the changed files. If Code Health drops, fix the issues, run the review again, and use `code_health_score` to confirm the result. Before finishing, run `pre_commit_code_health_safeguard` and only stop when it passes.
+
+## Shared CLI rules
+
+`agent-friendly-cli` owns the language-neutral CLI contract. `python-cli-packaging` copies 43 of its checklist rows and its `scripts/cli_contract.py`. After editing either source, run `python scripts/sync_shared.py`; the `sync-check` workflow fails when they drift.

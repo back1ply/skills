@@ -8,6 +8,12 @@
 !README.md
 !AGENTS.md
 
+# Repo tooling: shared-rule sync and its CI check
+!scripts/
+!scripts/**
+!.github/
+!.github/**
+
 # Plugin manifest
 !.claude-plugin/
 !.claude-plugin/**

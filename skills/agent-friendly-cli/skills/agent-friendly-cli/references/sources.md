@@ -1,6 +1,6 @@
 # Sources
 
-49 sources read 2026-11-18, the research experiments (E1–E13), the reference CLI tests on Windows (P1) and Linux (P2), and the agent harness probe (P3). `py:S16` style IDs point to the `python-cli-packaging` skill's sources.md. Trust: **High** = official docs or spec; **Medium** = practitioner writing; **Low** = thin or secondhand.
+50 sources read 2026-11-18, the research experiments (E1–E13), the reference CLI tests on Windows (P1) and Linux (P2), and the agent harness probe (P3). `py:S16` style IDs point to the `python-cli-packaging` skill's sources.md. Trust: **High** = official docs or spec; **Medium** = practitioner writing; **Low** = thin or secondhand.
 
 | ID | Title | URL | Type | Trust | One-line takeaway |
 |---|---|---|---|---|---|
@@ -53,6 +53,7 @@
 | S47 | Agents365-ai/365-skills `agent-native-design` (2K installs) | https://github.com/Agents365-ai/365-skills/tree/main/plugins/agent-native-design | skill | Medium | Human / agent / orchestrator audiences, progressive self-description, "schema is the source of truth", a 14-criterion rubric, recommends `anc audit`. Auto-JSON when stdout is not a TTY. |
 | S48 | pproenca/dot-skills `cli-for-agents` (experimental, 237 installs) | https://github.com/pproenca/dot-skills/tree/main/skills/.experimental/cli-for-agents | skill | Medium | 40+ rules in eight groups: interact, help, err, safe, input, output, idem, struct. Includes "stream large result sets as NDJSON" (contradicted by S34) and "confirm by typing the resource name". |
 | S49 | steipete/agent-scripts `create-cli` (492 installs) | https://github.com/steipete/agent-scripts/tree/main/skills/create-cli | skill | Medium | A clig.dev-based spec template: command tree, flags table, stdout/stderr, exit-code map, `--no-input`, `NO_COLOR`/`TERM=dumb`, completion, 5–10 examples. Human-first. No agent-harness facts. |
+| S50 | Anthropic Engineering: Writing effective tools for AI agents (2025-09-11) | https://www.anthropic.com/engineering/writing-tools-for-agents | guide | High | Return meaningful context. Save tokens with pagination, filtering, and truncation that tells the agent how to get more. Write actionable errors and use parameter names like `user_id`. |
 
 Reused from python-cli-packaging (`py:` prefix): py:S16 clig.dev (re-read this pass for exact quotes: "Display output as formatted JSON if `--json` is passed"; "If `stdin` is not an interactive terminal, skip prompting and just require those flags/args"; "Map the non-zero exit codes to the most important failure modes"; "Lead with examples"; "Keep changes additive where you can"; "Do not read secrets directly from flags"), py:S17 12-Factor CLI, py:S19 Willison on `--help`, py:S30 better-cli, py:S34 Anthropic writing tools for agents, py:S35 Speakeasy, py:S36 Trevin Chow, py:S37 Enyioha, py:S38 agent env-var detection, py:S39 gh formatting, py:S48 Jung, py:S50 Arize CLI vs MCP eval, py:S52 argparse, py:S53 HN CLI vs MCP, py:S57/py:S61 Microsoft AX measurements, py:S58/py:S62 joelclaw.
 

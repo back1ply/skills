@@ -71,26 +71,11 @@ Every mode needs these. Full wording, verification, and sources are in the check
 - LAY-02: `main(argv=None) -> int`; only the entry wrapper calls `sys.exit`.
 - LAY-09: no `sys.path` edits in package code.
 
-**Interface and output**
+**Interface, output, agents, errors**
 - CLI-01: a real parser (argparse, click, typer), no hand-parsed `sys.argv`.
-- CLI-02: `--help` on root and every subcommand, to stdout, exit 0.
-- CLI-05: `--version` to stdout, exit 0.
-- CLI-08: usage errors exit 2, message on stderr, stdout empty.
-- OUT-01: data on stdout; logs, progress, warnings, errors, prompts on stderr.
-- OUT-02: any failure exits non-zero, including partial failure.
-- OUT-04, OUT-05, OUT-06: color, spinners, and pagers only when the stream is a TTY and `NO_COLOR` is unset.
-
-**Agents**
-- AGT-01: data commands take `--json`; stdout is then exactly one JSON document.
-- AGT-04: with no TTY on stdin, never wait for input; fail fast naming the flag to pass.
-- AGT-05: every prompt has a flag equivalent (`--yes`, `--no-input`, a value flag).
-- AGT-10: errors name the bad input and the fix, with valid values or an example.
-
-**Errors and secrets**
-- ERR-01: expected failures print one line on stderr, no traceback.
 - ERR-04: tracebacks never include local variables (Typer: `pretty_exceptions_show_locals=False`).
-- CFG-03: secrets come from a file, stdin, env var, or keyring, never a flag value.
-- CFG-04: secrets never appear in output, logs, JSON, or errors.
+- The shared agent contract, whose rule text comes from `agent-friendly-cli`: CLI-02 `--help` · CLI-05 `--version` · CLI-08 usage errors exit 2 · OUT-01 stdout for data · OUT-02 failures exit non-zero · OUT-03 documented exit codes · OUT-04, OUT-05, OUT-06 color, spinners, pager only on a TTY · AGT-01 `--json` · AGT-04 no waiting for input · AGT-05 a flag for every prompt · AGT-10 actionable errors · ERR-01 one-line errors · CFG-03, CFG-04 secrets never in flags or output.
+- Python traps behind those: a closed pipe raises `BrokenPipeError`, or `OSError` EINVAL on Windows (OUT-08); `isatty()` is True for NUL on Windows, where Claude Code runs commands, so guard prompts with `GetConsoleMode` (AGT-04); Windows pipes default to cp1252 (OUT-12). The fixes are in patterns.md.
 
 **Dependencies, tests, distribution**
 - DEP-02: `uv lock --check` passes when a lockfile exists.
@@ -110,11 +95,7 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 - **requirements.txt:** remove hand-written ones, document `pip install .`, generate pinned files with `uv export` when a platform needs one.
 - **Lockfile:** commit `uv.lock`. It protects dev and CI only; `uv tool install`, pipx, and pip resolve fresh, so the `pyproject.toml` ranges must work alone (DEP-03).
 - **New releases:** set `[tool.uv] exclude-newer = "7 days"`; justify any locked version newer than that (DEP-05).
-- **Exit codes:** 0 success (including "no results"), 1 failure, 2 usage. Add more only for failure classes a caller would branch on, and document them. Agents read any non-zero exit as a failure, so a comparison command reports "different" in its output with exit 0, or documents its `diff`-style 1. Never use 124, 126, 127, or 128+N except 130. Full table: [references/patterns.md](references/patterns.md#exit-codes-cli-08-out-02-out-03-out-11-agt-03-agt-11).
-- **Input:** flags and positional arguments. Structured input, if any, comes from a file or stdin, never only an inline JSON string (AGT-15).
-- **JSON output:** explicit `--json`, never switched on automatically by piping. In `--json` mode, runtime errors go to stderr as one JSON object (`{"error": {"code", "message"}}`) with a non-zero exit; usage errors stay argparse text with exit 2 (AGT-03).
-- **Prompts:** allowed when stdin and stdout are TTYs, as long as every prompt has a flag.
-- **Agent env vars** (`CLAUDECODE`, `CI`): may change cosmetics only, never confirm actions.
+- **Agent contract** (exit codes, `--json`, input, prompts, agent env vars): the defaults in `agent-friendly-cli`. In short: 0 success including "no results", 1 failure, 2 usage only; explicit `--json`; structured input from a file or stdin; prompts only on a real TTY and always with a flag; env vars change cosmetics only. Python specifics: in `--json` mode usage errors stay argparse text with exit 2 (AGT-03), and the exit-code table is in [references/patterns.md](references/patterns.md#exit-codes-cli-08-out-02-out-03-out-11-agt-03-agt-11).
 - **CLI vs MCP:** build the CLI first, with a short usage guide for agents (DOC-06). Add an MCP server when users need OAuth, remote access, or have no shell.
 - **Build backend:** `uv_build` for pure-Python tools; hatchling with hatch-vcs for git-tag versions.
 
@@ -124,5 +105,5 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 - [references/checks.md](references/checks.md): copy-paste commands and the anti-pattern list. Read it in audit step 2.
 - [references/disputes.md](references/disputes.md): debated choices and research gaps. Read it before overriding a default.
 - [references/patterns.md](references/patterns.md): code shapes for `pyproject.toml`, the entry point, lazy dispatch, a subcommand, safe prompts, tests, and the fresh-install CI step. Read it in convert step 4 and build mode.
-- [references/sources.md](references/sources.md): the 62 sources and the local measurements (S63) behind the checklist.
+- [references/sources.md](references/sources.md): the 59 sources and the local measurements (S63) behind the Python-specific items; the shared contract cites `agent-friendly-cli`'s sources as `afc:S30`.
 - `scripts/cli_contract.py`: cross-platform behavioural checks, the same script as in `agent-friendly-cli` with this checklist's IDs. Run `--help` for options.

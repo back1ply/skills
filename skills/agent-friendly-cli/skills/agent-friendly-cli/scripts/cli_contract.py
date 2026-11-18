@@ -4,9 +4,9 @@ Runs the command as a subprocess with stdin closed and stdout piped (no TTY),
 the way an agent or CI calls it. Covers CLI-02, CLI-03, CLI-06, AGT-01, AGT-06,
 OUT-02, OUT-06, and ERR-01 from references/checklist.md.
 
-    python cli_contract.py --cmd "./demo" --sub list --sub show
-    python cli_contract.py --cmd "node demo.mjs" --run "show missing.txt" --json-run "list --json"
-    python cli_contract.py --cmd "./demo" --pipe-run "list --limit 200000"
+    python cli_contract.py --cmd "./mytool" --sub list --sub show
+    python cli_contract.py --cmd "uv run mytool" --run "show missing.txt" --json-run "list --json"
+    python cli_contract.py --cmd "node mytool.mjs" --pipe-run "list --limit 200000"
 
 Only pass --run / --json-run / --pipe-run commands that are safe to execute
 (read-only or a test target). The script runs them for real. A --pipe-run

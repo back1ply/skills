@@ -68,5 +68,5 @@ Both sides are in [references/disputes.md](references/disputes.md).
 - [references/checklist.md](references/checklist.md): all 70 items with severity, modes, verification, per-framework notes, and sources.
 - [references/patterns.md](references/patterns.md): the per-language contract table and complete reference CLIs in Go (cobra), Rust (clap), and Node (commander).
 - [references/disputes.md](references/disputes.md): debated choices with both sides.
-- [references/sources.md](references/sources.md): 49 sources, research experiments, and the reference CLI tests.
+- [references/sources.md](references/sources.md): 50 sources, research experiments, and the reference CLI tests.
 - `scripts/cli_contract.py`: language-neutral behavioural checks (help, version, usage errors, no-TTY hang, ANSI, crashes, JSON, closed pipe). Run `--help` for options.
