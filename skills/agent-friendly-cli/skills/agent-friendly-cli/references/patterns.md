@@ -1,6 +1,6 @@
 # Patterns
 
-How to meet the contract in each language, then one complete reference CLI per language. The three CLIs implement the same tool (`demo list [--limit N] [--json]`, `demo show FILE`) and each passes all 15 checks of `scripts/cli_contract.py`, plus the usage-error cases in sources.md (P1). Item IDs point to [checklist.md](checklist.md).
+How to meet the contract in each language, then one complete reference CLI per language. The three CLIs implement the same tool (`demo list [--limit N] [--json]`, `demo show FILE`) and each passes all 15 checks of `scripts/cli_contract.py` plus the usage-error cases, on Windows (P1) and on Linux in GitHub Actions (P2, sources.md). Item IDs point to [checklist.md](checklist.md).
 
 ## Contents
 
