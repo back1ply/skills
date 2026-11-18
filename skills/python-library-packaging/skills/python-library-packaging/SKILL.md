@@ -15,7 +15,7 @@ Pick the mode from the request:
 | **Convert** | Extract an importable library from scripts or an app | Repo passes all MUSTs and the fresh-install import test |
 | **Build** | New library from scratch | Same as convert, without the migration items |
 
-Command-line tools follow the sister skill `python-cli-packaging`. A project that is both (a library with a CLI) follows this skill for the importable package and the CLI skill for the command.
+Command-line tools follow the sister skill `python-cli-packaging`. Cutting releases (version bumps, tags, the publish workflow, yanking) follows `python-release-automation`. A project that is both (a library with a CLI) follows this skill for the importable package and the CLI skill for the command.
 
 ## Safety
 
