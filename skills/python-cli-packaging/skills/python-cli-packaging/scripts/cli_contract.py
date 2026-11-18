@@ -1,14 +1,17 @@
-"""Black-box contract checks for any installed CLI. Stdlib only, works on Windows and POSIX.
+"""Black-box contract checks for any CLI, in any language. Stdlib only, works on Windows and POSIX.
 
 Runs the command as a subprocess with stdin closed and stdout piped (no TTY),
 the way an agent or CI calls it. Covers CLI-02, CLI-05, CLI-08, AGT-01, AGT-04,
-OUT-04, and ERR-01 from references/checklist.md.
+OUT-04, OUT-08, and ERR-01 from references/checklist.md.
 
     python cli_contract.py --cmd "mytool" --sub fetch --sub dump
     python cli_contract.py --cmd "uv run mytool" --run "dump --file x.xml" --json-run "list --json"
+    python cli_contract.py --cmd "mytool" --pipe-run "list --limit 200000"
 
-Only pass --run / --json-run commands that are safe to execute (read-only or a
-test target). The script runs them for real.
+Only pass --run / --json-run / --pipe-run commands that are safe to execute
+(read-only or a test target). The script runs them for real. A --pipe-run
+command must print more than the pipe buffer (about 64 KB) for the check to mean
+anything.
 
 The script always sends --help, --version, and an unknown flag to the root
 command, and --help and an unknown flag to every --sub. A script that hand-parses sys.argv may treat
@@ -20,6 +23,7 @@ or the command could not start (its root --help printed nothing and failed).
 
 import argparse
 import json
+import re
 import shlex
 import subprocess
 import sys
@@ -27,6 +31,13 @@ from dataclasses import asdict, dataclass
 
 ANSI = "\x1b["
 BOGUS_FLAG = "--definitely-not-a-real-flag-xyz"
+# Python traceback, Rust panic, Go panic or goroutine dump, Node stack frame.
+CRASH = re.compile(
+    r"Traceback \(most recent call last\)|panicked at|^panic: |^goroutine \d+ \[|^\s+at .+:\d+:\d+\)?$",
+    re.MULTILINE,
+)
+# Exit after a closed pipe: 0, or killed by SIGPIPE (-13 from Python, 141 from a shell).
+PIPE_OK = {0, -13, 141}
 
 
 @dataclass
@@ -131,10 +142,34 @@ def check_run(cmd, line, timeout):
         Result(
             "no-traceback",
             line,
-            "Traceback (most recent call last)" not in r.err,
-            "traceback on stderr",
+            not CRASH.search(r.err),
+            "traceback, panic, or stack trace on stderr",
         ),
     ]
+
+
+def check_closed_pipe(cmd, line, timeout):
+    """Read one line, close the pipe, and expect a quiet exit (OUT-08)."""
+    proc = subprocess.Popen(
+        [*cmd, *shlex.split(line)],
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    out = proc.stdout
+    if out is not None:
+        out.readline()
+        out.close()
+    proc.stdout = None  # communicate() now drains stderr only
+    try:
+        _, err = proc.communicate(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        return Result("closed-pipe", line, False, f"still running {timeout}s after the pipe closed")
+    err = err.decode("utf-8", "replace")
+    ok = proc.returncode in PIPE_OK and not CRASH.search(err)
+    detail = f"rc={proc.returncode} (want 0 or SIGPIPE), stderr {len(err.strip())} chars"
+    return Result("closed-pipe", line, ok, detail if not ok else "")
 
 
 def check_json(cmd, line, timeout):
@@ -158,6 +193,7 @@ def collect(opts):
     for line in opts.run:
         results += check_run(cmd, line, t)
     results += [check_json(cmd, line, t) for line in opts.json_run]
+    results += [check_closed_pipe(cmd, line, t) for line in opts.pipe_run]
     return results
 
 
@@ -199,6 +235,12 @@ def build_parser():
         action="append",
         default=[],
         help="safe args whose stdout must be JSON (repeatable)",
+    )
+    p.add_argument(
+        "--pipe-run",
+        action="append",
+        default=[],
+        help="safe args printing over 64 KB; the pipe is closed after one line (repeatable)",
     )
     p.add_argument(
         "--timeout",

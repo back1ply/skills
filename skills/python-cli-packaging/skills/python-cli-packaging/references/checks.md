@@ -101,7 +101,7 @@ rg -n 'CLAUDECODE|AGENT|CODEX' $CODE
 7. **`sys.exit()` scattered through library functions**, or `main` returning a string, which makes Python print it and exit 1 [S4].
 8. **Calling sibling scripts through `subprocess.run([sys.executable, "other.py"])`** instead of importing them [S4].
 9. **`sys.path.insert(0, ...)` hacks** left over from the script era [S2].
-10. **`input()` or `confirm()` with no isatty guard and no bypass flag**, which hangs agents and CI [S16, S30].
+10. **`input()` or `confirm()` with no isatty guard and no bypass flag**, which hangs agents and CI [S16, S30]. On Windows an `isatty()` guard alone fails too: it is True for NUL, so `getpass` hangs under Claude Code [S63].
 11. **`except Exception: print(e)` that then exits 0** [S16].
 12. **A `--json` mode that prints a log or banner line before the JSON**, or prints a Python `repr` instead of JSON [S30].
 13. **The version hardcoded in two places** (`pyproject.toml` and `__version__`) that drift apart [S17].

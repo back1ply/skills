@@ -1,6 +1,6 @@
 # Sources
 
-49 sources read 2026-11-18, the research experiments (E1–E13), and the reference CLI tests (P1). `py:S16` style IDs point to the `python-cli-packaging` skill's sources.md. Trust: **High** = official docs or spec; **Medium** = practitioner writing; **Low** = thin or secondhand.
+49 sources read 2026-11-18, the research experiments (E1–E13), the reference CLI tests on Windows (P1) and Linux (P2), and the agent harness probe (P3). `py:S16` style IDs point to the `python-cli-packaging` skill's sources.md. Trust: **High** = official docs or spec; **Medium** = practitioner writing; **Low** = thin or secondhand.
 
 | ID | Title | URL | Type | Trust | One-line takeaway |
 |---|---|---|---|---|---|
@@ -91,3 +91,14 @@ Same sources, built with go1.27.4, rustc 1.99.1, Node 24, run by a `check.sh` in
 - No output lost: `list --limit 300000 | wc -l` = 300000 for all three. A Node script writing 10 MB then calling `process.exit(0)` delivered 64,000 bytes to a reader that started after one second; with `process.exitCode = 0` it delivered 10,000,000.
 - Color under a real PTY (`script -qec`): 3 colored lines each; 0 with `NO_COLOR=1`; 0 when piped.
 - SIGINT via `timeout --preserve-status -s INT 1`: Go, Rust, and Node all exit 130 with empty stderr (control `sleep 30`: 130). An earlier attempt that signalled a `&` background job saw exit 0, because non-interactive bash starts background jobs with SIGINT ignored.
+
+## Agent harness probe (P3), 2026-11-18, Windows 10
+
+`codex exec --json` (codex-cli 0.164.0, default sandbox `read-only`) was asked to run small Python probes, one tool call each; the JSON events record the command Codex actually ran, the exit code, and the output. Claude Code 2.1.326's Bash tool ran the same probes.
+- **Codex wraps every command in `pwsh -Command '<cmd>'`** on Windows. `exitwith.py N` for N = 1, 2, 3, 124, 127, and 130 was recorded and reported to the model as exit **1** every time. `pwsh -NoProfile -Command 'python exitwith.py 3'` gives 1 outside Codex too: PowerShell reports only whether the last command failed. `python exitwith.py 3; exit $LASTEXITCODE` gave 3 inside Codex. Codex on Linux runs commands through bash and was not observed here.
+- **Codex streams:** stdout and stderr arrive merged, and stderr lines sometimes came before earlier stdout lines.
+- **Codex stdin (default):** a pipe at EOF; stdout and stderr are pipes. With `tty: true` (the model set it when asked): stdin, stdout, and stderr are console devices, a read from stdin **blocks**, and the output carries ConPTY control sequences (`ESC[2J`, `ESC[nX`, a window title).
+- **Codex env:** `CODEX_CI=1`, `TERM=dumb`, `NO_COLOR=1`, `PAGER=cat`, `GIT_PAGER=cat`, `CODEX_SANDBOX_NETWORK_DISABLED=1`, plus `CODEX_SESSION_ID`, `CODEX_THREAD_ID`, and `CODEX_TOOL_CALL_ID`. `CI` is not set.
+- **Codex long output:** 4,000 lines (244,000 chars): the model reported seeing line 1 and line 4000 and being told the output was truncated.
+- **Claude Code (Windows):** stdin is NUL (a character device, read returns EOF at once), stdout a pipe, stderr a file. `AI_AGENT=claude-code_2-1-326_agent`, `CLAUDECODE=1`, `TERM=xterm-256color`, no `NO_COLOR`. Python's `sys.stdin.isatty()` returns **True** for NUL, while Go's `term.IsTerminal`, Rust's `is_terminal()`, and Node's `isTTY` (undefined) correctly say no. Under an `isatty()` guard, `input()` printed its prompt and raised `EOFError` (exit 1), and `getpass.getpass()` hung until `timeout 10` killed it (124), because on Windows getpass reads the console directly.
+- **Side finding:** `codex exec` with a prompt argument still reads stdin when stdin is a pipe ("Reading additional input from stdin..."). Started from a background job with an open stdin, it waited for over ten minutes without doing anything; `</dev/null` fixed it.

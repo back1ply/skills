@@ -5,7 +5,7 @@ description: Designs, converts, and audits command-line tools in any language (G
 
 # Agent-friendly CLI
 
-An agent calls your CLI with no terminal, stdin closed or at EOF, and reads back the exit code plus a truncated mix of stdout and stderr. Claude Code shows any non-zero exit as a failure and returns only about 10,000 characters of a failed command. Most popular CLI frameworks don't meet this contract out of the box: cobra, urfave/cli, commander, and yargs exit 1 on usage errors; urfave prints help to stdout on an error; Rust's `println!` panics when the reader closes the pipe. The checklist has 70 items with stable IDs (`CLI-03`, `OUT-06`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
+An agent calls your CLI with no terminal, stdin closed or at EOF, and reads back the exit code plus a truncated mix of stdout and stderr. Claude Code shows any non-zero exit as a failure and returns only about 10,000 characters of a failed command. Codex on Windows runs commands through `pwsh -Command`, which turns every non-zero exit into 1, so the error text has to carry the meaning on its own. Most popular CLI frameworks don't meet this contract out of the box: cobra, urfave/cli, commander, and yargs exit 1 on usage errors; urfave prints help to stdout on an error; Rust's `println!` panics when the reader closes the pipe. The checklist has 70 items with stable IDs (`CLI-03`, `OUT-06`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
 
 Python CLIs: use `python-cli-packaging`, which covers this contract plus packaging. This skill is the language-neutral version, with per-framework fixes.
 

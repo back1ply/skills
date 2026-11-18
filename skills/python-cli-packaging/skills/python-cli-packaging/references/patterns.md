@@ -50,11 +50,12 @@ exclude-newer = "7 days"                # dependency cooldown (DEP-05)
 # module-name = "mytool"
 ```
 
-## Entry point and dispatch (LAY-02, LAY-07, CLI-01, CLI-08, OUT-12)
+## Entry point and dispatch (LAY-02, LAY-07, CLI-01, CLI-08, OUT-08, OUT-11, OUT-12)
 
 ```python
 # src/mytool/cli.py
 import argparse
+import errno
 import importlib
 import importlib.metadata
 import os
@@ -87,15 +88,39 @@ def build_parser():
     return parser
 
 
-def main(argv=None):
-    configure_streams()
+def dispatch(argv):
     args, rest = build_parser().parse_known_args(argv)  # no command or unknown command: stderr, exit 2
     module_name, _, func_name = COMMANDS[args.command][0].partition(":")
     func = getattr(importlib.import_module(module_name), func_name)
     return func(rest)  # the command's parser handles its flags, --help, and unknown flags
+
+
+def stdout_closed(exc):
+    """OUT-08: the reader closed the pipe (`| head`). Windows raises EINVAL, not EPIPE."""
+    if isinstance(exc, BrokenPipeError):
+        return True
+    return sys.platform == "win32" and exc.errno == errno.EINVAL and exc.filename is None
+
+
+def main(argv=None):
+    configure_streams()
+    try:
+        code = dispatch(argv)
+        sys.stdout.flush()  # flush here, so a closed pipe raises inside the try, not at exit
+        return code
+    except OSError as exc:
+        if not stdout_closed(exc):
+            raise
+        os.dup2(os.open(os.devnull, os.O_WRONLY), sys.stdout.fileno())  # Python docs recipe
+        return 0
+    except KeyboardInterrupt:  # OUT-11: no traceback on Ctrl-C
+        print("interrupted", file=sys.stderr)
+        return 130
 ```
 
 The root parser only picks the command; everything after it goes to that command's own `build_parser()`, so `mytool export --help` shows export's help and `mytool export --bogus` gets export's usage error on stderr with exit 2. Root options go before the command (`mytool --version`). Printing help to stdout for an unknown flag fails CLI-08.
+
+Without the handler, `mytool export big.json | head -1` prints a traceback plus `Exception ignored while flushing sys.stdout` and exits 120: the buffered output also fails to flush at interpreter shutdown, outside any `try`. That is why `main` flushes before returning, and the `dup2` stops the shutdown flush from raising again. Catching only `BrokenPipeError`, as the Python docs do, misses Windows: there the write raises `OSError: [Errno 22] Invalid argument`. `stdout_closed` accepts EINVAL only on Windows and only without a filename, so a bad path passed to `open()` still raises. A closed pipe exits 0, not the docs' 1, so `set -o pipefail` scripts and agents don't count `| head` as a failure.
 
 ## A subcommand (OUT-01, ERR-01, AGT-01, AGT-03)
 
@@ -180,15 +205,30 @@ import os
 import sys
 
 
+def stdin_is_interactive():
+    """True only for a real terminal. On Windows, isatty() is also True for NUL."""
+    if not sys.stdin.isatty():
+        return False
+    if sys.platform != "win32":
+        return True
+    import ctypes
+    import msvcrt
+    mode = ctypes.c_uint32()
+    handle = msvcrt.get_osfhandle(sys.stdin.fileno())
+    return bool(ctypes.windll.kernel32.GetConsoleMode(handle, ctypes.byref(mode)))
+
+
 def get_token(token_file=None):
     if token_file:
         return open(token_file, encoding="utf-8").read().strip()
     if token := os.environ.get("MYTOOL_TOKEN"):
         return token
-    if not sys.stdin.isatty():
+    if not stdin_is_interactive():
         raise SystemExit("error: no token; pass --token-file PATH or set MYTOOL_TOKEN")
     return getpass.getpass("Token: ")
 ```
+
+`sys.stdin.isatty()` alone is not enough on Windows. NUL is a character device, so `isatty()` returns True for `</dev/null`. Claude Code on Windows also runs commands with NUL as stdin. Measured there: an `isatty()` guard let `input()` print its prompt and crash with `EOFError`, and `getpass.getpass()` hung until killed, because on Windows it reads the console directly and ignores stdin. `GetConsoleMode` succeeds only for a real console. Go's `term.IsTerminal`, Node's `isTTY`, and Rust's `IsTerminal` already work this way. In Codex's optional PTY mode stdin is a real console and stays open, so the prompt does appear and waits; the agent can answer it there, but the flag in AGT-05 is still the reliable path.
 
 ## Tests (TST-01, TST-02, LAY-06)
 
