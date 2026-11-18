@@ -54,6 +54,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `quality-pass` | One-command quality pass that sends each changed file to the best installed review skill. Use after changing code and before committing. |
 | `designite-skills` | Designite-style code smell analysis for Java, C#, and Python with open-source tools. Use for design-smell, architecture-smell, or technical-debt reviews. ([README](skills/designite-skills/README.md)) |
 | `python-cli-packaging` | Build, convert, and audit installable Python CLIs for humans and AI agents. Use when packaging scripts into a CLI, reviewing a CLI repo, or making one agent-friendly. |
+| `python-library-packaging` | Build, convert, and audit importable Python libraries: public API, type completeness, tested dependency bounds, deprecations, and library-safe logging. Use when packaging reusable code as a library or reviewing a library repo before release. |
 
 ### Working with coding agents
 

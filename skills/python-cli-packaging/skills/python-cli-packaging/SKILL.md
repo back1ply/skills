@@ -7,6 +7,8 @@ description: Builds, converts, and audits installable Python command-line tools 
 
 A packaged CLI has one installable command (`tool sub --flag`), declared in `pyproject.toml`, that behaves the same for a person at a terminal and for an agent or CI job with no TTY. The checklist has 99 items with stable IDs (`PKG-09`, `AGT-04`) in [references/checklist.md](references/checklist.md). Cite those IDs in every finding.
 
+Importable libraries (code other code imports) follow the sister skill `python-library-packaging`. A library that also ships a command follows that skill for the package and this one for the command.
+
 Pick the mode from the request:
 
 | Mode | When | Ends with |

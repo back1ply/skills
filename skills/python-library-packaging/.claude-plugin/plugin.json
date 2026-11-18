@@ -1,0 +1,11 @@
+{
+  "name": "python-library-packaging",
+  "description": "Build, convert, and audit importable Python libraries: public API, type completeness, dependency bounds tested at both ends, deprecations, and library-safe logging, with an 83-item sourced checklist",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": ["python", "library", "packaging", "uv", "pyproject", "typing", "pypi"]
+}
