@@ -56,6 +56,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `python-cli-packaging` | Build, convert, and audit installable Python CLIs for humans and AI agents. Use when packaging scripts into a CLI, reviewing a CLI repo, or making one agent-friendly. |
 | `python-library-packaging` | Build, convert, and audit importable Python libraries: public API, type completeness, tested dependency bounds, deprecations, and library-safe logging. Use when packaging reusable code as a library or reviewing a library repo before release. |
 | `python-release-automation` | Set up, run, and audit Python package releases from GitHub to PyPI: version and changelog gates, tests on the tagged commit, build once, trusted publishing behind approval, yanking, and a hardened workflow. Use when creating a release workflow, cutting a release, or recovering from a bad one. |
+| `agent-friendly-cli` | Design, convert, and audit CLIs in any language (Go, Rust, Node, Python) so AI agents can call them reliably: exit codes, streams, --json, no TTY prompts, closed pipes. Use when building or reviewing a CLI that agents or scripts call. |
 
 ### Working with coding agents
 

@@ -481,6 +481,22 @@
       "category": "code-quality"
     },
     {
+      "name": "agent-friendly-cli",
+      "description": "Design, convert, and audit CLIs in any language (Go, Rust, Node, Python) so AI agents can call them reliably: exit codes, streams, --json, no TTY prompts, closed pipes. Use when building or reviewing a CLI that agents or scripts call.",
+      "source": "./skills/agent-friendly-cli",
+      "license": "MIT",
+      "keywords": [
+        "cli",
+        "ai-agents",
+        "go",
+        "rust",
+        "node",
+        "exit-codes",
+        "json"
+      ],
+      "category": "code-quality"
+    },
+    {
       "name": "lean-spec",
       "description": "Lightweight Markdown specs for coding agents: a Kiro-style bugfix template, spec deltas, and same-commit sync. Use instead of a spec framework when fixing bugs or changing features in existing code.",
       "source": "./skills/lean-spec",
