@@ -2,6 +2,18 @@
 
 Reference shapes for a packaged argparse CLI named `mytool` with import package `mytool`. Rename both. Item IDs point to [checklist.md](checklist.md).
 
+## Contents
+
+- Layout
+- pyproject.toml
+- Entry point and dispatch
+- A subcommand
+- Exit codes
+- `__main__.py`
+- Prompts that never block agents
+- Tests
+- Fresh-install check in CI
+
 ## Layout
 
 ```

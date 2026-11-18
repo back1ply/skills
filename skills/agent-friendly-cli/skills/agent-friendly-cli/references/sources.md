@@ -2,6 +2,14 @@
 
 50 sources read 2026-11-18, the research experiments (E1–E13), the reference CLI tests on Windows (P1) and Linux (P2), and the agent harness probe (P3). `py:S16` style IDs point to the `python-cli-packaging` skill's sources.md. Trust: **High** = official docs or spec; **Medium** = practitioner writing; **Low** = thin or secondhand.
 
+## Contents
+
+- Source table (S1–S50)
+- Local experiments (E1–E13)
+- Reference CLI tests (P1), Windows
+- Linux run (P2)
+- Agent harness probe (P3)
+
 | ID | Title | URL | Type | Trust | One-line takeaway |
 |---|---|---|---|---|---|
 | S1 | spf13/cobra `command.go` (main branch, read 2026-11-18; v1.10.2 run in E1–E3) | https://github.com/spf13/cobra/blob/main/command.go | source | High | Help goes to `OutOrStdout()`. Usage goes to `OutOrStderr()`. On any `RunE` error ExecuteC prints `Error: <err>` plus the full usage unless `SilenceErrors`/`SilenceUsage` is set. No `os.Exit` in the library. `FlagErrorFunc` passes errors through unchanged by default. Suggestions use Levenshtein distance ≤ 2. |

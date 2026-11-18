@@ -2,6 +2,17 @@
 
 On Windows, the `script`, `${PIPESTATUS}`, `timeout --preserve-status`, and `/tmp` lines below are Linux-only. Use `scripts/cli_contract.py` for the behavioural checks instead.
 
+## Contents
+
+- Packaging and metadata
+- Entry points and fresh install
+- Dependencies and supply chain
+- Lint, tests, CI
+- CLI contract (bash)
+- Startup time
+- Code smells (ripgrep)
+- Anti-patterns to look for in AI-written or migrated CLIs
+
 Commands are unescaped and can be copied as-is. The packaging, dependency, and lint/CI blocks were run against a sample project (Windows, uv 0.11) and work as written. Not run: the CLI-contract bash block (Linux-only; use `scripts/cli_contract.py` on Windows), the startup-time block, `actionlint`, and `hyperfine` (separate installs). `pyproject-fmt --check` fails on any file it would reformat; run `pyproject-fmt pyproject.toml` to apply the formatting. Replace `tool`, `pkg`, `<repo>`, and `<wheel>` with real values. Run behavioural checks against a test target only (see Safety in SKILL.md).
 
 **Packaging and metadata**
