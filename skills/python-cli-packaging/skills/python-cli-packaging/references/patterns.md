@@ -148,6 +148,22 @@ if __name__ == "__main__":
 
 Data goes to stdout, every message to stderr. Expected failures print one line naming the input and the fix, then return non-zero. Under `--json` the same failure is one JSON object on stderr, so an agent can parse it; stdout stays empty.
 
+## Exit codes (CLI-08, OUT-02, OUT-03, OUT-11, AGT-03, AGT-11)
+
+Agent harnesses show any non-zero exit as a failure before the caller reads a word of output (Claude Code prints `Exit code N`). So non-zero must mean "something went wrong", and the detail belongs in stderr or the JSON error.
+
+| Code | Meaning | Use it for |
+|---|---|---|
+| 0 | Success | The command did its job, including "no results" (print `[]` under `--json`) |
+| 1 | Runtime failure | Missing file, bad data, network or auth error, partial failure. The message (or JSON `error.code`) says which |
+| 2 | Usage error | Unknown flag, missing argument, bad choice. argparse does this; never reuse 2 for runtime results |
+| 3–125 | Documented extras | Only for a failure class callers branch on (for example 3 = "already exists" for an idempotent create). List each in `--help` and the README |
+| 126–127 | Reserved by the shell | Not executable / command not found. Never use them |
+| 128+N | Killed by signal N | 130 for Ctrl-C (OUT-11). Don't use others on purpose |
+| 124 | Reserved by `timeout` | Means the caller's timeout fired. Never use it |
+
+Comparison commands are the exception agents trip on: `diff` and `grep` exit 1 for "differences found" or "no match", which a harness shows as a failure. Prefer exit 0 with the result in the output (`"identical": false` under `--json`). If you keep the `diff` convention because users expect it, use 1 for "different" and 2 for errors, and say so in `--help`.
+
 ## `__main__.py` (LAY-04)
 
 ```python

@@ -108,7 +108,7 @@ Reasoning and both sides are in [references/disputes.md](references/disputes.md)
 - **requirements.txt:** remove hand-written ones, document `pip install .`, generate pinned files with `uv export` when a platform needs one.
 - **Lockfile:** commit `uv.lock`. It protects dev and CI only; `uv tool install`, pipx, and pip resolve fresh, so the `pyproject.toml` ranges must work alone (DEP-03).
 - **New releases:** set `[tool.uv] exclude-newer = "7 days"`; justify any locked version newer than that (DEP-05).
-- **Exit codes:** 0 success, 1 failure, 2 usage. Add more only for failure classes a caller would branch on, and document them.
+- **Exit codes:** 0 success (including "no results"), 1 failure, 2 usage. Add more only for failure classes a caller would branch on, and document them. Agents read any non-zero exit as a failure, so a comparison command reports "different" in its output with exit 0, or documents its `diff`-style 1. Never use 124, 126, 127, or 128+N except 130. Full table: [references/patterns.md](references/patterns.md#exit-codes-cli-08-out-02-out-03-out-11-agt-03-agt-11).
 - **Input:** flags and positional arguments. Structured input, if any, comes from a file or stdin, never only an inline JSON string (AGT-15).
 - **JSON output:** explicit `--json`, never switched on automatically by piping. In `--json` mode, runtime errors go to stderr as one JSON object (`{"error": {"code", "message"}}`) with a non-zero exit; usage errors stay argparse text with exit 2 (AGT-03).
 - **Prompts:** allowed when stdin and stdout are TTYs, as long as every prompt has a flag.
