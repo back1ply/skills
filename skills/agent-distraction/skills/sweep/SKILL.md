@@ -25,7 +25,7 @@ Finding notes that look old is the easy part. The **history check** is the part 
    - **conflict**: a memory note or rule disagrees with the code, with no proof which one is intended. The user decides; never call these stale ([0:12:29](https://youtu.be/JhZB3spnuIY?t=749));
    - **load-bearing**: looks old but the history shows it still guards something. Keep it;
    - **unproven**: no conclusive evidence. Drop it from the report, or list it as a count only.
-4. **Blind verification.** Give every stale finding to a separate checker agent (a subagent with no chat history). Pass only the neutral claim and where to look. Leave out your verdict and reasoning, so the checker can't be steered into agreeing ([0:12:29](https://youtu.be/JhZB3spnuIY?t=749)). Example: "CLAUDE.md:14 says the products page is at `src/pages/products.tsx`. Is that true in the current code? Answer true / false / unclear, with evidence." Keep a finding as stale only if the checker answers *false* with evidence. If it answers *unclear*, move the finding to conflict.
+4. **Blind verification.** Give every stale finding to a separate checker agent (a subagent with no chat history). Pass only the neutral claim and where to look. Leave out your verdict and reasoning, so the checker can't be steered into agreeing ([0:12:29](https://youtu.be/JhZB3spnuIY?t=749)). Example: "CLAUDE.md:14 says the products page is at `src/pages/products.tsx`. Is that true in the current code? Answer true / false / unclear, with evidence." The video only says the checker confirms each finding is true. *(added)* As a tie-break, keep a finding as stale only if the checker answers *false* with evidence, and move *unclear* answers to conflict.
 5. **Report. Don't edit anything.** Use one table per class: artifact:line, claim, evidence, proposed action (update line / delete TODO / archive file). Conflicts get a question for the user.
 6. **Apply only what the user approved:**
    - CLAUDE.md, rules and specs: fix the line in place, or set the ticket to `completed`/`dropped`. Don't delete the history of a decision.
@@ -44,13 +44,14 @@ Finding notes that look old is the easy part. The **history check** is the part 
 | Ticket `not started`, feature fully built | stale status: set it to `completed` |
 
 ## Rules of thumb
-- Report, don't fix. A sweep that edits as it goes ends up removing load-bearing notes.
-- One sweep pass costs less than the side quests it prevents (Google: +77% tokens per distracted session).
-- Run it after renames, after requirement changes, and before handing a repo to a new agent workflow.
+- Report, don't fix ([0:11:29](https://youtu.be/JhZB3spnuIY?t=689)). Nothing changes until the user approves.
+- Stop new dead references at the door. Google suggests presubmit analyzers and whole-corpus scanners, for example a CI check that flags `TODO(#n)` when issue n is closed.
+- *(added)* Run it after renames, after requirement changes, and before handing a repo to a new agent workflow.
 - Loop/monitor features stop when the session ends ([0:07:10](https://youtu.be/JhZB3spnuIY?t=430)). For a recurring sweep, schedule it outside the session.
 
 ## Known gaps
 - The video's actual SKILL.md, verifier and hook code are paywalled and were never shown. This workflow and the hook are written from its description and Google's post.
+- The **load-bearing** and **unproven** classes come from Google's post ("load-bearing" TODOs) and from the video's "leave it alone without proof". The video's own report lists only findings and conflicts.
 
 ## Sources
 | Video | Channel | Date | Used for |
