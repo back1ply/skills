@@ -1,6 +1,6 @@
 # Skills
 
-34 agent skills in 32 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
+39 agent skills in 36 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -23,7 +23,7 @@ npx skills add back1ply/skills
 
 Add `-g` to install globally, or `-a claude-code` to target one agent.
 
-**Running a skill:** installed as a plugin, a skill runs as `/<plugin>:<skill>` (for example `/quality-pass:quality-pass`). Installed with skills.sh, it runs as `/<skill>`. The plugin and skill names match except in `arjancodes-playbook` (skill: `design-patterns-pythonic`) and `designite-skills` (skills: `designite-java`, `designite-csharp`, `designite-python`).
+**Running a skill:** installed as a plugin, a skill runs as `/<plugin>:<skill>` (for example `/quality-pass:quality-pass`). Installed with skills.sh, it runs as `/<skill>`. The plugin and skill names match except in `arjancodes-playbook` (skill: `design-patterns-pythonic`) `designite-skills` (skills: `designite-java`, `designite-csharp`, `designite-python`), and `agent-distraction` (skills: `distraction-rules`, `sweep`).
 
 ## Catalog
 
@@ -71,6 +71,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `ai-readiness` | Score a repository, product, or team estate across 20 AI-readiness dimensions using evidence. Use to assess readiness for coding agents, find weak spots, or compare codebases. |
 | `impatient-programming` | XP's 29 rules rewritten for teams building with coding agents (Impatient Programming). Use when setting up how a team works with agents, tests, and merges. ([README](skills/impatient-programming/README.md)) |
 | `lean-spec` | Lightweight Markdown specs for coding agents: a Kiro-style bugfix template, spec deltas, and same-commit sync. Use instead of a spec framework when fixing bugs or changing features in existing code. |
+| `agent-distraction` | Keep coding agents off side quests caused by stale CLAUDE.md lines, old specs and dead TODOs: four CLAUDE.md rules, ticket status tags, and a sweep that finds outdated notes with a history check. Use when an agent builds dropped features or follows docs over code. |
 
 ### Backend, infrastructure, and security
 
@@ -120,6 +121,8 @@ Built with `youtube-to-skill`. Transcripts are in `data/raw/<id>.json`. Regenera
 <!-- video-skills:start -->
 | Skill | What it does | Sources |
 |---|---|---|
+| `distraction-rules` | Sets up a project so coding agents stay on the task they were given instead of acting on stale CLAUDE.md lines, old specs, fixed-bug TODOs and outdated memory notes, using Google's agent distraction findings - four CLAUDE.md rules, ticket status tags, and a fresh-session habit. | [Google Just Released Something To Fix Claude Code's Biggest Problem](https://www.youtube.com/watch?v=JhZB3spnuIY) |
+| `sweep` | Finds outdated notes, plans, specs, CLAUDE.md/AGENTS.md lines, memory entries and TODO/FIXME comments that could send a coding agent on a side quest. | [Google Just Released Something To Fix Claude Code's Biggest Problem](https://www.youtube.com/watch?v=JhZB3spnuIY) |
 | `agent-orchestration-checklist` | Checklist for handing big coding tasks to an orchestrator agent that spins up sub-agents (Claude Code, Codex) and judging the result without reading all the code, using Maximilian Schwarzmüller's five developer skills for the AI era (judgment, orchestration, ownership, broad expertise, curiosity). | [What I would focus on](https://www.youtube.com/watch?v=I6V5dmoZplU) |
 | `dbt-agent-context` | Designs and maintains the business context AI agents need to answer questions over a dbt project correctly, using patterns from dbt Summit 2026 (Okta, Checkr, Green Dot, LangChain, Nordstrom, Anaconda, Recruit, AlphaSense, dbt Labs/Fivetran). | [From AI experiment to production: how Okta governs context for agents at scale](https://www.youtube.com/watch?v=SEgoqvU8Zrs)<br>[Is context engineering the new analytics engineering?](https://www.youtube.com/watch?v=rnLMk-GRx7Y)<br>[Meta:Context: a business context schema in dbt Semantic Layer](https://www.youtube.com/watch?v=vuXqA_vNssw)<br>[Governed by default: how data teams at Nordstrom turn dbt governance into an AI advantage](https://www.youtube.com/watch?v=wVXGX58Znts)<br>[YAML doesn't know why: building the business context your agents are missing](https://www.youtube.com/watch?v=PitSWUhaLP4)<br>[No drift allowed: LangChain's context playbook with Hex](https://www.youtube.com/watch?v=2yJxBnldB5A)<br>[Don't ship what you can't measure: Evaluation-driven development for AI analytics agents](https://www.youtube.com/watch?v=sCqjOmH_0Tg)<br>[Beyond semantic models: "Domain context as code" for high-accuracy text-to-SQL](https://www.youtube.com/watch?v=4gFcivfHR3A)<br>[AlphaSense scales AI on enterprise data with dbt-first governance and context from Euno](https://www.youtube.com/watch?v=TgUeC1LWc7o)<br>[With great context comes great autonomy: leveling up your agent context](https://www.youtube.com/watch?v=Ehm6_yfc7RE)<br>[From analytics engineering to context engineering in 4 minutes](https://www.youtube.com/watch?v=AN68dnWqhmk) |
 | `dbt-agentic-dev` | Designs and reviews AI-agent workflows that write, test and ship dbt models (prompt to validated PR), using patterns from dbt Summit 2026 (Careem, Riot Games, DocuSign, Zendesk, Nordstrom, Ramp, dbt Wizard). | [From prompt to PR: sandbox-validated dbt changes before human review](https://www.youtube.com/watch?v=6BPrk0LBl3o)<br>[When skills meet scale: an agent assembly line for dbt](https://www.youtube.com/watch?v=txI6XKFxguo)<br>[AI-augmented analytics engineering at DocuSign: dbt v2, dbt MCP, and agent skills](https://www.youtube.com/watch?v=RQ97J3IccX0)<br>[AI-powered data development: How agentic SDLC & dbt-MCP transformed our data engineering workflow](https://www.youtube.com/watch?v=n7aBWe4RB4k)<br>[dbt Wizard: your AI teammate for data development](https://www.youtube.com/watch?v=Cn_RhdpeX9U)<br>[Ramp's internal AI stack: agents, sandboxes, and an AI-first BI tool](https://www.youtube.com/watch?v=Di8R8dlwpxA)<br>[Governed by default: how data teams at Nordstrom turn dbt governance into an AI advantage](https://www.youtube.com/watch?v=wVXGX58Znts)<br>[From dbt Core to dbt v2: How CarGurus unlocked dbt State and AI at scale](https://www.youtube.com/watch?v=yqCrNVFzLg8) |

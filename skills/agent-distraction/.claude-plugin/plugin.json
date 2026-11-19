@@ -1,0 +1,18 @@
+{
+  "name": "agent-distraction",
+  "description": "Stop coding agents going on side quests from stale context: CLAUDE.md rules (code is the source of truth, leave the rest alone, check new requests against plans), ticket status tags, and a sweep that finds outdated notes, plans and TODOs with a history check and a blind verifier (Google's agent distraction findings)",
+  "author": {
+    "name": "back1ply"
+  },
+  "homepage": "https://github.com/back1ply/skills",
+  "repository": "https://github.com/back1ply/skills",
+  "license": "MIT",
+  "keywords": [
+    "claude-md",
+    "agents-md",
+    "context-rot",
+    "stale-docs",
+    "todo-cleanup",
+    "ai-agents"
+  ]
+}

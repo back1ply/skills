@@ -508,6 +508,21 @@
         "ai-agents"
       ],
       "category": "agents"
+    },
+    {
+      "name": "agent-distraction",
+      "description": "Keep coding agents off side quests caused by stale CLAUDE.md lines, old specs and dead TODOs: four CLAUDE.md rules, ticket status tags, and a sweep that finds outdated notes with a history check. Use when an agent builds dropped features or follows docs over code.",
+      "source": "./skills/agent-distraction",
+      "license": "MIT",
+      "keywords": [
+        "claude-md",
+        "agents-md",
+        "context-rot",
+        "stale-docs",
+        "todo-cleanup",
+        "ai-agents"
+      ],
+      "category": "agents"
     }
   ]
 }
