@@ -47,4 +47,4 @@ skills/designite-skills/dev/samples/**/.designite/
 .venv/
 
 # SkillEvaluator run output (keep evals/evals.json)
-evals/results/
+**/evals/results/
