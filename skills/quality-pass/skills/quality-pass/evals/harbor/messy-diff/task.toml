@@ -1,0 +1,21 @@
+schema_version = "1.3"
+
+[task]
+name = "nvidia/messy-diff"
+description = "Review and clean up an uncommitted messy Python change"
+
+[metadata]
+entry_id = "messy-diff"
+
+[agent]
+timeout_sec = 600.0
+
+[verifier]
+timeout_sec = 300.0
+
+[environment]
+cpus = 2
+memory_mb = 4096
+storage_mb = 2048
+network_mode = "public"
+skills_dir = "/workspace/skills"

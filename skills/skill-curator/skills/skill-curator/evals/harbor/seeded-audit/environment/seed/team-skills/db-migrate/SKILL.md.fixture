@@ -1,0 +1,8 @@
+---
+name: db-migrate
+description: Runs database migrations for this project. Use when the user asks to migrate, upgrade or roll back the database schema.
+---
+
+# Database migrations
+
+Run `scripts/migrate.sh up` from this skill's folder to apply pending migrations, or `scripts/migrate.sh down 1` to roll back one step.

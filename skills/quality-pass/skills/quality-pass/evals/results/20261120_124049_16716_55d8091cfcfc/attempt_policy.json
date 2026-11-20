@@ -1,0 +1,1 @@
+{"max_attempts":1,"pass_threshold":0.6,"stop_on_pass":false,"score_definition":"overall = user-provided reward overall [custom-overall-v1]","score_policy":"custom-overall-v1"}

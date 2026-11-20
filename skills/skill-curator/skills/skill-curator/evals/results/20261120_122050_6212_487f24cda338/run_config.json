@@ -1,0 +1,131 @@
+{
+  "config_file": "evals\\config.yml",
+  "harbor": {
+    "environment": {
+      "value": "docker",
+      "source": "CLI"
+    },
+    "environment_kwargs": {
+      "keys": [],
+      "sources": {},
+      "values_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "n_attempts": 1,
+    "stop_on_pass": false,
+    "n_concurrent": 3,
+    "timeout_multiplier": 3.0,
+    "base_image_mode": "disabled",
+    "resources": {
+      "cpus": null,
+      "memory_mb": null,
+      "storage_mb": null
+    },
+    "agent_workdir": null,
+    "custom_dockerfile_mode": "rebase",
+    "runtime_env": {
+      "keys": [],
+      "values_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "jobs_retained": false
+  },
+  "provider": {
+    "name": "openai-compatible",
+    "model": "google/gemini-2.5-flash"
+  },
+  "judge": {
+    "enabled": false
+  },
+  "credential_validation": {
+    "status": "degraded",
+    "targets": [
+      {
+        "labels": [
+          "opencode"
+        ],
+        "provider": "openai-compatible",
+        "model": "google/gemini-2.5-flash",
+        "status": "degraded",
+        "detail": "model catalog access does not verify runtime credentials for this endpoint"
+      }
+    ]
+  },
+  "task_source": "native_harbor",
+  "grading": {
+    "mode": "custom_only"
+  },
+  "skill_workspace": {
+    "mode": "isolated"
+  },
+  "copy_repo": false,
+  "repo_context_exclude_paths": [
+    "F:\\Shehab Projects\\skill-eval-reports\\tier3\\skill-curator\\custom"
+  ],
+  "agents": {
+    "opencode": {
+      "agent": "opencode",
+      "model": "openai/google/gemini-2.5-flash",
+      "source": "CLI"
+    }
+  },
+  "evaluated_source": null,
+  "baseline_task_tree_digest": "sha256:c08121a7bbb07af3e635422f3340df49e4dae20dad9c555cb0a5b4d74d6461cb",
+  "baseline": {
+    "mode": "fresh"
+  },
+  "budget": {
+    "limits": {
+      "max_agent_tokens": 4000000,
+      "max_judge_calls": null,
+      "max_attempts_total": null,
+      "max_cost_usd": null
+    },
+    "planned_attempts": 6,
+    "started_attempts": 6,
+    "finished_attempts": 6,
+    "unmeasured_attempts": {
+      "agent_tokens": 0,
+      "judge_calls": 6,
+      "cost_usd": 6
+    },
+    "used": {
+      "agent_tokens": 327413,
+      "judge_calls": "not measured",
+      "cost_usd": "not measured"
+    },
+    "status": "ok",
+    "partial": false,
+    "exhausted_limit": null,
+    "exhausted_basis": null,
+    "attempts_not_run": 0,
+    "not_run": [],
+    "charge_coverage": {
+      "agent_inference": "user-price-file token pricing; otherwise provider-reported cost; otherwise not measured",
+      "attempts_by_derivation": {
+        "price_file": 0,
+        "provider_reported": 0,
+        "unmeasured": 6
+      },
+      "unmeasured_agent_cost": "not estimated or treated as zero; measured subtotal retained; stops further cost-bounded admission",
+      "judge_inference": "not priced; bounded only by --max-judge-calls when configured",
+      "environment_setup": "not included",
+      "container": "not included",
+      "backend": "not included",
+      "infrastructure": "not included"
+    },
+    "reservation": {
+      "policy": "largest_measured_attempt",
+      "estimate_per_attempt": {
+        "agent_tokens": 69561,
+        "judge_calls": "not measured",
+        "cost_usd": "not measured"
+      },
+      "in_flight_attempts": 0,
+      "waits": 4,
+      "unestimated_admissions": 2,
+      "calibration_waits": 4,
+      "estimate_denials": 0,
+      "denied_unit_size": 0
+    },
+    "observed_overruns": {}
+  }
+}

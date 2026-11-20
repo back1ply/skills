@@ -1,0 +1,7 @@
+---
+name: release-notes
+---
+
+# Release notes
+
+Collect merged pull requests since the last tag and group them into Added, Changed and Fixed sections.

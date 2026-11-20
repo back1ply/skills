@@ -1,0 +1,10 @@
+---
+name: pdf-extract
+description: Extracts text and tables from PDF files. Use when the user wants to read a PDF, pull tables out of a PDF, or convert a PDF to text.
+---
+
+# PDF extract
+
+1. Open the PDF with `pdfplumber`.
+2. For each page, extract text with `page.extract_text()` and tables with `page.extract_tables()`.
+3. Return the text in reading order and each table as Markdown.

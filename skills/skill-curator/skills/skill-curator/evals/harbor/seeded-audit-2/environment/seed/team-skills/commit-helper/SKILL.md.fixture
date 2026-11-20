@@ -1,0 +1,8 @@
+---
+name: commit-helper
+description: Writes Conventional Commits messages from the staged diff. Use when the user asks for a commit message.
+---
+
+# Commit helper
+
+Read `git diff --staged`, pick the type (feat, fix, docs, refactor, test, chore), and write a subject under 72 characters plus a short body explaining why.

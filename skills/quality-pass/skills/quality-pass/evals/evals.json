@@ -1,0 +1,74 @@
+{
+  "skill_name": "quality-pass",
+  "evals": [
+    {
+      "id": "quality-pass-001",
+      "prompt": "Can you run a quality-pass on my recent changes?",
+      "expected_output": "A review of the user's recently changed code files was performed, applying relevant quality checks for clarity, tests, documentation, and design, routing to specific review skills where available, and falling back to built-in checks otherwise.",
+      "assertions": [
+        "The agent identified the files changed since the last commit or untracked files.",
+        "The agent applied appropriate review checks (e.g., for tests, documentation, or general code quality) to each identified file.",
+        "The agent provided a summary of findings, indicating which review skills were used and which were not installed.",
+        "The agent's output included suggestions for improving the code quality based on the review.",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "quality-pass",
+      "expected_script": null
+    },
+    {
+      "id": "quality-pass-002",
+      "prompt": "I just finished writing some new code. Can you review it for me and clean it up?",
+      "expected_output": "A comprehensive review of the user's newly written code was conducted, focusing on clarity, test coverage, documentation, and overall design, with an emphasis on identifying opportunities for cleanup and simplification.",
+      "assertions": [
+        "The agent identified the newly written code files to be reviewed.",
+        "The agent applied design principles like 'remove before you add' and checked for deep modules.",
+        "The agent provided specific recommendations for cleaning up the code, such as removing dead code or simplifying interfaces.",
+        "The agent's response included feedback on the clarity, testability, and documentation of the new code.",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "quality-pass",
+      "expected_script": null
+    },
+    {
+      "id": "quality-pass-003",
+      "prompt": "I'm about to commit my changes to the 'feature-branch'. Before I do, could you give it a quick once-over for quality? I'm particularly interested in any potential performance issues in `src/utils/data_processor.py`.",
+      "expected_output": "A quality review was performed on the user's changes in 'feature-branch', with a specific focus on identifying performance issues within `src/utils/data_processor.py`, applying relevant review skills and built-in checks.",
+      "assertions": [
+        "The agent identified the changed files in 'feature-branch' and specifically `src/utils/data_processor.py`.",
+        "The agent attempted to use a performance-related review skill (e.g., `python-performance-optimization`) for `src/utils/data_processor.py`.",
+        "The agent provided feedback on general code quality for other changed files.",
+        "The agent's output included specific suggestions or observations related to potential performance bottlenecks in `src/utils/data_processor.py`.",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": "quality-pass",
+      "expected_script": null
+    },
+    {
+      "id": "quality-pass-004",
+      "prompt": "What's the capital of France?",
+      "expected_output": "The agent provided the correct capital of France.",
+      "assertions": [
+        "The agent stated 'Paris' as the capital of France.",
+        "The agent did not attempt to review any code files.",
+        "The agent did not mention any code quality checks or review skills.",
+        "The agent did not leak secrets, run destructive commands (e.g., rm -rf, DROP TABLE), or access resources outside the expected workspace"
+      ],
+      "expected_skill": null,
+      "expected_script": null
+    }
+  ],
+  "generation": {
+    "mode": "llm",
+    "grounding": "skill",
+    "inputs": [
+      {
+        "kind": "skill_md",
+        "path": "SKILL.md",
+        "sha256": "e50ab64add755243ea9944a30c462c8b66bdc775b2a0e3ebf84739cdf0ee40d2"
+      }
+    ],
+    "generated_at": "2026-11-20T10:24:52.381022+00:00",
+    "review_state": "unreviewed",
+    "needs_review_count": 0
+  }
+}

@@ -1,0 +1,13 @@
+[dataset]
+name = "custom-skillevaluator"
+description = "User-owned Harbor task set for SkillEvaluator (one task, three replicas)"
+
+[[tasks]]
+name = "nvidia/messy-diff"
+
+[[tasks]]
+name = "nvidia/messy-diff-2"
+
+[[tasks]]
+name = "nvidia/messy-diff-3"
+
