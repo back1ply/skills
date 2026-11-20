@@ -111,7 +111,7 @@ The skill lands in a different place for each install method (a plugin cache fol
 - In `SKILL.md` and its references, point to files relative to the skill folder (`scripts/foo.py`, `references/bar.md`).
 - Inside hook commands and MCP server commands or arguments, use `${CLAUDE_PLUGIN_ROOT}`.
 - In `plugin.json` component fields (`hooks`, `commands`, `agents`, `mcpServers` paths), use `./` paths relative to the plugin root.
-- In scripts, find files relative to the script's own location (Python: `Path(__file__).parent`; bash: `"$(dirname "$0")"`).
+- In scripts, find files relative to the script's own location (Python: `Path(__file__).parent`; bash: `"$(dirname "${BASH_SOURCE[0]}")"`).
 
 ### 6. Validate
 ```bash
