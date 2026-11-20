@@ -29,7 +29,7 @@ Releasing is outward-facing and permanent. Never push a tag, approve a deploymen
 4. **Add the workflows** from [references/patterns.md](references/patterns.md): `release.yml`, `zizmor.yml`, `dependabot.yml`. Adjust the package name and test command; keep the job chain, permissions, and gates.
 5. **One-time GitHub and PyPI setup** (patterns.md): trusted publisher, `pypi` environment with a reviewer and a `v*` tag rule, tag ruleset, SHA-pinning requirement, old tokens removed.
 6. **Write RELEASING.md** from the pattern (POST-07) and `SECURITY.md` with supported versions (POST-06).
-7. **Verify locally:** `uvx zizmor --persona pedantic .github/` and actionlint clean; the gate steps pass on a scratch tag (checks.md). Then a TestPyPI dry run with a pre-release version.
+7. **Verify locally:** `uvx zizmor@1.32.0 --persona pedantic .github/` and actionlint clean; the gate steps pass on a scratch tag (checks.md). Then a TestPyPI dry run with a pre-release version.
 
 ## Release
 

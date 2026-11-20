@@ -87,7 +87,7 @@ jobs:
       - run: uv build
       - name: Check the artifacts (GATE-04, GATE-05, VER-05)
         run: |
-          uvx twine check --strict dist/*
+          uvx twine@7.0.0 check --strict dist/*
           ls dist
           test "$(find dist -name '*.tar.gz' | wc -l)" -eq 1
           if compgen -G 'dist/*+*' > /dev/null; then echo "local version part in a filename"; exit 1; fi
@@ -228,7 +228,7 @@ The release workflow looks for a heading `## [V]` or `## V` (CHG-01) and copies 
    (never `git push --tags`: more than three tags in one push trigger no workflow).
 5. Approve the `pypi` deployment in the Actions run.
 6. Check: `uv run --no-project --with "mylib==X.Y.Z" --refresh-package mylib -- python -c "import mylib"`
-   and `uvx pypi-attestations verify pypi --repository https://github.com/O/R <wheel URL from PyPI>`.
+   and `uvx pypi-attestations@0.0.31 verify pypi --repository https://github.com/O/R <wheel URL from PyPI>`.
 
 ## If something goes wrong
 

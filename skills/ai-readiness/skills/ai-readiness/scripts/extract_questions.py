@@ -21,8 +21,10 @@ USER_AGENT = "ai-readiness-skill/1.0"
 
 
 def fetch(url: str) -> str:
+    if not url.startswith("https://"):
+        raise ValueError(f"refusing non-https URL: {url}")
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=30) as response:
+    with urllib.request.urlopen(request, timeout=30) as response:  # nosec B310 - scheme checked above
         return response.read().decode("utf-8")
 
 

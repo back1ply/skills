@@ -5,7 +5,7 @@ Copy-paste commands for set-up verification and audits. Replace `O/R` with the G
 **Workflow lint and security** (SEC-01 to SEC-09)
 
 ```
-uvx zizmor --persona pedantic .github/
+uvx zizmor@1.32.0 --persona pedantic .github/
 actionlint .github/workflows/*.yml       # without a local install: go run github.com/rhysd/actionlint/cmd/actionlint@latest .github/workflows/*.yml
 rg -n 'pull_request_target|workflow_run|issue_comment' .github/workflows/
 rg -n 'enable-cache: true|actions/cache|^\s+cache: ' .github/workflows/release.yml   # setup-python's cache: key; enable-cache: false is fine
@@ -54,6 +54,6 @@ uv lock --check                                   # the bump commit included uv.
 
 ```
 uv run --no-project --with "dist==X.Y.Z" --refresh-package dist -- python -c "import pkg"
-uvx pypi-attestations verify pypi --repository https://github.com/O/R <wheel URL from the PyPI file list>
+uvx pypi-attestations@0.0.31 verify pypi --repository https://github.com/O/R <wheel URL from the PyPI file list>
 gh release view vX.Y.Z --json isPrerelease,body
 ```

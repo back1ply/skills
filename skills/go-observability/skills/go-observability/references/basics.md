@@ -51,7 +51,7 @@ Source: Logging & Observability Full Course, Boot.dev / Jonathan Hall (youtube.c
 - Go's `log` package flags control what each line starts with: `Ldate`, `Ltime`, `Lmicroseconds`, `Llongfile`/`Lshortfile` (caller's file), `LUTC`, `Lmsgprefix`, and `LstdFlags` (date + time) ([0:29:59](https://youtu.be/jhS_VD247Qo?t=1799)).
 
 ## Structured logs
-- Plain logs are free-form strings. **Structured logs** add key-value pairs: `user_id=9284 ip=102.0.0.1 msg="login failed"` or the same as JSON ([1:11:41](https://youtu.be/jhS_VD247Qo?t=4301)).
+- Plain logs are free-form strings. **Structured logs** add key-value pairs: `user_id=9284 ip=192.0.2.1 msg="login failed"` or the same as JSON ([1:11:41](https://youtu.be/jhS_VD247Qo?t=4301)).
 - Why it matters: searching plain text for `9284` also matches file sizes and timestamps that contain those digits. Searching `user_id=9284` matches only that user ([1:13:43](https://youtu.be/jhS_VD247Qo?t=4423)).
 - Nearly every cloud log service understands structured logs natively. Plain-text logs have to be parsed into fields first ([1:12:42](https://youtu.be/jhS_VD247Qo?t=4362)).
 - The trade-off: structured logs are built for machines first and are slightly harder for people to read ([1:14:45](https://youtu.be/jhS_VD247Qo?t=4485)).
