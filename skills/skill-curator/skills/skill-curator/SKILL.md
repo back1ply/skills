@@ -46,7 +46,7 @@ For full marketplace listings, identification methods, and overlap resolution ru
 
 ## Phase 0: Quick Start Mode
 
-Offer analysis depth at the start:
+Offer analysis depth at the start. If the user said not to ask questions or is unavailable, use Quick mode without asking.
 
 ```text
 Quick or Full Analysis?
@@ -89,6 +89,8 @@ Gather these four data points to personalize recommendations:
 
 Check for platform indicators in this order:
 
+If the user names a folder, scan that folder first (`<folder>/**/SKILL.md`) and treat it as a Custom source.
+
 ```text
 1. .gemini/skills/    -> Gemini CLI
 2. .claude/           -> Claude Code
@@ -105,6 +107,8 @@ Execute discovery based on detected platform:
 **Gemini CLI:** Scan `.gemini/skills/**/SKILL.md` and `~/.gemini/skills/**/SKILL.md`, check MCP server configurations, parse each SKILL.md frontmatter.
 
 **Claude Code:** Scan `.claude/settings.json` for plugins, check `CLAUDE.md` files, parse plugin manifests, fetch official `marketplace.json` for source classification, classify each plugin as Official/Endorsed/External/Custom.
+
+**Custom:** Scan `<folder>/**/SKILL.md` for any folder the user names, and parse each frontmatter.
 
 **Cursor:** Scan `.cursor/rules/*.md` and `.cursorrules` in project root.
 
@@ -125,6 +129,7 @@ Execute discovery based on detected platform:
 After discovery, run these analysis phases in order:
 
 1. **Deep Skill Analysis** — Read full skill content, extract trigger keywords, anti-patterns, dependencies, token estimates, and complexity scores
+   - **Integrity check (every skill):** the frontmatter has `name` and `description` (without a description the skill never triggers); every script, file and link the skill references exists, resolved relative to the skill's folder (`scripts/migrate.sh`, `references/x.md`). Report each failure as a broken skill, with the missing field or path.
 2. **Semantic Similarity** — Extract capability signatures (`[Actions] x [Domains]`), detect overlaps (exact duplicate, superset, partial, complementary), group by semantic category
 3. **Conflict Detection** — Find contradictions between skills (opposing rules, style clashes, trigger conflicts, version conflicts)
 4. **Weighted Scoring** — Calculate composite score per skill: Relevance (30%), Uniqueness (25%), Quality (20%), Efficiency (15%), Usage (10%)
@@ -134,11 +139,15 @@ For detailed methodology, scoring tables, and detection methods, see **`referenc
 
 For the standard report output template, see **`references/report-template.md`**.
 
+**Where the report goes:** if the user names a file, write the full report to that file and reply with a short summary and the path. Otherwise show the report in the chat.
+
 ---
 
 ## Operational Rules
 
-- Offer Quick vs Full mode at the start of every audit
+- Offer Quick vs Full mode at the start of every audit (use Quick when the user can't answer)
+- Write the report to the file the user names; printing it in the chat instead does not count as done
+- Run the integrity check on every skill: missing `description`, missing referenced scripts or files
 - Use automated discovery — never ask users to paste configuration
 - Calculate semantic overlap, not just name matching
 - Check for conflicts between skill rules
