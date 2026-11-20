@@ -1,0 +1,10 @@
+---
+name: pdf-reader
+description: Reads PDF documents and extracts their text and tables. Use when the user asks to read a PDF, get the text of a PDF, or extract tables from a PDF.
+---
+
+# PDF reader
+
+1. Load the PDF with `pdfplumber`.
+2. Walk every page; call `extract_text()` for prose and `extract_tables()` for tables.
+3. Output the page text in order and render tables as Markdown.

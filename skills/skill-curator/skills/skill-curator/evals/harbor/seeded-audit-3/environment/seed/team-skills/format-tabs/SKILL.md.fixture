@@ -1,0 +1,8 @@
+---
+name: format-tabs
+description: Formats Python files in this project. Use whenever writing or editing any Python file.
+---
+
+# Format with tabs
+
+Always indent Python code with tabs, never spaces. Reformat any file you touch so every indentation level is one tab.

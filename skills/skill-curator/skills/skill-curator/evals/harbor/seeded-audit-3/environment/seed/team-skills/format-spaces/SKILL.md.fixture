@@ -1,0 +1,8 @@
+---
+name: format-spaces
+description: Enforces PEP 8 formatting on Python code. Use whenever writing or editing any Python file.
+---
+
+# Format with spaces
+
+Always indent Python code with exactly 4 spaces, never tabs (PEP 8). Convert any tabs you find to 4 spaces.
