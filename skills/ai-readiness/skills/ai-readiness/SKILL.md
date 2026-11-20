@@ -1,6 +1,6 @@
 ---
 name: ai-readiness
-description: Scores a repository, product or team estate on Jurgen De Smet's 20-dimension AI-readiness instrument (howreadyfor.ai) from evidence, not opinion. Places each dimension on the 1-5 ladder (Blind, Tacit, Visible but inert, Acted on, Durable) by its tell, reports the floor first, calibrates scores across repos, and names the cheapest move up per dimension, including converting cultural agreements into hard guardrails. Use when the user asks "how ready are we for AI agents", "score this repo on howreadyfor.ai", "answer the AI readiness questions for <repo>", "what is our floor", "which standards are only agreed, not enforced", or compares two codebases for agent readiness.
+description: Scores a repository, product or team estate on Jurgen De Smet's 20-dimension AI-readiness instrument (howreadyfor.ai) from evidence, not opinion. Places each dimension on the 1-5 ladder (Blind, Tacit, Visible but inert, Acted on, Durable) by its tell, reports the floor first, calibrates scores across repos, and names the cheapest move up per dimension, including converting cultural agreements into hard guardrails. Use when the user asks "how ready are we for AI agents", "score this repo on howreadyfor.ai", "answer the AI readiness questions for this repo", "what is our floor", "which standards are only agreed, not enforced", or compares two codebases for agent readiness.
 ---
 
 # AI readiness: score a codebase from evidence

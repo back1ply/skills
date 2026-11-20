@@ -25,7 +25,7 @@ A deck reads as AI-made because of **familiar defaults**, not because a model to
 
 1. Find the brand template, the audience and the deck's point. Without the template you can't tell a tell from house style.
 2. Check every slide for the **strong five** below first. Report each hit with slide number, tell number and fix.
-3. Run the rest of [checklist.md](checklist.md) (some signal, then weak), using [tells.md](tells.md) for each fix.
+3. Run the rest of [checklist.md](references/checklist.md) (some signal, then weak), using [tells.md](references/tells.md) for each fix.
 4. Deck-level: same layout on every slide (10), the ending (15), the cover subtitle (21).
 5. Read only the titles in order. If they don't carry the argument, that's the first fix.
 6. List every placeholder, `[DATA NEEDED: ...]`, `[SOURCE NEEDED: ...]` and unsourced number left. Never fill one with a guess.
@@ -33,7 +33,7 @@ A deck reads as AI-made because of **familiar defaults**, not because a model to
 ## Workflow: build a deck
 
 1. Collect real material: numbers with their sources, the audience, the one-sentence point. These rules stop a tool faking substance; they can't supply it.
-2. Building in another AI tool (Gamma, Copilot, ChatGPT)? Load [tool-prompt.md](tool-prompt.md) into its instructions before it starts.
+2. Building in another AI tool (Gamma, Copilot, ChatGPT)? Load [tool-prompt.md](references/tool-prompt.md) into its instructions before it starts.
 3. Draft every title as a full sentence; build slides only once the titles read as a story.
 4. Build, then run the audit above. Look at every slide at full size: tools miss their own overlaps.
 
@@ -51,7 +51,7 @@ Percentages are per the guide (2026).
 
 ## Judgment calls (this skill, not the guide)
 
-Real decks used these **more** than AI tools did: accent colour everywhere (25), icons in circles (2), bold lead-ins on bullets (7; the bullet wall itself is not on this list), default type such as Inter, Roboto or the system font (23), cards with shadows (24), pills and badges (27). The guide's strict fix for each is in [tells.md](tells.md) and in the tool prompt. When auditing, apply it only where the element hurts the slide (nothing stands out, decoration repeats the word next to it, cards in cards) or the user asks for the strict version; otherwise report it as a style choice, not an AI tell.
+Real decks used these **more** than AI tools did: accent colour everywhere (25), icons in circles (2), bold lead-ins on bullets (7; the bullet wall itself is not on this list), default type such as Inter, Roboto or the system font (23), cards with shadows (24), pills and badges (27). The guide's strict fix for each is in [tells.md](references/tells.md) and in the tool prompt. When auditing, apply it only where the element hurts the slide (nothing stands out, decoration repeats the word next to it, cards in cards) or the user asks for the strict version; otherwise report it as a style choice, not an AI tell.
 
 ## Known gaps
 

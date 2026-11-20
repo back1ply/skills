@@ -6,7 +6,7 @@ argument-hint: "[tdd | deep | dupes | perf | re | <path>...]  (default: review t
 
 # Quality pass
 
-One pass over the code that changed, using whichever review skills are installed. Arguments: `$ARGUMENTS`
+One pass over the code that changed, using whichever review skills are installed. Take the mode and paths from the user's request (see `argument-hint`); with none, review the current changes.
 
 This pass checks quality: clarity, tests, docs and design. It does not hunt for correctness bugs; for
 that, suggest a bug-focused review (such as `/code-review`) at the end.

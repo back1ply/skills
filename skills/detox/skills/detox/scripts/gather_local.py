@@ -327,7 +327,7 @@ def gather_skills(usage):
             "desc_tokens": max(1, len(desc) // 4),
             "body_lines": text.count("\n"),
             "manual_only": fm.get("disable-model-invocation", "").lower() == "true",
-            "md5": hashlib.md5(text.encode()).hexdigest(),
+            "md5": hashlib.md5(text.encode(), usedforsecurity=False).hexdigest(),
         })
     # use counts: match plain name, or plugin:name
     for r in rows:

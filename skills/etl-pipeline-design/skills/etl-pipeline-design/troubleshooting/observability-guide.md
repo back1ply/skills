@@ -249,7 +249,7 @@ Bronze (Raw) → Silver (Clean) → Gold (Final)
 ```yaml
 # contract.yaml
 dataset: orders
-owner: data-engineering@company.com
+owner: data-team@example.com
 sla:
   freshness: 1 hour
   completeness: 99.9%

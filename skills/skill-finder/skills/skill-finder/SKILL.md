@@ -1,6 +1,6 @@
 ---
 name: skill-finder
-description: This skill should be used when the user asks to "find a skill", "discover plugins", "search for an MCP", "what plugins exist for X", "fill my skill gaps", "improve my setup", or when Claude recognizes it lacks tools for a task. Searches GitHub and marketplaces to suggest installations.
+description: Finds new skills, plugins and MCP servers to install by searching GitHub and marketplaces. Use when the user asks to 'find a skill', 'discover plugins', 'search for an MCP', 'what plugins exist for X', 'is there a tool for X', 'fill my skill gaps', says they keep doing something by hand or checking it manually, or when Claude lacks a tool for the task. To audit skills already installed (duplicates, overlaps, conflicts), use skill-curator instead.
 ---
 
 # Skill Finder

@@ -25,5 +25,5 @@ def article_id(url: str) -> str:
     norm = normalize_url(url)
     parts = urlsplit(norm)
     host = parts.netloc.removeprefix("www.")
-    digest = hashlib.sha1(norm.encode("utf-8")).hexdigest()[:6]
+    digest = hashlib.sha1(norm.encode("utf-8"), usedforsecurity=False).hexdigest()[:6]
     return f"{host}_{slugify(parts.path + ' ' + parts.query, 50)}_{digest}"

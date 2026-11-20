@@ -45,3 +45,6 @@ skills/designite-skills/dev/samples/**/.designite/
 *.sarif
 .mypy_cache/
 .venv/
+
+# SkillEvaluator run output (keep evals/evals.json)
+evals/results/

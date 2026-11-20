@@ -5,7 +5,7 @@ description: Finds what limits how many users a single small server can handle (
 
 # Server capacity tuning
 
-Distilled from "I Asked Developers to Max Out a $12 Server (again)" (Arjay McCandless, 2026-10-23), checked against the challenge repo's official results (github.com/arjaythedev/twelve-dollar-server-challenge). Detail in [references/limits-and-fixes.md](references/limits-and-fixes.md); per-entry results in [references/results-2026-10.md](references/results-2026-10.md).
+Distilled from "I Asked Developers to Max Out a 12-dollar Server (again)" (Arjay McCandless, 2026-10-23), checked against the challenge repo's official results (github.com/arjaythedev/twelve-dollar-server-challenge). Detail in [references/limits-and-fixes.md](references/limits-and-fixes.md); per-entry results in [references/results-2026-10.md](references/results-2026-10.md).
 
 ## Core mental model
 Every server stops at one limit first: **CPU, memory, file descriptors (connections), disk sync waits, or the load generator**. Language matters less than which limit you hit and how you move it. At 1 vCPU / 2 GB, the same Go service went from 55k users (net/http, out of memory) to 165k (raw epoll + C SQLite helper). Six entries stopped at the 65k file-descriptor limit, not because they were slow (four tied at 71k with CPU anywhere from 31% to 94%). Find the binding limit before optimizing anything.
@@ -43,5 +43,5 @@ Every server stops at one limit first: **CPU, memory, file descriptors (connecti
 ## Sources
 | Source | Channel | Date | Used for |
 |---|---|---|---|
-| [I Asked Developers to Max Out a $12 Server (again)](https://www.youtube.com/watch?v=-BFt49ula08) | Arjay McCandless | 2026-10-23 | Techniques, limits, trade-offs; transcript in `data/raw/-BFt49ula08.json` |
+| [I Asked Developers to Max Out a 12-dollar Server (again)](https://www.youtube.com/watch?v=-BFt49ula08) | Arjay McCandless | 2026-10-23 | Techniques, limits, trade-offs; transcript in `data/raw/-BFt49ula08.json` |
 | [Challenge repo, batch-2 report](https://github.com/arjaythedev/twelve-dollar-server-challenge/blob/main/benchmarks/batch-2.md) | arjaythedev | 2026-10-22 | Official numbers and the F# correction |

@@ -1,6 +1,6 @@
 ---
 name: skill-curator
-description: This skill should be used when the user asks to "review installed skills", "find duplicates", "detect skill overlaps", "identify skill gaps", "optimize skills", "audit my skills", or "troubleshoot skill conflicts". Supports Gemini, Claude Code, Cursor, Copilot, Windsurf, and custom setups.
+description: Audits the skills already installed in Claude Code, Gemini, Cursor, Copilot, Windsurf or a custom setup. Finds duplicates, overlaps, conflicts and gaps, and recommends what to remove, merge or fix. Use when the user asks to 'review installed skills', 'audit my skills', 'find duplicate skills', 'detect skill overlaps', 'optimize skills' or 'troubleshoot skill conflicts'. To search for new skills to install, use skill-finder instead.
 ---
 
 # Skill Curator

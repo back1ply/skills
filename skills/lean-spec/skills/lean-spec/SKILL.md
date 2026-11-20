@@ -1,6 +1,6 @@
 ---
 name: lean-spec
-description: Lightweight Markdown specs for coding agents (Kiro-style bugfix template, spec deltas, same-commit sync) instead of a spec framework.
+description: Lightweight Markdown specs for coding agents (Kiro-style bugfix template, spec deltas, same-commit sync) instead of a spec framework. Run only when the user asks for it by name.
 disable-model-invocation: true
 ---
 
