@@ -1,6 +1,6 @@
 ---
 name: quality-pass
-description: This skill should be used after writing or changing code, before committing, or when the user asks to "run a quality pass", "review my changes", "clean this up", "check code quality", or wants test-first work, an architecture scan, a duplicate-function hunt, or a performance pass. Routes each changed file to the best installed review skill (test-guard, clean-code-guard, docs-guard, writing-dax-measures and others) and falls back to built-in checks when a skill is missing.
+description: Reviews and cleans up the code that just changed, before it is committed. Use after writing or changing code, or when the user asks to 'review my changes', 'clean this up', 'look this over before I commit', 'run a quality pass' or 'check code quality', or wants test-first work, an architecture scan, a duplicate-function hunt or a performance pass. Routes each changed file to the best installed review skill (test-guard, clean-code-guard, docs-guard, writing-dax-measures and others) and falls back to built-in checks when a skill is missing.
 argument-hint: "[tdd | deep | dupes | perf | re | <path>...]  (default: review the current changes)"
 ---
 
@@ -58,7 +58,7 @@ Apply briefly before changing anything. `dupes` and `re` only read, so they skip
    | DAX: `*.dax`, measures in `*.tmdl` / `*.bim` | `writing-dax-measures` | Variables over repeated expressions, `DIVIDE` over `/`, no `FILTER` on whole tables where a column filter works |
    | GSC: `*.gsc` | `gsc-writer` | Review as code (next row) |
    | Docs: `*.md`, `*.mdx`, `*.rst`, READMEs | `docs-guard` | Every function, flag, path and example named in the doc exists in the code; no filler |
-   | All other code | `clean-code-guard` | Names say what things do, functions do one thing, no dead code, no speculative options, no copy-paste |
+   | All other code | `clean-code-guard` | Names say what things do, functions do one thing, no dead code or unused imports, no speculative options, no copy-paste, no unexplained magic numbers, no bare `except`, and new behaviour has a test |
 
    Then add the secondary checks:
    - `.py` files with long or tangled functions: also `python-refactor` if installed.
@@ -66,9 +66,13 @@ Apply briefly before changing anything. `dupes` and `re` only read, so they skip
    - Any other installed skill made for that file type or framework (for example a Power Query or
      Terraform skill): use it alongside the primary reviewer.
 3. **Report** findings grouped by reviewer, most severe first, then fix the ones that are clearly right
-   and in scope. Keep behaviour unchanged unless a finding is a real bug. Run the project's own checks
-   (`just check`, `npm test`, `pytest`, …) after fixing.
-4. Respect the project's rules (AGENTS.md / CLAUDE.md): review gates, commit rules, code-health tools.
+   and in scope. Keep behaviour unchanged unless a finding is a real bug. Prefer several small edits to one
+   large rewrite.
+4. **Verify before you finish (required).** After fixing, confirm every changed file still parses
+   (`python -m py_compile`, `tsc --noEmit`, `go vet`, …) and run the project's own checks (`just check`,
+   `npm test`, `pytest`, …). If a check fails, fix it or revert that edit; never finish with a file that
+   does not parse or a check that fails. Say which checks ran and their result.
+5. Respect the project's rules (AGENTS.md / CLAUDE.md): review gates, commit rules, code-health tools.
 
 ## 4. Other modes
 
@@ -88,7 +92,7 @@ Apply briefly before changing anything. `dupes` and `re` only read, so they skip
 
 ## 5. Finish
 
-End with one short list: what each skill found, what was fixed, what was left and why, and which skills
+End with one short list: what each skill found, what was fixed, which checks ran and passed, what was left and why, and which skills
 were not installed (with install hints). If code changed, suggest a bug-focused review.
 
 ## Install hints
