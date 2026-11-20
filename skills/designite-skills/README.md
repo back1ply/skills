@@ -17,9 +17,10 @@ the threshold, how it is detected), `references/tools.md` (exact commands, verif
 ## Install
 
 ```
-/plugin marketplace add back1ply/skills
-/plugin install designite-skills
+/plugin install designite-skills --marketplace back1ply/skills
 ```
+
+On Claude Code older than 2.1.275, run `/plugin marketplace add back1ply/skills` first, then `/plugin install designite-skills`.
 
 Or with skills.sh: `npx skills add back1ply/skills` (pick the `designite-*` skills).
 

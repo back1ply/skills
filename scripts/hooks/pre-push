@@ -83,9 +83,9 @@ fi
 step "4. lychee (changed Markdown)"
 if [ -z "$markdown" ]; then echo "  no Markdown changed"
 elif have lychee; then
-  # 403/429 are bot blocks, not dead links. Results are cached for a week.
+  # 403/429 are bot blocks and timeouts are often transient, so neither blocks. Results are cached for a week.
   printf '%s\n' "$markdown" | xargs -d '\n' lychee --no-progress --cache --max-cache-age 7d \
-    --max-concurrency 16 --timeout 20 --accept '200..=299,403,429' || failed+=("dead links")
+    --max-concurrency 16 --timeout 20 --accept-timeouts --accept '200..=299,403,429' || failed+=("dead links")
 fi
 
 step "5. zizmor + actionlint (workflows)"

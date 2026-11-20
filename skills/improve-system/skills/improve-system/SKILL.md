@@ -1,6 +1,6 @@
 ---
 name: improve-system
-description: "Keep your system sharp. Reviews your setup, captures learnings, audits for rot, recaps your sessions. Run it regularly to keep improving."
+description: "Reviews and maintains your Claude Code setup in four modes: setup review (CLAUDE.md, MCP servers, skills, hooks), experience capture, session recap, and audit for stale or conflicting rules. Use when the user says 'review my setup', 'how's my setup', 'capture this', 'log this', 'recap my week', 'what did I do', 'audit', 'health check' or 'what's stale', or describes a win or lesson to record."
 ---
 
 # /improve-system

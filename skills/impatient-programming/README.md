@@ -20,9 +20,10 @@ impatientprogramming.org.
 ## Install
 
 ```
-/plugin marketplace add back1ply/skills
-/plugin install impatient-programming
+/plugin install impatient-programming --marketplace back1ply/skills
 ```
+
+On Claude Code older than 2.1.275, run `/plugin marketplace add back1ply/skills` first, then `/plugin install impatient-programming`.
 
 Or with skills.sh: `npx skills add back1ply/skills` (pick `impatient-programming`).
 
