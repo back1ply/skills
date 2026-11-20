@@ -244,7 +244,7 @@ When looking for MCP servers:
 
 ### Official MCP Servers
 
-Check: https://github.com/anthropics/mcp-servers
+Check: https://github.com/modelcontextprotocol/servers
 - filesystem, git, github, gitlab, google-drive, postgres, sqlite, slack, memory, fetch, brave-search, puppeteer, sequential-thinking
 ```
 

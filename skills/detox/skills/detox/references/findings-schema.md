@@ -24,8 +24,8 @@ Each part sub-agent writes one file: `<run>/findings/<part>.json`. Parts: `inter
           "tokens": 18,
           "tokens_est": false,
           "actions": [
-            {"label": "Move to backup", "apply": {"kind": "move_skill", "path": "/Users/x/.claude/skills/example-skill"}},
-            {"label": "Make manual only", "apply": {"kind": "manual_only", "path": "/Users/x/.claude/skills/example-skill/SKILL.md"}}
+            {"label": "Move to backup", "apply": {"kind": "move_skill", "path": "~/.claude/skills/example-skill"}},
+            {"label": "Make manual only", "apply": {"kind": "manual_only", "path": "~/.claude/skills/example-skill/SKILL.md"}}
           ],
           "default": 0
         }

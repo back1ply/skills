@@ -15,3 +15,7 @@ After changing code, run `code_health_review` on the changed files. If Code Heal
 ## Shared CLI rules
 
 `agent-friendly-cli` owns the language-neutral CLI contract. `python-cli-packaging` copies 43 of its checklist rows and its `scripts/cli_contract.py`. After editing either source, run `python scripts/sync_shared.py`; the `sync-check` workflow fails when they drift.
+
+## Pre-push checks
+
+`scripts/hooks/pre-push` runs `claude plugin validate`, SkillEvaluator Tier 1, gitleaks, lychee, and (when workflows change) zizmor and actionlint on what a push changes. Enable it once per clone with `git config core.hooksPath scripts/hooks`. Skip once with `git push --no-verify`.

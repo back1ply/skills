@@ -106,7 +106,7 @@ my-skill@my-repo                           -> Custom (user's own)
 
 ### Identifying Official vs Endorsed
 
-- **Official:** `author.name` = "Anthropic" AND `author.email` = "support@anthropic.com"
+- **Official:** `author.name` = "Anthropic" AND `author.email` is on the `anthropic.com` domain
 - **Endorsed:** Listed in marketplace but author is NOT Anthropic
 
 ### Overlap Resolution by Source
