@@ -43,8 +43,9 @@ files=$(printf '%s' "$files" | tr -d '\r' | sort -u | sed '/^$/d')
 plugins=$(printf '%s\n' "$files" | sed -n 's|^skills/\([^/]*\)/.*|\1|p' | sort -u)
 skill_dirs=$(printf '%s\n' "$files" | sed -n 's|^\(skills/[^/]*/skills/[^/]*\)/.*|\1|p' | sort -u)
 # sed, not grep: some Windows grep builds add a carriage return to each output line.
-# The README template's links are relative to the repo root, not tools/; README.md itself is checked.
-markdown=$(printf '%s\n' "$files" | sed -n '/^tools\/readme_template\.md$/d; /\.md$/p')
+# Skipped by the link check: the README template (its links are relative to the repo root, and
+# README.md itself is checked) and eval cases (prompts are test input with made-up URLs).
+markdown=$(printf '%s\n' "$files" | sed -n '/^tools\/readme_template\.md$/d; /^skills\/[^/]*\/evals\//d; /\.md$/p')
 workflows=$(printf '%s\n' "$files" | sed -n '/^\.github\/workflows\//p')
 
 step "0. repo check (tools/)"
