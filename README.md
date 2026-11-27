@@ -1,6 +1,6 @@
 # Skills
 
-39 agent skills in 36 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
+40 agent skills in 37 plugins, for data work, dbt, code quality, and working with coding agents. Each plugin installs on its own.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Agent Skills](https://img.shields.io/badge/Agent_Skills-Open_Standard-blue.svg)](https://agentskills.io)
@@ -23,7 +23,7 @@ npx skills add back1ply/skills
 
 Add `-g` to install globally, or `-a claude-code` to target one agent.
 
-**Running a skill:** installed as a plugin, a skill runs as `/<plugin>:<skill>` (for example `/quality-pass:quality-pass`). Installed with skills.sh, it runs as `/<skill>`. The plugin and skill names match except in `arjancodes-playbook` (skill: `design-patterns-pythonic`) `designite-skills` (skills: `designite-java`, `designite-csharp`, `designite-python`), and `agent-distraction` (skills: `distraction-rules`, `sweep`).
+**Running a skill:** installed as a plugin, a skill runs as `/<plugin>:<skill>` (for example `/quality-pass:quality-pass`). Installed with skills.sh, it runs as `/<skill>`. The plugin and skill names match except in `arjancodes-playbook` (skill: `design-patterns-pythonic`), `designite-skills` (skills: `designite-java`, `designite-csharp`, `designite-python`), and `agent-distraction` (skills: `distraction-rules`, `sweep`).
 
 ## Catalog
 
@@ -72,6 +72,7 @@ Add `-g` to install globally, or `-a claude-code` to target one agent.
 | `impatient-programming` | XP's 29 rules rewritten for teams building with coding agents (Impatient Programming). Use when setting up how a team works with agents, tests, and merges. ([README](skills/impatient-programming/README.md)) |
 | `lean-spec` | Lightweight Markdown specs for coding agents: a Kiro-style bugfix template, spec deltas, and same-commit sync. Use instead of a spec framework when fixing bugs or changing features in existing code. |
 | `agent-distraction` | Keep coding agents off side quests caused by stale CLAUDE.md lines, old specs and dead TODOs: four CLAUDE.md rules, ticket status tags, and a sweep that finds outdated notes with a history check. Use when an agent builds dropped features or follows docs over code. |
+| `tldr` | End every reply with a ten-second bottom line: visual, readable on its own, with at most one decision. Use by starting a chat with /tldr when long replies and too many questions slow you down. |
 
 ### Backend, infrastructure, and security
 

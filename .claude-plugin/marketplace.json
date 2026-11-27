@@ -523,6 +523,19 @@
         "ai-agents"
       ],
       "category": "agents"
+    },
+    {
+      "name": "tldr",
+      "description": "End every reply with a ten-second bottom line: visual, readable on its own, with at most one decision. Use by starting a chat with /tldr when long replies and too many questions slow you down.",
+      "source": "./skills/tldr",
+      "license": "MIT",
+      "keywords": [
+        "bottom-line",
+        "replies",
+        "decisions",
+        "communication"
+      ],
+      "category": "agents"
     }
   ]
 }
