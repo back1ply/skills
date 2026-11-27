@@ -3,7 +3,7 @@
 Source: [The rules that govern how we work](https://impatientprogramming.org/rules/) by Obie Fernandez,
 impatientprogramming.org, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 Changes: reformatted from HTML to markdown, one section per rule, a Contents list added;
-"Revisit this rule" links and images removed. Text otherwise unchanged. Snapshot: 2026-10-27.
+"Revisit this rule" links and images removed. Text otherwise unchanged. Snapshot: 2026-11-27.
 
 Each rule shows the 2026 IMP rule, then Don Wells's 1999 XP rule it revisits.
 Anchor links (`https://impatientprogramming.org/rules/#rule-N`) point to the live page.
@@ -84,8 +84,6 @@ XP gave the team an open workspace. Most teams are remote now, so the open works
 
 Ideally, everyone's local Claude Code sessions feed a shared knowledge graph. What's learned by one should be learned by all.
 
-Essays [Matthew Canham, “The Playbook and the Contract”](https://impatientprogramming.org/essays/matthew-canham-the-playbook-and-the-contract/) agrees
-
 Tools [The agent itself](https://impatientprogramming.org/tools/the-agent/)
 
 ### Rule 7: Set a sustainable attention budget.
@@ -113,7 +111,7 @@ In IMP a fix means a defect in code that's live in production. Everything else i
 
 On flat-rate plans the bill is fixed, so dollars aren't worth tracking. Plan limits are. Watch how close you run to them, because hitting one stops your agents mid-work.
 
-Essays [Matthew Canham, “The Playbook and the Contract”](https://impatientprogramming.org/essays/matthew-canham-the-playbook-and-the-contract/) pushes back
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) extends
 
 Tools [Measurement](https://impatientprogramming.org/tools/measurement/)
 
@@ -129,7 +127,7 @@ People rotate to the new work, and agents take over the maintenance.
 1999: *Fix XP when it breaks.*  
 Link: https://impatientprogramming.org/rules/#rule-11
 
-
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) extends
 
 ## Designing
 
@@ -160,6 +158,8 @@ System metaphor was the XP practice teams found hardest to apply. The problem is
 In IMP the metaphor/mental model gets written down in the source code. We call it the Contract. It's the team's comprehensive description of what the software must do, in a form a team can collaborate on and maintain. More on [the Contract](https://impatientprogramming.org/xp-revisited/#the-metaphor-finally-has-a-home).
 
 Ancestor: Peter Naur, “Programming as Theory Building” (1985).
+
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) agrees
 
 Tools [The Contract](https://impatientprogramming.org/tools/contract/), [Proof](https://impatientprogramming.org/tools/proof/)
 
@@ -225,7 +225,7 @@ Link: https://impatientprogramming.org/rules/#rule-19
 
 Convention over configuration. The rules run in machines: mutation gates, executable contracts, merge checks, guardrails on every change.
 
-Essays [Stephen Margheim, “Code Is Cheap Now. That's Why It Matters.”](https://impatientprogramming.org/essays/stephen-margheim-code-is-cheap-now/) extends
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) agrees [Stephen Margheim, “Code Is Cheap Now. That's Why It Matters.”](https://impatientprogramming.org/essays/stephen-margheim-code-is-cheap-now/) extends
 
 Tools [Structure](https://impatientprogramming.org/tools/structure/), [Standards](https://impatientprogramming.org/tools/standards/)
 
@@ -242,7 +242,7 @@ One thing does come first. When you're changing existing code, pin the behavior 
 
 The most impish thing you can do is to make the Contract executable, and that's one of the greenest green fields that exists in October 2026.
 
-Essays [Matthew Canham, “The Playbook and the Contract”](https://impatientprogramming.org/essays/matthew-canham-the-playbook-and-the-contract/) extends
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) agrees
 
 Tools [The Contract](https://impatientprogramming.org/tools/contract/), [Generated inputs](https://impatientprogramming.org/tools/generated-inputs/), [Tests that bite](https://impatientprogramming.org/tools/tests-that-bite/)
 
@@ -284,6 +284,8 @@ A guardrail is software, and building one is programming. Think of bowling with 
 
 Bumpers up. They keep the ball out of the gutter on its way to the pins.
 
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) pushes back
+
 Tools [Safety](https://impatientprogramming.org/tools/safety/), [What users see](https://impatientprogramming.org/tools/what-users-see/)
 
 ### Rule 25: Collective ownership, agents included.
@@ -306,6 +308,8 @@ Imps run all automated tests through a *kill matrix* using mutation testing, and
 
 A kill matrix. Each column is the code broken on purpose in one small way, and a dot means that test catches it. Take away tests 3 and 5 and every mutant shown is still caught.
 
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) agrees
+
 Tools [Tests that bite](https://impatientprogramming.org/tools/tests-that-bite/)
 
 ### Rule 27: Green merges itself.
@@ -317,7 +321,7 @@ Our long-term goal is to get rid of human code review altogether. The blast radi
 
 Claude can set up canary deployments for you without breaking a sweat. It can also hotfix or rollback almost any bad release almost instantly. IMP embraces the fact that the risks of continual deployment have never been lower.
 
-Essays [Muhannad Salkini, “Rule 17: What the Contract can't hold”](https://impatientprogramming.org/essays/muhannad-salkini-rule-17-what-the-contract-can-t-hold/) extends [Sebastian Scholl, “Stop Apologizing for Being the Bottleneck”](https://impatientprogramming.org/essays/sebastian-scholl-stop-apologizing-for-being-the-bottleneck/) extends [Matthew Canham, “The Playbook and the Contract”](https://impatientprogramming.org/essays/matthew-canham-the-playbook-and-the-contract/) pushes back
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) pushes back [Muhannad Salkini, “Rule 17: What the Contract can't hold”](https://impatientprogramming.org/essays/muhannad-salkini-rule-17-what-the-contract-can-t-hold/) extends [Sebastian Scholl, “Stop Apologizing for Being the Bottleneck”](https://impatientprogramming.org/essays/sebastian-scholl-stop-apologizing-for-being-the-bottleneck/) extends
 
 Tools [Review and merge](https://impatientprogramming.org/tools/review-and-merge/)
 
@@ -329,6 +333,8 @@ Link: https://impatientprogramming.org/rules/#rule-28
 A bug is a defect in code that's live in production ([rule 9](https://impatientprogramming.org/rules/#rule-9)). Everything else is refinement.
 
 Add the missing obligation to the Contract first, make it executable ([rule 20](https://impatientprogramming.org/rules/#rule-20)), and prove the new test kills the mutant that matches the bug ([rule 26](https://impatientprogramming.org/rules/#rule-26)). Then fix the code. Every bug leaves the Contract stronger.
+
+Essays [Agustín Calabrese, “One person, a coordinator and a flock: running Impatient Programming alone”](https://impatientprogramming.org/essays/agusti-n-calabrese-one-person-a-coordinator-and-a-flock-running-impatient-progra/) agrees
 
 Tools [Generated inputs](https://impatientprogramming.org/tools/generated-inputs/)
 
