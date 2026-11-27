@@ -39,8 +39,8 @@ jobs:
         run: uv run pytest
       - name: Lint
         run: uv run ruff check . && uv run ruff format --check .
-      - name: Default rules (SKL, REG, MAN, CNT, DOC, REF)
-        run: uv run repo check --root "$GITHUB_WORKSPACE"
+      - name: Default rules (SKL, REG, MAN, CNT, DOC, REF, EVL), as PR annotations
+        run: uv run repo check --root "$GITHUB_WORKSPACE" --format github
       - name: skills.sh finds exactly the published skills (DSC)
         run: uv run repo check --root "$GITHUB_WORKSPACE" --select DSC
       - name: Fresh install from the wheel, outside the repo

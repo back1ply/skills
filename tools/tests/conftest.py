@@ -13,7 +13,7 @@ import pytest
 import yaml
 
 from skills_repo import config
-from skills_repo.core import readme
+from skills_repo.core import evals, readme
 from skills_repo.model import Repo
 
 TEMPLATE = """# Skills
@@ -46,7 +46,7 @@ def write_skill(path: Path, frontmatter: dict, body: str = "# Skill\n\nDo the th
 
 
 def add_plugin(root: Path, name: str, skill: str | None = None, category: str = "agents") -> None:
-    """A plugin that passes every rule: folder, plugin.json, SKILL.md, marketplace entry."""
+    """A plugin that passes every rule: folder, plugin.json, SKILL.md, trigger cases, entry."""
     skill = skill or name
     plugin = root / config.PLUGINS_DIR / name
     write_json(
@@ -63,6 +63,9 @@ def add_plugin(root: Path, name: str, skill: str | None = None, category: str = 
     write_skill(
         plugin / "skills" / skill / "SKILL.md",
         {"name": skill, "description": f"Does {skill} things. Use when testing."},
+    )
+    evals.write_trigger_cases(
+        plugin, skill, f"Please do {skill} things.", "What time is it in Tokyo?"
     )
     market_path = root / config.MARKETPLACE
     market = read_json(market_path)

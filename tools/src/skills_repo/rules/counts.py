@@ -27,19 +27,24 @@ def _checklist_ids(skill: Skill) -> tuple[Path, set[str]]:
     return checklist, set(ID_ROW.findall(checklist.read_text(encoding="utf-8")))
 
 
-def _claim_texts(repo: Repo, plugin: Plugin, skill: Skill) -> dict[str, str]:
-    """Every text that may state the checklist's item count, keyed by where it lives."""
-    texts = {repo.rel(skill.path): skill.text}
+def _claim_texts(repo: Repo, plugin: Plugin, skill: Skill) -> list[tuple[str, str, str]]:
+    """(path, subject, text) for every text that may state the checklist's item count."""
+    texts = [(repo.rel(skill.path), "", skill.text)]
     if plugin.manifest is not None:
-        texts[repo.rel(plugin.manifest_path)] = plugin.manifest.get("description", "")
-    texts[f"marketplace.json ({plugin.name})"] = (plugin.entry or {}).get("description", "")
+        description = plugin.manifest.get("description", "")
+        texts.append((repo.rel(plugin.manifest_path), "", description))
+    entry_description = (plugin.entry or {}).get("description", "")
+    texts.append((config.MARKETPLACE, plugin.name, entry_description))
     return texts
 
 
-def _wrong_claims(texts: dict[str, str], checklist: str, count: int) -> Iterator[Finding]:
-    for where, text in texts.items():
+def _wrong_claims(
+    texts: list[tuple[str, str, str]], checklist: str, count: int
+) -> Iterator[Finding]:
+    for path, subject, text in texts:
         for claim in (c for c in ITEM_CLAIM.findall(text) if int(c) != count):
-            yield Finding(where, "CNT001", f"says {claim} items, {checklist} has {count}")
+            message = f"says {claim} items, {checklist} has {count}"
+            yield Finding(path, "CNT001", message, subject=subject)
 
 
 @rule("CNT001", "'N items' in a skill, plugin.json or entry matches its checklist's IDs")

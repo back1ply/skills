@@ -138,3 +138,34 @@ def test_new_copies_skill_from_file(
 def test_sync_needs_both_skills(repo_root: Path, capsys: pytest.CaptureFixture[str]) -> None:
     code, out, err = run(capsys, "sync", "--root", str(repo_root), "--check")
     assert code == 1 and out == "" and err.startswith("error: shared rules need")
+
+
+def test_check_github_annotations(repo_root: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    (repo_root / config.README).write_text("stale\n", encoding="utf-8")
+    code, out, err = run(capsys, "check", "--root", str(repo_root), "--format", "github")
+    assert code == 1 and err == ""
+    assert "::error file=README.md,title=DOC001::" in out
+
+
+def test_check_sarif(repo_root: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    (repo_root / config.README).write_text("stale\n", encoding="utf-8")
+    code, out, _ = run(capsys, "check", "--root", str(repo_root), "--format", "sarif")
+    sarif = json.loads(out)
+    (result,) = sarif["runs"][0]["results"]
+    assert code == 1 and sarif["version"] == "2.1.0"
+    assert result["ruleId"] == "DOC001" and result["level"] == "error"
+    assert result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"] == "README.md"
+
+
+def test_check_fix_rebuilds_readme(repo_root: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    (repo_root / config.README).write_text("stale\n", encoding="utf-8")
+    code, out, err = run(capsys, "check", "--root", str(repo_root), "--fix")
+    assert code == 0 and out.startswith("ok ") and err.startswith("fixed DOC001")
+    assert (repo_root / config.README).read_text(encoding="utf-8").startswith("# Skills")
+
+
+def test_new_writes_trigger_case_stubs(repo_root: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    run(capsys, "new", "beta", "--root", str(repo_root), "--category", "skills",
+        "--description", "Beta plugin. Use when testing.")  # fmt: skip
+    for case in ("trigger-beta", "no-trigger-beta"):
+        assert (repo_root / "skills/beta/evals" / case / "prompt.md").is_file()

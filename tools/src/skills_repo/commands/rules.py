@@ -21,12 +21,16 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     registry = rules.load_all()
     if args.json:
-        rows = [{"id": r.id, "title": r.title, "default": r.default} for r in registry.values()]
+        rows = [
+            {"id": r.id, "title": r.title, "default": r.default, "fixable": r.fix is not None}
+            for r in registry.values()
+        ]
         json.dump(rows, sys.stdout, indent=2)
         sys.stdout.write("\n")
         return 0
     for family, about in rules.FAMILIES.items():
         print(f"{family}  {about}")
         for r in (r for r in registry.values() if r.family == family):
-            print(f"  {r.id}  {r.title}{'' if r.default else '  [opt-in]'}")
+            tags = ("" if r.default else "  [opt-in]") + ("  [fixable]" if r.fix else "")
+            print(f"  {r.id}  {r.title}{tags}")
     return 0

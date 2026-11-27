@@ -28,6 +28,21 @@ SPEC_FIELDS = frozenset(
     {"name", "description", "license", "compatibility", "metadata", "allowed-tools"}
 )
 
+# spec guidance: keep the SKILL.md body under about 5,000 tokens (estimated as chars / 4)
+BODY_TOKENS_MAX = 5000
+CHARS_PER_TOKEN = 4
+
+# Characters a reviewer can't see: zero-width space/non-joiner, word joiner and invisible
+# operators, soft hyphen, BOM, bidi embeddings/overrides/isolates, and Unicode tag characters
+# (used to smuggle hidden text). U+200D (zero-width joiner) is left out: emoji need it.
+HIDDEN_CHARS = (
+    "[\u200b\u200c\u2060-\u2064\u00ad\ufeff\u202a-\u202e\u2066-\u2069\U000e0000-\U000e007f]"
+)
+TEXT_SUFFIXES = frozenset(
+    {".md", ".py", ".sh", ".ps1", ".json", ".yaml", ".yml", ".toml", ".txt", ".js", ".ts",
+     ".html", ".svg", ".sql", ".csv"}
+)  # fmt: skip
+
 # Claude Code skills docs: extra frontmatter it reads, and the listing cut-off
 CLAUDE_FIELDS = frozenset(
     {

@@ -58,6 +58,14 @@ test:
 rules:
     {{repo}} rules
 
+# Does each skill load when it should, and stay quiet when it shouldn't? Every case is a real
+# Claude session, 3 runs each unless you pass --runs N. Never run by the hook or CI.
+# Reports stay local (--no-publish); spend stops at $1 (--max-cost-usd).
+[group('evals')]
+[doc("BILLED: run one plugin's trigger evals (real Claude sessions; $1 cap, reports stay local)")]
+trigger-evals plugin *args:
+    p="$1"; shift; claude plugin eval "skills/$p" --tag trigger --ablation none --no-publish --max-cost-usd 1 "$@"
+
 # Turn on the pre-push hook for this clone.
 [group('setup')]
 hooks:

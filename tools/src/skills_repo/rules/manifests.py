@@ -34,7 +34,7 @@ def _each_entry(repo: Repo, rule_id: str, check: Check) -> Iterator[Finding]:
     for entry in repo.entries:
         message = check(entry)
         if message:
-            yield Finding(f"marketplace.json ({entry.get('name')})", rule_id, message)
+            yield Finding(config.MARKETPLACE, rule_id, message, subject=str(entry.get("name")))
 
 
 def _has_version(data: dict) -> str | None:
@@ -88,7 +88,7 @@ def author_name(repo: Repo) -> Iterator[Finding]:
 def no_email(repo: Repo) -> Iterator[Finding]:
     yield from _each_manifest(repo, "MAN003", _author_email)
     if "email" in repo.marketplace.get("owner", {}):
-        yield Finding("marketplace.json", "MAN003", "remove owner.email")
+        yield Finding(config.MARKETPLACE, "MAN003", "remove owner.email")
 
 
 @rule("MAN004", "repository is the string URL of this repo")

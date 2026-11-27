@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 from collections.abc import Callable, Iterator
+from pathlib import Path
 
 from skills_repo import config
 from skills_repo.findings import ERROR, NOTE, Finding
@@ -17,6 +18,7 @@ from skills_repo.model import Repo, Skill
 from skills_repo.rules import rule
 
 NAME_RE = re.compile(config.NAME_PATTERN)
+HIDDEN_RE = re.compile(config.HIDDEN_CHARS)
 
 
 def _parsed(repo: Repo) -> Iterator[tuple[Skill, dict]]:
@@ -122,9 +124,11 @@ def description_length(repo: Repo) -> Iterator[Finding]:
     return _each(repo, "SKL004", _bad_description)
 
 
-@rule("SKL005", "description + when_to_use fit Claude Code's 1,536-char listing")
+@rule("SKL005", "note: description + when_to_use fit Claude Code's 1,536-char listing")
 def listing_length(repo: Repo) -> Iterator[Finding]:
-    return _each(repo, "SKL005", _listing_too_long)
+    # a note, not an error: Claude Code truncates rather than refuses, and users can raise the
+    # limit with skillListingMaxDescChars
+    return _each(repo, "SKL005", _listing_too_long, NOTE)
 
 
 @rule("SKL006", "compatibility, if set, is 1-500 chars")
@@ -180,6 +184,66 @@ def skill_location(repo: Repo) -> Iterator[Finding]:
         yield Finding(repo.rel(path), "SKL011", message)
 
 
+def _angle_brackets(skill: Skill, fm: dict) -> str | None:
+    desc = fm.get("description")
+    if not isinstance(desc, str) or not any(c in desc for c in "<>"):
+        return None
+    return (
+        "description contains < or >; Claude Code shows them as &lt; and skill-creator rejects them"
+    )
+
+
+@rule("SKL012", "description has no < or >")
+def description_angle_brackets(repo: Repo) -> Iterator[Finding]:
+    return _each(repo, "SKL012", _angle_brackets)
+
+
+def _is_scanned(path: Path) -> bool:
+    """A text file, outside eval run output."""
+    return (
+        path.is_file()
+        and path.suffix.lower() in config.TEXT_SUFFIXES
+        and "results" not in path.parts
+    )
+
+
+def _text_files(skill: Skill) -> Iterator[Path]:
+    """Text files in a skill folder, skipping eval run output."""
+    yield from (p for p in sorted(skill.path.parent.rglob("*")) if _is_scanned(p))
+
+
+def _first_hidden(text: str) -> tuple[int, str] | None:
+    """(line, code point) of the first hidden character; a BOM at the very start is allowed."""
+    for number, line in enumerate(text.splitlines(), 1):
+        for match in HIDDEN_RE.finditer(line):
+            if not (number == 1 and match.start() == 0 and match.group() == "\ufeff"):
+                return number, f"U+{ord(match.group()):04X}"
+    return None
+
+
+@rule("SKL013", "no invisible or bidirectional-control characters in skill files")
+def hidden_characters(repo: Repo) -> Iterator[Finding]:
+    # zero-width, bidi-control and Unicode tag characters can hide instructions from a reviewer
+    for path in (p for s in repo.skills for p in _text_files(s)):
+        hit = _first_hidden(path.read_text(encoding="utf-8", errors="replace"))
+        if hit:
+            message = f"hidden character {hit[1]}; remove it or replace it with a visible one"
+            yield Finding(repo.rel(path), "SKL013", message, line=hit[0])
+
+
+def _body_tokens(skill: Skill, fm: dict) -> str | None:
+    body = skill.text.split("---", 2)[-1]
+    tokens = len(body) // config.CHARS_PER_TOKEN
+    if tokens > config.BODY_TOKENS_MAX:
+        return f"body is about {tokens} tokens (spec suggests under {config.BODY_TOKENS_MAX}); move detail to references/"
+    return None
+
+
 @rule("SKL100", "note: Claude-only frontmatter fields, which other agents ignore")
 def claude_only_fields(repo: Repo) -> Iterator[Finding]:
     return _each(repo, "SKL100", _claude_only, NOTE)
+
+
+@rule("SKL101", "note: SKILL.md body is under about 5,000 tokens")
+def body_token_budget(repo: Repo) -> Iterator[Finding]:
+    return _each(repo, "SKL101", _body_tokens, NOTE)

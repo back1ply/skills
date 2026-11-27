@@ -14,7 +14,7 @@ from skills_repo.findings import Finding
 from skills_repo.model import Repo
 from skills_repo.rules import rule
 
-MARKET = "marketplace.json"
+MARKET = config.MARKETPLACE
 
 
 @rule("REG001", "every plugin folder has .claude-plugin/plugin.json")
@@ -66,7 +66,7 @@ def entry_source(repo: Repo) -> Iterator[Finding]:
         expected = f"./{config.PLUGINS_DIR}/{entry.get('name')}"
         if entry.get("source") != expected:
             message = f"source is {entry.get('source')!r}, expected {expected!r}"
-            yield Finding(f"{MARKET} ({entry.get('name')})", "REG006", message)
+            yield Finding(MARKET, "REG006", message, subject=str(entry.get("name")))
 
 
 @rule("REG007", "entry category is a README section")
@@ -76,14 +76,14 @@ def entry_category(repo: Repo) -> Iterator[Finding]:
             message = (
                 f"category {entry.get('category')!r} is not one of {', '.join(config.CATEGORIES)}"
             )
-            yield Finding(f"{MARKET} ({entry.get('name')})", "REG007", message)
+            yield Finding(MARKET, "REG007", message, subject=str(entry.get("name")))
 
 
 @rule("REG008", "entry has a description for the README catalog")
 def entry_description(repo: Repo) -> Iterator[Finding]:
     for entry in repo.entries:
         if not entry.get("description"):
-            yield Finding(f"{MARKET} ({entry.get('name')})", "REG008", "no description")
+            yield Finding(MARKET, "REG008", "no description", subject=str(entry.get("name")))
 
 
 @rule("REG009", "every plugin has at least one skill")

@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from skills_repo import config
+from skills_repo.core import evals
 from skills_repo.model import Repo, parse_frontmatter
 
 NAME_RE = re.compile(config.NAME_PATTERN)
@@ -84,6 +85,18 @@ def _write_json(path: Path, data: dict) -> None:
     )
 
 
+def _write_eval_stubs(plugin: Path, name: str, skill: Path) -> None:
+    """Trigger eval cases with placeholder prompts, so EVL001 passes; edit them before a run."""
+    fm, _ = parse_frontmatter(skill.read_text(encoding="utf-8"))
+    positive = (
+        "TODO: a realistic request that should load this skill."
+        if evals.model_invocable(fm or {})
+        else None
+    )
+    negative = "TODO: a near-miss request that sounds related but should not load this skill."
+    evals.write_trigger_cases(plugin, name, positive, negative)
+
+
 def create(repo: Repo, plan: NewPlugin) -> Path:
     """Write the plugin and its marketplace entry; return the new SKILL.md path."""
     plugin = repo.path(f"{config.PLUGINS_DIR}/{plan.name}")
@@ -106,6 +119,7 @@ def create(repo: Repo, plan: NewPlugin) -> Path:
     else:
         stub = STUB.format(name=plan.name, description=plan.description)
         skill.write_text(stub, encoding="utf-8", newline="\n")
+    _write_eval_stubs(plugin, plan.name, skill)
     repo.marketplace["plugins"].append(
         {
             "name": plan.name,

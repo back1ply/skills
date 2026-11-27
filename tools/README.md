@@ -24,15 +24,21 @@ Installed as a tool instead: `uv tool install ./tools` (or `pipx install ./tools
 
 | Command | What it does |
 |---|---|
-| `repo check [--select CODES] [--paths FILE...] [--json]` | Run rules and print findings. Exit 1 if any error-level finding. |
+| `repo check [--select CODES] [--paths FILE...] [--format text\|json\|github\|sarif] [--fix]` | Run rules and print findings. `--fix` first rewrites what fixable rules flag (DOC). `--format github` prints GitHub Actions annotations; `sarif` is for code-scanning tools. Exit 1 if any error-level finding. |
 | `repo rules [--json]` | List every rule with its ID. This list is the source of truth. |
-| `repo new NAME --category CAT --description "..." [--from SKILL.md]` | Scaffold a plugin, its plugin.json, SKILL.md and marketplace entry. |
+| `repo new NAME --category CAT --description "..." [--from SKILL.md]` | Scaffold a plugin, its plugin.json, SKILL.md, trigger eval stubs and marketplace entry. |
 | `repo readme [--check]` | Rebuild README.md from `tools/readme_template.md`. |
 | `repo sync [--check]` | Copy agent-friendly-cli's shared rows into python-cli-packaging. |
 
 Exit codes: 0 ok, 1 problems found or a command failed, 2 usage error.
 
-Rules are grouped by family. `SKL` covers SKILL.md, `REG` folder and manifest agreement, `MAN` manifest rules, `CNT` counts in prose, `DOC` generated files, and `REF` reference files (over 100 lines need a Contents section). Those run by default. `DSC` (skills.sh discovery, which needs npx) runs only with `--select`.
+Rules are grouped by family. `SKL` covers SKILL.md, `REG` folder and manifest agreement, `MAN` manifest rules, `CNT` counts in prose, `DOC` generated files, `REF` reference files (over 100 lines need a Contents section), and `EVL` trigger eval cases. Those run by default. `DSC` (skills.sh discovery, which needs npx) runs only with `--select`. Rules marked `note:` inform but never fail a check.
+
+## Trigger evals
+
+Every skill has two `claude plugin eval` cases in its plugin's `evals/` folder: `trigger-<skill>`, a request that should load the skill, and `no-trigger-<skill>`, a near-miss that must not. Skills with `disable-model-invocation: true` get only the second. Rules `EVL001` (both cases exist) and `EVL002` (only keys and grader types the runner accepts) check them for free.
+
+Running them is billed, because every case is a real Claude session, so nothing runs them automatically. Run one plugin by hand with `just trigger-evals PLUGIN [--runs N]`, which keeps reports local (`--no-publish`) and caps spend at $1.
 
 ## Layout
 
@@ -40,15 +46,15 @@ Rules are grouped by family. `SKL` covers SKILL.md, `REG` folder and manifest ag
 src/skills_repo/
   config.py      paths, URLs, limits, categories
   model.py       Repo, Plugin, Skill: loaded once, read by everything
-  findings.py    Finding(path, rule, message, severity) and its text/JSON output
+  findings.py    Finding(path, rule, message, severity, line, subject); text/JSON/GitHub/SARIF output
   rules/         one module per family; each rule is a function registered with @rule
-  core/          logic with no argparse: README rendering, shared-rule sync, scaffolding
+  core/          logic with no argparse: README rendering, shared-rule sync, scaffolding, eval cases
   commands/      one module per subcommand: build_parser() and main(argv) -> int
   cli.py         the root parser and lazy dispatch
 tests/           each rule passes on a clean fixture repo and fails on its planted bug
 ```
 
-To add a rule, write a function in the right `rules/` module, decorate it with `@rule("XXX000", "title")`, and add its planted bug to `tests/test_rules.py`. A test fails if any rule has no planted bug.
+To add a rule, write a function in the right `rules/` module, decorate it with `@rule("XXX000", "title")` (add `fix=` if it can repair itself), and add its planted bug to `tests/test_rules.py`. A test fails if any rule has no planted bug.
 
 ## Old commands
 

@@ -15,9 +15,12 @@ from skills_repo.findings import Finding
 from skills_repo.model import Repo
 
 RuleFunc = Callable[[Repo], Iterable[Finding]]
+FixFunc = Callable[[Repo], None]
 
 # Explicit list, not a folder scan, so the wheel and the tests load the same rules.
-MODULES = ("skills", "registry", "manifests", "counts", "docs", "references", "discovery")
+MODULES = (
+    "skills", "registry", "manifests", "counts", "docs", "references", "evals", "discovery",
+)  # fmt: skip
 FAMILIES = {
     "SKL": "SKILL.md meets the Agent Skills spec and Claude Code's rules",
     "REG": "plugin folders, plugin.json and marketplace.json agree",
@@ -25,6 +28,7 @@ FAMILIES = {
     "CNT": "counts written in prose match the files",
     "DOC": "generated files are up to date",
     "REF": "reference files are easy to navigate",
+    "EVL": "every skill has trigger eval cases that `claude plugin eval` accepts",
     "DSC": "skills.sh finds exactly the published skills",
 }
 
@@ -35,6 +39,7 @@ class Rule:
     title: str
     func: RuleFunc
     default: bool
+    fix: FixFunc | None = None  # rewrites files so the rule passes; `repo check --fix` runs it
 
     @property
     def family(self) -> str:
@@ -44,11 +49,13 @@ class Rule:
 REGISTRY: dict[str, Rule] = {}
 
 
-def rule(rule_id: str, title: str, *, default: bool = True) -> Callable[[RuleFunc], RuleFunc]:
+def rule(
+    rule_id: str, title: str, *, default: bool = True, fix: FixFunc | None = None
+) -> Callable[[RuleFunc], RuleFunc]:
     def register(func: RuleFunc) -> RuleFunc:
         if rule_id in REGISTRY:
             raise ValueError(f"rule {rule_id} is registered twice")
-        REGISTRY[rule_id] = Rule(rule_id, title, func, default)
+        REGISTRY[rule_id] = Rule(rule_id, title, func, default, fix)
         return func
 
     return register

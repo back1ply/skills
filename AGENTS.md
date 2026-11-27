@@ -5,10 +5,11 @@
 The `repo` CLI in `tools/` (a uv project, see `tools/README.md`) checks and maintains this repo. The `justfile` wraps it; run `just` to list the recipes.
 
 - `just new NAME --category CAT --description "What it does. Use when ..." [--from path/SKILL.md]`: scaffold a plugin (folder, plugin.json, marketplace entry), then rebuild the README and run the checks. Never add a plugin by hand.
-- `just check`: every default rule, the same as CI. Families: `SKL` (Agent Skills spec and Claude Code rules for every SKILL.md), `REG` (folders, plugin.json and marketplace agree), `MAN` (no `version`, no author email, `repository` is this repo), `CNT` (counts in prose match the files), `DOC` (README and shared CLI rules are up to date), `REF` (long reference files have a Contents section). `just rules` lists every rule ID.
+- `just check`: every default rule, the same as CI. Families: `SKL` (Agent Skills spec and Claude Code rules for every SKILL.md), `REG` (folders, plugin.json and marketplace agree), `MAN` (no `version`, no author email, `repository` is this repo), `CNT` (counts in prose match the files), `DOC` (README and shared CLI rules are up to date), `REF` (long reference files have a Contents section), `EVL` (every skill has trigger eval cases). `just check --fix` rewrites what it can (README, shared rules). `just rules` lists every rule ID.
 - `just discovery`: skills.sh must find exactly the published skills (rule family `DSC`, needs npx).
 - `just refs [FILES]`: only rule `REF001`: reference files over 100 lines need a `## Contents` near the top. It is a default rule, so `just check` and CI run it too.
 - `just readme`: rebuild README.md from `tools/readme_template.md`. Edit the template, not README.md.
+- `just trigger-evals PLUGIN`: BILLED. Runs a plugin's trigger evals (`evals/trigger-<skill>` should load the skill, `evals/no-trigger-<skill>` must not) with real Claude sessions. Never run it without being asked. When adding or renaming a skill, write both prompts by hand; `repo new` leaves TODO stubs.
 - `just test`: the CLI's own tests. A new rule needs a planted-bug case in `tools/tests/test_rules.py`; a test fails without one.
 
 ## Where new skills go
