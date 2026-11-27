@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Pre-push checks for the skills marketplace. Only what the push changes is checked.
 #
+#   0. scripts/                 skill spec, registry, manifest rules, counts, README, changed
+#                               reference files, skills.sh discovery (see justfile)
 #   1. claude plugin validate   marketplace + each changed plugin (errors block; warnings show)
 #   2. skillevaluator Tier 1    each changed skill (static checks, no API key)
 #   3. gitleaks                 secrets in the commits being pushed
@@ -41,8 +43,26 @@ files=$(printf '%s' "$files" | tr -d '\r' | sort -u | sed '/^$/d')
 plugins=$(printf '%s\n' "$files" | sed -n 's|^skills/\([^/]*\)/.*|\1|p' | sort -u)
 skill_dirs=$(printf '%s\n' "$files" | sed -n 's|^\(skills/[^/]*/skills/[^/]*\)/.*|\1|p' | sort -u)
 # sed, not grep: some Windows grep builds add a carriage return to each output line.
-markdown=$(printf '%s\n' "$files" | sed -n '/\.md$/p')
+# The README template's links are relative to the repo root, not scripts/; README.md itself is checked.
+markdown=$(printf '%s\n' "$files" | sed -n '/^scripts\/readme_template\.md$/d; /\.md$/p')
 workflows=$(printf '%s\n' "$files" | sed -n '/^\.github\/workflows\//p')
+
+step "0. repo checks (scripts/)"
+if have uv; then
+  for s in check_skills check_registry lint_manifests check_counts; do
+    uv run -q "scripts/$s.py" || failed+=("$s")
+  done
+  uv run -q scripts/build_readme.py --check || failed+=("README out of date")
+  uv run -q scripts/sync_shared.py --check || failed+=("shared CLI rules out of sync")
+  refs=$(printf '%s\n' "$markdown" | sed -n '/^skills\/[^/]*\/skills\/[^/]*\/references\//p')
+  if [ -n "$refs" ]; then
+    printf '%s\n' "$refs" | xargs -d '\n' uv run -q scripts/lint_references.py || failed+=("reference Contents")
+  fi
+  # sed, not grep, for the same carriage-return reason as above.
+  if [ -n "$(printf '%s\n' "$files" | sed -n '/^skills\//p;/^\.claude-plugin\//p')" ] && have npx; then
+    uv run -q scripts/check_discovery.py || failed+=("skills.sh discovery")
+  fi
+fi
 
 step "1. claude plugin validate"
 if have claude; then

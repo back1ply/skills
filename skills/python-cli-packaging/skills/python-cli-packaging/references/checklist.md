@@ -2,7 +2,7 @@
 
 99 items with stable IDs. Sources: [sources.md](sources.md).
 
-**Shared rows:** 43 items state the language-neutral agent contract that the `agent-friendly-cli` skill owns. Their Source cell starts with `afc:<ID>`, and their rule text and severity are copied from that skill by `scripts/sync_shared.py` in the skills repo, so edit the rule there, not here. Citations in that text use the other skill's sources (`afc:S30`). The Verify cell, with its **Python:** notes, belongs to this skill. Commands in tables escape `|` as `\|`; copy runnable commands from [checks.md](checks.md) instead.
+**Shared rows:** 44 items state the language-neutral agent contract that the `agent-friendly-cli` skill owns. Their Source cell starts with `afc:<ID>`, and their rule text and severity are copied from that skill by `scripts/sync_shared.py` in the skills repo, so edit the rule there, not here. Citations in that text use the other skill's sources (`afc:S30`). The Verify cell, with its **Python:** notes, belongs to this skill. Commands in tables escape `|` as `\|`; copy runnable commands from [checks.md](checks.md) instead.
 
 Modes: **B** build, **C** convert, **A** audit. Every item applies in audit mode unless the mode column says otherwise. The only items without A are the convert-only LAY-08, DOC-05, and DIST-03.
 

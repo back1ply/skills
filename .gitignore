@@ -7,8 +7,9 @@
 !LICENSE
 !README.md
 !AGENTS.md
+!justfile
 
-# Repo tooling: shared-rule sync and its CI check
+# Repo tooling: checks, README builder, hooks, CI
 !scripts/
 !scripts/**
 !.github/
