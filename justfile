@@ -1,45 +1,42 @@
-# Repo tasks. Run `just` to list them. Every check is also a plain script in scripts/.
+# Repo tasks. Run `just` to list them. Each recipe calls the `repo` CLI in tools/.
 set windows-shell := ["bash", "-cu"]
 set positional-arguments
+
+repo := "uv run -q --project " + quote(justfile_directory() / "tools") + " repo"
 
 default:
     @just --list
 
-# Scaffold a plugin, rebuild the README, run the checks. Args go to scripts/new_plugin.py.
+# Scaffold a plugin, rebuild the README, run the checks. Args go to `repo new`.
 [group('make')]
 new +args:
-    uv run -q scripts/new_plugin.py "$@"
+    {{repo}} new "$@"
     just readme check
 
-# Rebuild README.md from scripts/readme_template.md and the marketplace.
+# Rebuild README.md from tools/readme_template.md and the marketplace.
 [group('make')]
 readme:
-    uv run -q scripts/build_readme.py
+    {{repo}} readme
 
 # Copy shared CLI rules from agent-friendly-cli into python-cli-packaging.
 [group('make')]
 sync:
-    uv run -q scripts/sync_shared.py
+    {{repo}} sync
 
-# Fast offline checks: what CI runs.
+# Every default rule (SKL, REG, MAN, CNT, DOC): what CI runs. Extra args go to `repo check`.
 [group('check')]
-check:
-    uv run -q scripts/check_skills.py
-    uv run -q scripts/check_registry.py
-    uv run -q scripts/lint_manifests.py
-    uv run -q scripts/check_counts.py
-    uv run -q scripts/build_readme.py --check
-    uv run -q scripts/sync_shared.py --check
+check *args:
+    {{repo}} check "$@"
 
 # Confirm skills.sh finds exactly the published skills (needs npx).
 [group('check')]
 discovery:
-    uv run -q scripts/check_discovery.py
+    {{repo}} check --select DSC
 
 # Long reference files missing a Contents section (all files, or the ones given).
 [group('check')]
 refs *files:
-    uv run -q scripts/lint_references.py "$@"
+    if [ $# -gt 0 ]; then {{repo}} check --select REF --paths "$@"; else {{repo}} check --select REF; fi
 
 # Claude Code's own validator for the marketplace and every plugin.
 [group('check')]
@@ -47,9 +44,19 @@ validate:
     claude plugin validate .
     for p in skills/*/.claude-plugin/plugin.json; do d=${p%/.claude-plugin/plugin.json}; claude plugin validate "$d" >/dev/null || { claude plugin validate "$d"; exit 1; }; done; echo "ok every plugin validates"
 
-# Everything: offline checks, skills.sh discovery, Claude Code validation.
+# Everything: tests, default rules, skills.sh discovery, Claude Code validation.
 [group('check')]
-all: check discovery validate
+all: test check discovery validate
+
+# The repo CLI's own tests, lint and lockfile check.
+[group('check')]
+test:
+    cd tools && uv lock --check -q && uv run -q pytest && uv run -q ruff check . && uv run -q ruff format --check .
+
+# List every rule with its ID.
+[group('check')]
+rules:
+    {{repo}} rules
 
 # Turn on the pre-push hook for this clone.
 [group('setup')]

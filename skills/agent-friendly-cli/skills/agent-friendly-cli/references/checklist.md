@@ -2,7 +2,7 @@
 
 70 items with stable IDs, language-neutral, with per-framework notes in the Verify column. Sources: [sources.md](sources.md) (`S` = source, `E` = research experiment, `P1` = the reference CLIs in patterns.md, `py:` = a source of the `python-cli-packaging` skill; `from py X` = item X of that skill, generalized). Commands in tables escape `|` as `\|`.
 
-**Shared with python-cli-packaging:** 43 rows here are the source for that skill's matching rows (rule text and severity). After editing one, run `python scripts/sync_shared.py` from the skills repo root; CI fails if the two drift.
+**Shared with python-cli-packaging:** 44 rows here are the source for that skill's matching rows (rule text and severity). After editing one, run `just sync` from the skills repo root; CI fails if the two drift.
 
 Modes: **B** build, **C** convert, **A** audit. `tool` is the CLI under test.
 

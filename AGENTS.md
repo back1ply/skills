@@ -1,14 +1,15 @@
 # AGENTS.md
 
-## Repo scripts
+## Repo tooling
 
-Tooling lives in `scripts/` and runs through the `justfile` (`just` lists the recipes). Each script does one job, prints one summary line, and exits 1 on a problem.
+The `repo` CLI in `tools/` (a uv project, see `tools/README.md`) checks and maintains this repo. The `justfile` wraps it; run `just` to list the recipes.
 
 - `just new NAME --category CAT --description "What it does. Use when ..." [--from path/SKILL.md]`: scaffold a plugin (folder, plugin.json, marketplace entry), then rebuild the README and run the checks. Never add a plugin by hand.
-- `just check`: the offline checks CI runs. `check_skills.py` (Agent Skills spec plus Claude Code rules for every SKILL.md), `check_registry.py` (folders, plugin.json and marketplace agree), `lint_manifests.py` (no `version`, no author email, `repository` is this repo), `check_counts.py` (item counts in prose match the checklists), `build_readme.py --check`, `sync_shared.py --check`.
-- `just discovery`: `skills add --list` on the published files must find exactly the published skills.
-- `just refs [FILES]`: reference files over 100 lines need a `## Contents` near the top. The hook checks only changed files.
-- `just readme`: rebuild README.md from `scripts/readme_template.md`. Edit the template, not README.md.
+- `just check`: every default rule, the same as CI. Families: `SKL` (Agent Skills spec and Claude Code rules for every SKILL.md), `REG` (folders, plugin.json and marketplace agree), `MAN` (no `version`, no author email, `repository` is this repo), `CNT` (counts in prose match the files), `DOC` (README and shared CLI rules are up to date). `just rules` lists every rule ID.
+- `just discovery`: skills.sh must find exactly the published skills (rule family `DSC`, needs npx).
+- `just refs [FILES]`: reference files over 100 lines need a `## Contents` near the top (rule `REF001`). Older files have a backlog, so the hook checks only changed files.
+- `just readme`: rebuild README.md from `tools/readme_template.md`. Edit the template, not README.md.
+- `just test`: the CLI's own tests. A new rule needs a planted-bug case in `tools/tests/test_rules.py`; a test fails without one.
 
 ## Where new skills go
 
@@ -24,8 +25,8 @@ After changing code, run `code_health_review` on the changed files. If Code Heal
 
 ## Shared CLI rules
 
-`agent-friendly-cli` owns the language-neutral CLI contract. `python-cli-packaging` copies 44 of its checklist rows and its `scripts/cli_contract.py`. After editing either source, run `just sync`; the `sync-check` workflow fails when they drift.
+`agent-friendly-cli` owns the language-neutral CLI contract. `python-cli-packaging` copies 44 of its checklist rows and its `scripts/cli_contract.py`. After editing either source, run `just sync`; rule `DOC002` (in `just check` and CI) fails when they drift.
 
 ## Pre-push checks
 
-`scripts/hooks/pre-push` runs the repo scripts above (step 0), `claude plugin validate`, SkillEvaluator Tier 1, gitleaks, lychee, and (when workflows change) zizmor and actionlint on what a push changes. Enable it once per clone with `just hooks`. Skip once with `git push --no-verify`.
+`scripts/hooks/pre-push` runs `repo check` (step 0, plus `REF` on changed reference files, `DSC` when skills change, and the CLI's tests when `tools/` changes), `claude plugin validate`, SkillEvaluator Tier 1, gitleaks, lychee, and (when workflows change) zizmor and actionlint on what a push changes. Enable it once per clone with `just hooks`. Skip once with `git push --no-verify`.

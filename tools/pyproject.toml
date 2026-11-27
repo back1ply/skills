@@ -1,0 +1,33 @@
+[build-system]
+requires = ["uv_build>=0.9,<0.12"]
+build-backend = "uv_build"
+
+[project]
+name = "skills-repo"
+version = "0.1.0"
+description = "Checks and chores for the back1ply/skills marketplace: skill specs, manifests, README, shared rules"
+readme = "README.md"
+# The repo's LICENSE sits one level up; PEP 639 license-files can't point at a parent path,
+# and this tool is never published, so the license is declared by expression only.
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = ["pyyaml>=6"]
+
+[project.scripts]
+repo = "skills_repo.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.uv]
+exclude-newer = "7 days"
+
+[tool.uv.build-backend]
+module-name = "skills_repo"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100

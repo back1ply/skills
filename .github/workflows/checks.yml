@@ -1,0 +1,55 @@
+name: checks
+
+on:
+  push:
+  pull_request:
+
+permissions: {}
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repo:
+    name: repo check, tests, and fresh install
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read                     # read the repo
+    defaults:
+      run:
+        working-directory: tools
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.13.10"             # tested; Renovate bumps it
+          enable-cache: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Lockfile is current
+        run: uv lock --check
+      - name: Install
+        run: uv sync --locked
+      - name: Tests
+        run: uv run pytest
+      - name: Lint
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Default rules (SKL, REG, MAN, CNT, DOC)
+        run: uv run repo check --root "$GITHUB_WORKSPACE"
+      - name: skills.sh finds exactly the published skills (DSC)
+        run: uv run repo check --root "$GITHUB_WORKSPACE" --select DSC
+      - name: Fresh install from the wheel, outside the repo
+        run: |
+          uv build
+          wheel=$(ls "$PWD"/dist/*.whl)
+          cd "$RUNNER_TEMP"
+          run() { uvx --from "$wheel" repo "$@"; }
+          run --help
+          run --version
+          for sub in check rules new readme sync; do run "$sub" --help > /dev/null; done
+          run check --root "$GITHUB_WORKSPACE"

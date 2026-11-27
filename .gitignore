@@ -9,7 +9,9 @@
 !AGENTS.md
 !justfile
 
-# Repo tooling: checks, README builder, hooks, CI
+# Repo tooling: the `repo` CLI (tools/), the pre-push hook, CI
+!tools/
+!tools/**
 !scripts/
 !scripts/**
 !.github/
@@ -49,3 +51,7 @@ skills/designite-skills/dev/samples/**/.designite/
 
 # SkillEvaluator run output (keep evals/evals.json)
 **/evals/results/
+
+# tools/ build and test output (after the allow list, so these win)
+tools/dist/
+.pytest_cache/

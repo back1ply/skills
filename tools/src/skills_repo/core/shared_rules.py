@@ -1,23 +1,18 @@
-"""Keep python-cli-packaging in step with agent-friendly-cli, its source for the shared CLI contract.
+"""Shared CLI rules: agent-friendly-cli owns them, python-cli-packaging carries a copy.
 
-agent-friendly-cli owns the language-neutral rules. For each shared item, this script copies the
-rule text and severity into python-cli-packaging's checklist (keeping that skill's IDs, modes,
-Verify cell, and sources), and copies scripts/cli_contract.py with item IDs translated.
-Citations are rewritten so they still resolve: agent-friendly sources become `afc:S30`, and
-agent-friendly item IDs become the Python skill's IDs (or `afc:ID` when there is no match).
+For each shared item, the rule text and severity are copied into python-cli-packaging's
+checklist (keeping that skill's IDs, modes, Verify cell, and sources), and
+scripts/cli_contract.py is copied with item IDs translated. Citations are rewritten so they
+still resolve: agent-friendly sources become `afc:S30`, and agent-friendly item IDs become the
+Python skill's IDs (or `afc:ID` when there is no match).
 
-    python scripts/sync_shared.py          # write the files
-    python scripts/sync_shared.py --check  # exit 1 if they are out of date (CI)
+Ported verbatim from scripts/sync_shared.py; only the paths became a `root` parameter.
 """
 
-import argparse
-import pathlib
 import re
-import sys
+from pathlib import Path
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent / "skills"
-AFC = ROOT / "agent-friendly-cli/skills/agent-friendly-cli"
-PY = ROOT / "python-cli-packaging/skills/python-cli-packaging"
+from skills_repo.config import SHARED_COPY, SHARED_SOURCE
 
 # python-cli-packaging ID -> agent-friendly-cli ID, for items that state the same rule.
 SHARED = {
@@ -93,14 +88,13 @@ def cells(row):
     return [c.strip() for c in CELL.split(row)[1:-1]]
 
 
-def sync_checklist():
+def sync_checklist(root: Path):
+    afc, py = root / SHARED_SOURCE, root / SHARED_COPY
     afc_rows = {
         m.group(1): cells(m.group(0))
-        for m in ROW.finditer(
-            (AFC / "references/checklist.md").read_text(encoding="utf-8")
-        )
+        for m in ROW.finditer((afc / "references/checklist.md").read_text(encoding="utf-8"))
     }
-    path = PY / "references/checklist.md"
+    path = py / "references/checklist.md"
     text = path.read_text(encoding="utf-8")
 
     def repl(m):
@@ -119,42 +113,30 @@ def sync_checklist():
     return path, ROW.sub(repl, text)
 
 
-def sync_script():
-    text = (AFC / "scripts/cli_contract.py").read_text(encoding="utf-8")
+def sync_script(root: Path):
+    afc, py = root / SHARED_SOURCE, root / SHARED_COPY
+    text = (afc / "scripts/cli_contract.py").read_text(encoding="utf-8")
     ids = re.compile(r"\b((?:CLI|OUT|EXIT|AGT|ERR|CFG|DISC|TST)-\d{2})\b")
-    return PY / "scripts/cli_contract.py", ids.sub(
+    return py / "scripts/cli_contract.py", ids.sub(
         lambda m: TO_PY.get(m.group(1), f"afc:{m.group(1)}"), text
     )
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(
-        description="Sync python-cli-packaging from agent-friendly-cli."
-    )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="exit 1 if any file is out of date; write nothing",
-    )
-    args = parser.parse_args(argv)
+def present(root: Path) -> tuple[bool, bool]:
+    """Whether the source and the copy skill exist (a fixture repo has neither)."""
+    return (root / SHARED_SOURCE).is_dir(), (root / SHARED_COPY).is_dir()
+
+
+def stale_files(root: Path) -> list[tuple[Path, str]]:
+    """(path, new text) for every copied file that differs from what sync would write."""
     stale = []
-    for path, new in (sync_checklist(), sync_script()):
-        old = path.read_bytes().decode("utf-8").replace("\r\n", "\n")
-        if old != new.replace("\r\n", "\n"):
-            stale.append(path.relative_to(ROOT.parent))
-            if not args.check:
-                path.write_bytes(new.replace("\r\n", "\n").encode("utf-8"))
-    if args.check and stale:
-        print(
-            "out of date (run python scripts/sync_shared.py):",
-            *stale,
-            sep="\n  ",
-            file=sys.stderr,
-        )
-        return 1
-    print(f"{'stale' if args.check else 'updated'}: {len(stale)} file(s)")
-    return 0
+    for path, new in (sync_checklist(root), sync_script(root)):
+        new = new.replace("\r\n", "\n")
+        if path.read_bytes().decode("utf-8").replace("\r\n", "\n") != new:
+            stale.append((path, new))
+    return stale
 
 
-if __name__ == "__main__":
-    raise SystemExit(main())
+def write(files: list[tuple[Path, str]]) -> None:
+    for path, text in files:
+        path.write_bytes(text.encode("utf-8"))
