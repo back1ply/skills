@@ -2,6 +2,14 @@
 
 Tools for evaluating and refining prompts.
 
+## Contents
+
+- Prompt Quality Scorecard
+  - Scoring Guide
+- Prompt Refinement Worksheet
+- Quick Diagnostic Checklist
+- Testing Tips
+
 ## Prompt Quality Scorecard
 
 Rate each item 1-5. Use to evaluate prompt strength before sending.

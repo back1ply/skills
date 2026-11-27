@@ -161,5 +161,5 @@ def test_parse_listing_reads_skills_cli_output() -> None:
 
 def test_default_selection_leaves_out_opt_in_rules() -> None:
     selected = {r.id for r in rules.select([])}
-    assert "REF001" not in selected and "DSC001" not in selected
-    assert "SKL001" in selected
+    assert "DSC001" not in selected and "DSC002" not in selected
+    assert {"SKL001", "REF001"} <= selected

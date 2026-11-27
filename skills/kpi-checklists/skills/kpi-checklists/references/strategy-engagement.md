@@ -1,5 +1,24 @@
 # Strategy & Engagement Checklists
 
+## Contents
+
+- Step 1 — Clear Strategy
+  - Strategy Fitness Checklist
+  - Strategic Objectives Clarity Checklist
+  - Good Strategic Objective Examples
+  - Right Number of Strategic Objectives
+- Step 2 — Engage Stakeholders
+  - RACI Matrix
+  - Stakeholder Types
+  - Communications Plan — Message, Purpose, and Audience
+  - Communications Plan — Design Activities
+  - Communications Plan — Delivery
+  - Key Communications Principles
+- Stakeholder Interviews
+  - Semi-Structured Interview Checklist
+  - Stakeholder Workshop Tips
+  - How to Tell What People Really Think
+
 ## Step 1 — Clear Strategy
 
 ### Strategy Fitness Checklist

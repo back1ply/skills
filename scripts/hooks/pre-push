@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Pre-push checks for the skills marketplace. Only what the push changes is checked.
 #
-#   0. repo check (tools/)      default rules; REF on changed reference files; DSC when skills
-#                               or manifests change; the CLI's tests when tools/ changes
+#   0. repo check (tools/)      default rules; DSC when skills or manifests change; the CLI's
+#                               tests when tools/ changes
 #   1. claude plugin validate   marketplace + each changed plugin (errors block; warnings show)
 #   2. skillevaluator Tier 1    each changed skill (static checks, no API key)
 #   3. gitleaks                 secrets in the commits being pushed
@@ -51,11 +51,6 @@ step "0. repo check (tools/)"
 if have uv; then
   repo() { uv run -q --project tools repo "$@"; }
   repo check || failed+=("repo check")
-  refs=$(printf '%s\n' "$markdown" | sed -n '/^skills\/[^/]*\/skills\/[^/]*\/references\//p')
-  if [ -n "$refs" ]; then
-    printf '%s\n' "$refs" | xargs -d '\n' uv run -q --project tools repo check --select REF --paths \
-      || failed+=("reference Contents (REF)")
-  fi
   # sed, not grep, for the same carriage-return reason as above.
   if [ -n "$(printf '%s\n' "$files" | sed -n '/^skills\//p;/^\.claude-plugin\//p')" ] && have npx; then
     repo check --select DSC || failed+=("skills.sh discovery (DSC)")

@@ -4,6 +4,16 @@ Standard output template for skill audit reports. Copy and fill in values.
 
 ---
 
+## Contents
+
+- Full Report Structure
+- Actionable Output Commands
+  - Backup Commands
+  - Auto-Consolidation Suggestions
+  - Removal Commands
+  - Installation Commands
+  - Verification Steps
+
 ## Full Report Structure
 
 ```markdown

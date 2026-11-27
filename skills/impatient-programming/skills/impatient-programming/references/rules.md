@@ -2,11 +2,19 @@
 
 Source: [The rules that govern how we work](https://impatientprogramming.org/rules/) by Obie Fernandez,
 impatientprogramming.org, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-Changes: reformatted from HTML to markdown, one section per rule; "Revisit this rule"
-links and images removed. Text otherwise unchanged. Snapshot: 2026-10-27.
+Changes: reformatted from HTML to markdown, one section per rule, a Contents list added;
+"Revisit this rule" links and images removed. Text otherwise unchanged. Snapshot: 2026-10-27.
 
 Each rule shows the 2026 IMP rule, then Don Wells's 1999 XP rule it revisits.
 Anchor links (`https://impatientprogramming.org/rules/#rule-N`) point to the live page.
+
+## Contents
+
+- Planning
+- Managing
+- Designing
+- Coding
+- Testing
 
 ## Planning
 

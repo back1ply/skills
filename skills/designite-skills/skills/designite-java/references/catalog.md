@@ -14,6 +14,15 @@ Every smell DesigniteJava reports, its rule, and how this skill finds it.
 Metric names (Designite): NOF fields, NOPF public fields, NOM methods (constructors included),
 NOPM public methods, WMC sum of method CC, NC children, DIT inheritance depth, LCOM, FANIN, FANOUT.
 
+## Contents
+
+- Architecture smells (component = Java package)
+- Design smells (per class)
+- Implementation smells (per method)
+- Testability smells (Designite Professional; rules not published)
+- Test smells
+- Refactoring hints
+
 ## Architecture smells (component = Java package)
 
 | Smell | Rule | How | Source |

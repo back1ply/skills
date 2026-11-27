@@ -4,6 +4,14 @@ Detailed methodology for deep skill analysis, semantic similarity, conflict dete
 
 ---
 
+## Contents
+
+- Phase 2.5: Deep Skill Analysis
+- Phase 3: Semantic Similarity Analysis
+- Phase 3.5: Conflict Detection
+- Phase 4: Weighted Scoring System
+- Phase 5.5: Dependency Mapping
+
 ## Phase 2.5: Deep Skill Analysis
 
 Go beyond frontmatter — read the full skill content:

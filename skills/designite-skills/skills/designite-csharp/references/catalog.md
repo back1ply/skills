@@ -15,6 +15,15 @@ DesigniteJava's defaults (`ThresholdsDTO.java`) unless marked otherwise.
 A **component** is a namespace. Metrics: NOF fields, NOPF public fields, NOM methods, NOPM public
 methods, WMC sum of method CC, NC children, DIT depth of inheritance.
 
+## Contents
+
+- Architecture smells
+- Design smells
+- Implementation smells
+- Testability smells (rules not published)
+- Test smells (no maintained C# tool; judge from test code)
+- Refactoring hints
+
 ## Architecture smells
 
 | Smell | Rule | How | Source |

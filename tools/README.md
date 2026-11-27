@@ -32,7 +32,7 @@ Installed as a tool instead: `uv tool install ./tools` (or `pipx install ./tools
 
 Exit codes: 0 ok, 1 problems found or a command failed, 2 usage error.
 
-Rules are grouped by family. `SKL` covers SKILL.md, `REG` folder and manifest agreement, `MAN` manifest rules, `CNT` counts in prose, and `DOC` generated files. Those run by default. `REF` (reference files need a Contents section) and `DSC` (skills.sh discovery, which needs npx) run only with `--select`.
+Rules are grouped by family. `SKL` covers SKILL.md, `REG` folder and manifest agreement, `MAN` manifest rules, `CNT` counts in prose, `DOC` generated files, and `REF` reference files (over 100 lines need a Contents section). Those run by default. `DSC` (skills.sh discovery, which needs npx) runs only with `--select`.
 
 ## Layout
 

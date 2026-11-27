@@ -5,6 +5,14 @@
 
 ---
 
+## Contents
+
+- Official Plugins (Made by Anthropic)
+- Endorsed Plugins (Third-party in Official Marketplace)
+- Quick Lookup: Finding Replacements
+- No Official Alternative (Keep External)
+- Marketplace Identification
+
 ## Official Plugins (Made by Anthropic)
 
 | Plugin | Category | Purpose |

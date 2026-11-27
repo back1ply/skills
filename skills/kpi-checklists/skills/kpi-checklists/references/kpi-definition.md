@@ -1,5 +1,17 @@
 # KPI Definition
 
+## Contents
+
+- The "Common Sense" Problem
+- KPI Definition Checklist
+- KPI Definition Canvas (ROKS Template)
+  - Benefits of KPI Definitions
+- Meeting Terms of Reference
+  - Why Create a Terms of Reference?
+  - Terms of Reference Checklist
+  - Terms of Reference Template
+  - Going Live with Terms of Reference
+
 ## The "Common Sense" Problem
 
 Many KPIs use descriptive names that create dangerous assumptions. Example: "Utilisation" (ratio of billed hours to available hours) seems simple but raises questions:

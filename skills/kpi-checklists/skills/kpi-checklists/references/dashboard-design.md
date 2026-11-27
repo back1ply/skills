@@ -1,5 +1,13 @@
 # Dashboard Design
 
+## Contents
+
+- Prototyping Approaches
+- The Brilliant Dashboards Checklist
+- Report Readability Rules
+- Report Length & Complexity
+- Observing Real Usage
+
 ## Prototyping Approaches
 
 ### Why Prototype?

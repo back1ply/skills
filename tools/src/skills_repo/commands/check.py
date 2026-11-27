@@ -15,7 +15,7 @@ EPILOG = """examples:
   repo check --select SKL,REG             two rule families
   repo check --select REF --paths a.md    one rule, findings for a.md only
   repo check --json                       one JSON object on stdout
-Opt-in rules (REF, DSC) run only when selected. Exit 1 when any error-level finding remains."""
+Opt-in rules (DSC) run only when selected. Exit 1 when any error-level finding remains."""
 
 
 def build_parser():

@@ -2,6 +2,16 @@
 
 Ready-to-use prompts for common business roles. Swap in your input and adjust tone as needed.
 
+## Contents
+
+- Operations
+- Sales
+- Marketing
+- Management
+- Content Development
+- Data Analysis
+- Learning & Development
+
 ## Operations
 
 ### Process Improvement

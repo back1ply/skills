@@ -1,5 +1,17 @@
 # Go-Live & Operations
 
+## Contents
+
+- Getting Buy-In
+- Common Data Problems and Solutions
+- SMED — Cycle Time Reduction
+- FMEA — Risk Management
+- Data Collection Methods
+- Process Mapping KPI Production
+- Preflight Checks Before Launch
+- Handover to BAU Team
+- Sustaining KPIs
+
 ## Getting Buy-In
 
 ### Five Stages of Buy-In

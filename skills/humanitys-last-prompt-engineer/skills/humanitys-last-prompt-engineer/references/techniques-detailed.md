@@ -4,6 +4,20 @@ Extended examples and tips for each of the 11 foundational techniques.
 
 ---
 
+## Contents
+
+- 1\. Zero-Shot Prompting
+- 2\. Few-Shot Prompting
+- 3\. System Prompting
+- 4\. Role Prompting
+- 5\. Contextual Prompting
+- 6\. Step-Back Prompting
+- 7\. Chain-of-Thought (CoT)
+- 8\. Self-Consistency
+- 9\. Tree of Thoughts (ToT)
+- 10\. ReAct (Reason + Act)
+- 11\. Automatic Prompt Engineering (APE)
+
 ## 1. Zero-Shot Prompting
 
 Single instruction, no examples.

@@ -23,7 +23,7 @@ readme:
 sync:
     {{repo}} sync
 
-# Every default rule (SKL, REG, MAN, CNT, DOC): what CI runs. Extra args go to `repo check`.
+# Every default rule (SKL, REG, MAN, CNT, DOC, REF): what CI runs. Extra args go to `repo check`.
 [group('check')]
 check *args:
     {{repo}} check "$@"
@@ -33,7 +33,7 @@ check *args:
 discovery:
     {{repo}} check --select DSC
 
-# Long reference files missing a Contents section (all files, or the ones given).
+# Only the REF rule: long reference files missing a Contents section (all, or the ones given).
 [group('check')]
 refs *files:
     if [ $# -gt 0 ]; then {{repo}} check --select REF --paths "$@"; else {{repo}} check --select REF; fi

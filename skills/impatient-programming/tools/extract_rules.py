@@ -17,8 +17,8 @@ HEADER = """# The 29 rules of Impatient Programming
 
 Source: [The rules that govern how we work]({page}) by Obie Fernandez,
 impatientprogramming.org, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-Changes: reformatted from HTML to markdown, one section per rule; "Revisit this rule"
-links and images removed. Text otherwise unchanged. Snapshot: {date}.
+Changes: reformatted from HTML to markdown, one section per rule, a Contents list added;
+"Revisit this rule" links and images removed. Text otherwise unchanged. Snapshot: {date}.
 
 Each rule shows the 2026 IMP rule, then Don Wells's 1999 XP rule it revisits.
 Anchor links (`{page}#rule-N`) point to the live page.
@@ -35,13 +35,19 @@ def md(node) -> str:
     return "\n".join(line.rstrip() for line in text.splitlines())
 
 
+def contents(groups: list[str]) -> str:
+    """The Contents list the repo requires on reference files over 100 lines (rule REF001)."""
+    return "## Contents\n\n" + "\n".join(f"- {g}" for g in groups) + "\n"
+
+
 def extract(src: Path, dst: Path, date: str) -> None:
     soup = BeautifulSoup(src.read_text(encoding="utf-8"), "html.parser")
-    out = [HEADER.format(page=PAGE, date=date)]
+    sections, groups = [], []
     count = 0
     for group in soup.select("section.rules-group"):
         heading = group.find(["h2"])
-        out.append(f"## {heading.get_text(strip=True)}\n")
+        groups.append(heading.get_text(strip=True))
+        sections.append(f"## {groups[-1]}\n")
         for rule in group.select("li.rule"):
             num = rule["id"].split("-")[1]
             then = rule.select_one(".rule__xp").get_text(" ", strip=True)
@@ -52,10 +58,11 @@ def extract(src: Path, dst: Path, date: str) -> None:
             body = md(now)
             while "\n\n\n" in body:
                 body = body.replace("\n\n\n", "\n\n")
-            out.append(f"### Rule {num}: {title}\n\n1999: *{then}*  \nLink: {PAGE}#rule-{num}\n\n{body}\n")
+            sections.append(f"### Rule {num}: {title}\n\n1999: *{then}*  \nLink: {PAGE}#rule-{num}\n\n{body}\n")
             count += 1
     if count != 29:
         sys.exit(f"error: expected 29 rules, found {count}; the page layout may have changed")
+    out = [HEADER.format(page=PAGE, date=date), contents(groups), *sections]
     dst.write_text("\n".join(out).rstrip() + "\n", encoding="utf-8")
     print(f"{src.name} -> {dst}: {count} rules")
 

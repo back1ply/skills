@@ -1,8 +1,8 @@
 """Rule registry. A rule is a function (repo) -> iterable of Findings, registered with @rule.
 
 Each rule has an ID (three letters for its family, three digits), a one-line title, and a
-`default` flag: default rules run on a plain `repo check`; the others (REF, DSC) run only when
-selected with --select, because they have a known backlog or need the network.
+`default` flag: default rules run on a plain `repo check`; the others (DSC) run only when
+selected with --select, because they need the network.
 """
 
 from __future__ import annotations
