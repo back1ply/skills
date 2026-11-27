@@ -8,6 +8,7 @@
 !README.md
 !AGENTS.md
 !justfile
+!renovate.json
 
 # Repo tooling: the `repo` CLI (tools/), the pre-push hook, CI
 !tools/
